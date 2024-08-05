@@ -34,7 +34,7 @@ class CreateTableAdmin extends Migration
             'level' => [
                 'type' => 'VARCHAR',
                 'constraint' => '20',
-                'comment'        => 'manajer | karyawan'
+                'comment'        => "manajer | karyawan"
             ],
             'created_at' => [
                 'type' => 'DATETIME',

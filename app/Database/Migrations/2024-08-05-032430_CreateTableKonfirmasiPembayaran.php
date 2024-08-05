@@ -31,10 +31,12 @@ class CreateTableKonfirmasiPembayaran extends Migration
             ],
             'status' => [
                 'type' => 'VARCHAR',
-                'comment' => 'PENDING | SUCCESS | FAILED',
+                'constraint' => '20',
+                'comment' => "PENDING | SUCCESS | FAILED",
             ],
             'created' => [
                 'type' => 'DATE',
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'DATETIME',

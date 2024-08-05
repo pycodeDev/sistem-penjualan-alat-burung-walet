@@ -41,6 +41,7 @@ class CreateTableTrxItem extends Migration
             ],
             'created' => [
                 'type' => 'DATE',
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'DATETIME',

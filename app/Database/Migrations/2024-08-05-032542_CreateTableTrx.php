@@ -42,10 +42,11 @@ class CreateTableTrx extends Migration
             'status' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',
-                'comment' => 'PENDING | KONFIRM | SHIPPING | SUCCESS',
+                'comment' => "PENDING | KONFIRM | SHIPPING | SUCCESS",
             ],
             'created' => [
                 'type' => 'DATE',
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'DATETIME',
