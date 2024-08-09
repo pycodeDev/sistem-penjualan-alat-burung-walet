@@ -16,7 +16,7 @@ class Home extends BaseController
     
     public function prd(): string
     {
-        return view('admin/content/trx/detail');
+        return view('admin/content/confirm-trx/confirm-detail-trx');
     }
     
     public function prdd(): string

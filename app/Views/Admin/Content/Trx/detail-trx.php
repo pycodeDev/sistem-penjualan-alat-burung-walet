@@ -33,22 +33,49 @@
                                 <h5>#trx141bkjbkbafa</h5>
                             </div>
                             <div class="col-4">
-                                <h5>Email</h5>
+                                <h5>Qty</h5>
                             </div>
                             <div class="col-1">
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>Johndoe@gmail.com</h5>
+                                <h5>5</h5>
                             </div>
                             <div class="col-4">
-                                <h5>Hp</h5>
+                                <h5>Price</h5>
                             </div>
                             <div class="col-1">
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>08226788999</h5>
+                                <h5>Rp 100.000</h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>Payment Method</h5>
+                            </div>
+                            <div class="col-1">
+                                <h5>:</h5>
+                            </div>
+                            <div class="col-7">
+                                <h5>BCA</h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>Payment Number</h5>
+                            </div>
+                            <div class="col-1">
+                                <h5>:</h5>
+                            </div>
+                            <div class="col-7">
+                                <h5>89078979</h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>Status</h5>
+                            </div>
+                            <div class="col-1">
+                                <h5>:</h5>
+                            </div>
+                            <div class="col-7">
+                                <h5>SUCCESS</h5>
                             </div>
                         </div>
                     </div>

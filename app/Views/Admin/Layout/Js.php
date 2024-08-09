@@ -22,3 +22,4 @@
 <script src="<?php echo base_url('assets/admin/dist/js/pages/dashboard2.js'); ?>"></script>
 <!-- style manual -->
 <script src="<?php echo base_url('assets/admin/style.js'); ?>"></script>
+<?= $this->renderSection('js') ?>

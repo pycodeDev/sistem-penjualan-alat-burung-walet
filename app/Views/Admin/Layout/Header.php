@@ -10,3 +10,4 @@
 <link rel="stylesheet" href="<?php echo base_url('assets/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'); ?>">
 <!-- Theme style -->
 <link rel="stylesheet" href="<?php echo base_url('assets/admin/dist/css/adminlte.min.css'); ?>">
+<?= $this->renderSection('css') ?>
