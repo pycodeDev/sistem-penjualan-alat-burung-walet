@@ -30,9 +30,9 @@ class ModelCrud extends Model
 		return $this->db->table($table)->insert($data);
 	}
 
-    public function update_data($table, $data, $param, $id)
+    public function update_data($data, $param, $id)
 	{
-		return $this->db->table($table)->update($data, [$param => $id]);
+		return $this->db->table($this->param['table'])->update($data, [$param => $id]);
 	}
 
 	public function read_all_data()
@@ -48,6 +48,11 @@ class ModelCrud extends Model
 	public function delete_truncate($table)
 	{
 		return $this->db->table($table)->truncate();
+	}
+	
+    public function delete_data($id)
+	{
+		return $this->db->table($this->param['table'])->delete(['id' => $id]);
 	}
 
 	public function solo_query($query)

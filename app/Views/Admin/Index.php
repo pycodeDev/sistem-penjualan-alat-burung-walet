@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css'); ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url('assets/admin/dist/css/adminlte.min.css'); ?>">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="<?php echo base_url('assets/admin/plugins/toastr/toastr.min.css');?>">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -24,9 +26,10 @@
     <div class="card-body">
       <p class="login-box-msg">Masuk Untuk Memulai Sesi Anda.</p>
 
-      <form action="#" method="post">
+      <form action="<?= site_url('auth/index') ?>" method="post">
+      <?= csrf_field() ?>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" class="form-control" name="email" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -34,7 +37,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" name="password" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -62,5 +65,12 @@
 <script src="<?php echo base_url('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url('assets/admin/dist/js/adminlte.min.js'); ?>"></script>
+<!-- Toastr -->
+<script src="<?php echo base_url('assets/admin/plugins/toastr/toastr.min.js');?>"></script>
+<?php if(session()->getFlashdata('error_login')): ?>
+    <script>
+      toastr.error("<?= session()->getFlashdata('error_login') ?>")
+    </script>
+<?php endif; ?>
 </body>
 </html>

@@ -4,9 +4,20 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
-    public function index(): string
+    protected $session;
+
+	public function __construct()
+	{
+        $this->session = session();
+	}
+
+    public function index()
     {
-        return view('admin/index');
+        // Cek apakah pengguna sudah login
+        if (!$this->session->get('logged_in')) {
+            return redirect()->to('auth/index');
+        }
+        return view('admin/content/dashboard');
     }
     
     public function tes(): string

@@ -29,7 +29,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                    <a class="btn btn-sm btn-success float-left m-2" href="<?= base_url(); ?>product-category/add-product">
+                    <a class="btn btn-sm btn-success float-left m-2" href="<?= base_url(); ?>product/category-product/add-category-product">
                         Tambah Data
                     </a>
                     <table class="table">
@@ -46,13 +46,19 @@
                                     <tr>
                                         <td colspan="3">Tidak Ada Data !!</td>
                                     </tr>
-                                <?php } else {?>
+                                <?php } else {
+                                    $no = 1;
+                                    foreach ($data as $cp) {
+                                    ?>
+
                                     <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td><span class="badge bg-danger">55%</span></td>
+                                        <td><?= $no;?></td>
+                                        <td><?= $cp['name'] ?></td>
+                                        <td><a href="<?= base_url(); ?>product/category-product/edit-category-product/<?= $cp['id'] ?>" class="btn btn-sm btn-warning"><div class="fa fa-pencil-alt text-white"></div></a><a href="<?= base_url(); ?>product/category-product/delete-category-product/<?= $cp['id'] ?>" class="btn btn-sm btn-danger ml-2"><div class="fa fa-trash-alt"></div></a></td>
                                     </tr>
                                 <?php
+                                $no++;
+                                    }
                                 }
                             ?>
                         </tbody>

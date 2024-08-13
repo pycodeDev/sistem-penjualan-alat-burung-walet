@@ -29,7 +29,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                    <a class="btn btn-sm btn-success float-left m-2" href="<?= base_url(); ?>product/add-product">
+                    <a class="btn btn-sm btn-success float-left m-2" href="<?= base_url(); ?>product/data-product/add-product">
                         Tambah Data
                     </a>
                     <table class="table">
@@ -49,18 +49,23 @@
                                     <tr>
                                         <td colspan="6">Tidak Ada Data !!</td>
                                     </tr>
-                                <?php } else {?>
+                                <?php } else {
+                                    $no = 1;
+                                    foreach ($data as $product) {
+                                        $rupiah = "Rp " . number_format($product['price'], 0, ',', '.');
+                                    ?>
                                     <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                            </div>
+                                        <td><?= $no; ?></td>
+                                        <td><?= $product["category_name"]?></td>
+                                        <td><?= $product["name"]?></td>
+                                        <td><?= $rupiah ?></td>
+                                        <td><?= $product["stok"] ?></td>
+                                        <td><a href="<?= base_url(); ?>product/data-product/edit-product/<?= $product['id'] ?>" class="btn btn-sm btn-warning"><div class="fa fa-pencil-alt text-white"></div></a><a href="<?= base_url(); ?>product/data-product/<?= $product['id'] ?>" class="btn btn-sm btn-danger ml-2"><div class="fa fa-trash-alt"></div></a></td>
                                         </td>
-                                        <td><span class="badge bg-danger">55%</span></td>
                                     </tr>
                                 <?php
+                                $no++;
+                                }
                                 }
                             ?>
                         </tbody>

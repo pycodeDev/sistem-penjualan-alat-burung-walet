@@ -29,6 +29,7 @@
 
 <!-- REQUIRED SCRIPTS -->
   <?php echo $this->include('Admin/Layout/Js'); ?>
+  <?php echo $this->include('Admin/Layout/Toast'); ?>
   <script>
     // Dapatkan URL saat ini
     const currentURL = window.location.pathname;

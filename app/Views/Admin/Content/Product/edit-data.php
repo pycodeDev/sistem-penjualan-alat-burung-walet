@@ -34,7 +34,7 @@
                                 <option selected="selected">Silahkan Pilih Category Produk</option>
                                 <?php
                                     foreach ($cat_product as $cp) {?>
-                                    <option value="<?php $cp['id'] ?>" <?= $data['id'] == $cp['id'] ? 'selected': "" ?> ><?php $cp['name'] ?></option>
+                                    <option value="<?= $cp['id'] ?>" <?= $data['category_id'] == $cp['id'] ? 'selected': "" ?> ><?= $cp['name'] ?></option>
                                 <?php
                                     }
                                 ?>

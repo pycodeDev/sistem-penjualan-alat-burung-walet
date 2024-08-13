@@ -21,18 +21,20 @@
                         <h3 class="card-title">Add Data Product Category</h3>
                     </div>
                 <!-- /.card-header -->
-                    <div class="card-body p-2">
-                    <?= csrf_field() ?>
-                        <div class="form-group">
-                            <label for="exampleInputName">Category Name</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter Product Name">
+                    <form action="<?= site_url('product/category-product/add-category-product') ?>" method="post">
+                        <div class="card-body p-2">
+                        <?= csrf_field() ?>
+                            <div class="form-group">
+                                <label for="exampleInputName">Category Name</label>
+                                <input type="text" class="form-control" name="name" id="exampleInputName" placeholder="Enter Product Name">
+                            </div>
+                        <!-- /.card-body -->
                         </div>
-                    <!-- /.card-body -->
-                    </div>
-                    <div class="card-footer">
-                        <button type="button" class="btn btn-primary" onclick="saveData()">Save</button>
-                        <button type="button" class="btn btn-secondary" onclick="goBack()">Back</button>
-                    </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" >Save</button>
+                            <a href="<?= base_url(); ?>product/category-product" class="btn btn-secondary">Back</a>
+                        </div>
+                    </form>
                 <!-- /.card -->
                 </div>
             </div>

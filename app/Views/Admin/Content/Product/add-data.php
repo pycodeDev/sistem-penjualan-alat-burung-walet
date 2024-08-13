@@ -21,38 +21,44 @@
                         <h3 class="card-title">Add Data Product</h3>
                     </div>
                 <!-- /.card-header -->
-                    <div class="card-body p-2">
-                    <?= csrf_field() ?>
-                        <div class="form-group">
-                            <label for="exampleInputName">Product Name</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter Product Name">
+                    <form action="<?= site_url('product/data-product/add-product') ?>" method="post">
+                        <div class="card-body p-2">
+                        <?= csrf_field() ?>
+                            <div class="form-group">
+                                <label for="exampleInputName">Product Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter Product Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Category Product</label>
+                                <select class="form-control select2bs4" name="category_id" style="width: 100%;">
+                                    <option selected="selected">Silahkan Pilih Category Produk</option>
+                                    <?php
+                                        foreach ($data as $cp) {?>
+                                        <option value="<?= $cp['id'] ?>"><?= $cp['name'] ?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPrice">Price</label>
+                                <input type="text" class="form-control" name="price" placeholder="Enter Price">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputStock">Stock</label>
+                                <input type="text" class="form-control" name="stok" placeholder="Enter Stock">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputImage">Image</label>
+                                <input type="text" class="form-control" name="image" placeholder="Enter Image Url">
+                            </div>
+                        <!-- /.card-body -->
                         </div>
-                        <div class="form-group">
-                            <label>Category Product</label>
-                            <select class="form-control select2bs4" style="width: 100%;">
-                                <option selected="selected">Silahkan Pilih Category Produk</option>
-                                <?php
-                                    foreach ($data as $cp) {?>
-                                    <option value="<?php $cp['id'] ?>"><?php $cp['name'] ?></option>
-                                <?php
-                                    }
-                                ?>
-                            </select>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" >Save</button>
+                            <a href="<?= base_url(); ?>product/data-product" class="btn btn-secondary">Back</a>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPrice">Price</label>
-                            <input type="text" class="form-control" id="exampleInputPrice" placeholder="Enter Price">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputStock">Stock</label>
-                            <input type="text" class="form-control" id="exampleInputStock" placeholder="Enter Stock">
-                        </div>
-                    <!-- /.card-body -->
-                    </div>
-                    <div class="card-footer">
-                        <button type="button" class="btn btn-primary" onclick="saveData()">Save</button>
-                        <button type="button" class="btn btn-secondary" onclick="goBack()">Back</button>
-                    </div>
+                    </form>
                 <!-- /.card -->
                 </div>
             </div>
