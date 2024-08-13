@@ -51,6 +51,12 @@
       section = null 
       subsection = "payment"
     }
+    
+    if (section == "user") {
+      section = null 
+      subsection = "user"
+    }
+    
     setActiveMenu(subsection, section);
 </script>
 </body>

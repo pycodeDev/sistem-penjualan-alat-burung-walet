@@ -32,29 +32,54 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Trx Id</th>
-                                <th>Nama User</th>
-                                <th>Total Product</th>
-                                <th>Total Harga</th>
-                                <th>Status</th>
-                                <th>Tanggal</th>
-                                <th>Action</th>
+                                <th style="text-align: center; vertical-align: middle;">No</th>
+                                <th style="text-align: center; vertical-align: middle;">Trx Id</th>
+                                <th style="text-align: center; vertical-align: middle;">Nama User</th>
+                                <th style="text-align: center; vertical-align: middle;">Total Product</th>
+                                <th style="text-align: center; vertical-align: middle;">Total Harga</th>
+                                <th style="text-align: center; vertical-align: middle;">Status</th>
+                                <th style="text-align: center; vertical-align: middle;">Tanggal</th>
+                                <th style="text-align: center; vertical-align: middle;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 if (count($data) == 0) {?>
                                     <tr>
-                                        <td colspan="8">Tidak Ada Data !!</td>
+                                        <td colspan="8" style="text-align: center; vertical-align: middle;">Tidak Ada Data !!</td>
                                     </tr>
-                                <?php } else {?>
+                                <?php } else {
+                                    $no = 1;
+                                    foreach ($data as $trx) {
+                                        $formattedDate = date('d F Y', strtotime($trx['created']));
+                                    ?>
                                     <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td><span class="badge bg-danger">55%</span></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $no;?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $trx['trx_id'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $trx['nama_user'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $trx['total'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $trx['price'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            <?php
+                                                if ($trx['status'] == "PENDING") {
+                                                    echo '<span class="right badge badge-warning text-white">PENDING</span>';
+                                                }elseif ($trx['status'] == 'KONFIRM') {
+                                                    echo '<span class="right badge badge-info text-white">KONFIRM</span>';
+                                                }elseif ($trx['status'] == 'SHIPPING') {
+                                                    echo '<span class="right badge badge-danger text-white">SHIPPING</span>';
+                                                }elseif ($trx['status'] == 'SUCCESS') {
+                                                    echo '<span class="right badge badge-warning text-white">SUCCESS</span>';
+                                                }else{
+                                                    echo '<span class="right badge badge-primary text-white">FAILED</span>';
+                                                }
+                                            ?>
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $formattedDate ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><a href="<?= base_url(); ?>trx/data-trx/<?= $trx['trx_id'] ?>" class="btn btn-sm btn-info"><div class="fa fa-eye text-white"></div></a>
                                     </tr>
                                 <?php
+                                $no++;
+                                    }
                                 }
                             ?>
                         </tbody>

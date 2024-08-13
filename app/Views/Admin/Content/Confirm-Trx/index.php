@@ -34,7 +34,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Trx Id</th>
-                                <th>Image</th>
                                 <th>Note</th>
                                 <th>Status</th>
                                 <th>Tanggal</th>
@@ -45,15 +44,31 @@
                             <?php
                                 if (count($data) == 0) {?>
                                     <tr>
-                                        <td colspan="7">Tidak Ada Data !!</td>
+                                        <td colspan="6">Tidak Ada Data !!</td>
                                     </tr>
-                                <?php } else {?>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td><span class="badge bg-danger">55%</span></td>
-                                    </tr>
+                                <?php } else {
+                                    $no=1;
+                                    foreach ($data as $ct) {
+                                        $formattedDate = date('d F Y', strtotime($ct['created']));
+                                    ?>
+                                        <td ><?= $no;?></td>
+                                        <td ><?= $ct['trx_id'] ?></td>
+                                        <td ><?= $ct['note'] ?></td>
+                                        <td >
+                                            <?php
+                                                if ($ct['status'] == "PENDING") {
+                                                    echo '<span class="right badge badge-warning text-white">PENDING</span>';
+                                                }elseif ($ct['status'] == 'SUCCESS') {
+                                                    echo '<span class="right badge badge-success text-white">APPROVE</span>';
+                                                }else{
+                                                    echo '<span class="right badge badge-danger text-white">REJECT</span>';
+                                                }
+                                            ?>
+                                        </td>
+                                        <td ><?= $formattedDate ?></td>
+                                        <td ><a href="<?= base_url(); ?>trx/trx-confirm/<?= $ct['trx_id'] ?>" class="btn btn-sm btn-info"><div class="fa fa-eye text-white"></div></a>
                                 <?php
+                                    }
                                 }
                             ?>
                         </tbody>

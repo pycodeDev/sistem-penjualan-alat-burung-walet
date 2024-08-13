@@ -32,7 +32,7 @@
           </li>
           <li class="nav-item" data-section="product">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-box"></i>
               <p>
                 Product
                 <i class="right fas fa-angle-left"></i>
@@ -55,7 +55,7 @@
           </li>
           <li class="nav-item" data-section="trx">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon fas fa-cart-plus"></i>
               <p>
                 Transaction
                 <i class="fas fa-angle-left right"></i>
@@ -63,13 +63,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/UI/general.html" class="nav-link" data-subsection="data-trx">
+                <a href="<?= base_url(); ?>trx/data-trx" class="nav-link" data-subsection="data-trx">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Transaction</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/icons.html" class="nav-link" data-subsection="trx-confirm">
+                <a href="<?= base_url(); ?>trx/trx-confirm" class="nav-link" data-subsection="trx-confirm">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Confirm Transaction</p>
                 </a>
@@ -78,9 +78,17 @@
           </li>
           <li class="nav-item">
             <a href="<?= base_url(); ?>payment/data-payment" class="nav-link" data-subsection="payment">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-money-bill"></i>
               <p>
                 Payment
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url(); ?>user/data-user" class="nav-link" data-subsection="user">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                User
               </p>
             </a>
           </li>

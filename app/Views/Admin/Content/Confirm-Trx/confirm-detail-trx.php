@@ -33,7 +33,7 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>#trx141bkjbkbafa</h5>
+                                <h5>#<?= $trx['trx_id'] ?></h5>
                             </div>
                             <div class="col-4">
                                 <h5>Qty</h5>
@@ -42,7 +42,7 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>5</h5>
+                                <h5><?= $trx['total'] ?></h5>
                             </div>
                             <div class="col-4">
                                 <h5>Price</h5>
@@ -51,7 +51,12 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>Rp 100.000</h5>
+                                <h5>
+                                <?php 
+                                    $rupiah = "Rp " . number_format($trx['price'], 0, ',', '.');
+                                    echo $rupiah;
+                                    ?>
+                                </h5>
                             </div>
                             <div class="col-4">
                                 <h5>Payment Method</h5>
@@ -60,7 +65,7 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>BCA</h5>
+                                <h5><?= $trx['payment_method_name'] ?></h5>
                             </div>
                             <div class="col-4">
                                 <h5>Payment Number</h5>
@@ -69,7 +74,7 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>89078979</h5>
+                                <h5><?= $trx['payment_method_number'] ?></h5>
                             </div>
                             <div class="col-4">
                                 <h5>Status</h5>
@@ -78,7 +83,21 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>SUCCESS</h5>
+                                <h5>
+                                <?php
+                                    if ($trx['status'] == "PENDING") {
+                                        echo '<span class="right badge badge-warning text-white">PENDING</span>';
+                                    }elseif ($trx['status'] == 'KONFIRM') {
+                                        echo '<span class="right badge badge-info text-white">KONFIRM</span>';
+                                    }elseif ($trx['status'] == 'SHIPPING') {
+                                        echo '<span class="right badge badge-danger text-white">SHIPPING</span>';
+                                    }elseif ($trx['status'] == 'SUCCESS') {
+                                        echo '<span class="right badge badge-warning text-white">SUCCESS</span>';
+                                    }else{
+                                        echo '<span class="right badge badge-primary text-white">FAILED</span>';
+                                    }
+                                ?>
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -101,7 +120,7 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>John Doe</h5>
+                                <h5><?= $rek['rekening_name'] ?></h5>
                             </div>
                             <div class="col-4">
                                 <h5>Nomor Rekening</h5>
@@ -110,7 +129,7 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>801841241414</h5>
+                                <h5><?= $rek['rekening'] ?></h5>
                             </div>
                             <div class="col-4">
                                 <h5>Bukti</h5>
@@ -119,21 +138,25 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>[image]</h5>
+                                <h5><img src="<?= $pc['image'] ?>" alt="bukti payment" style="width: 100%; max-width: 200px; height: auto;"></h5>
                             </div>
-                            <div class="col-12">Note</div>
-                            <div class="col-12">
-                                <textarea id="summernote">
-                                    Place <em>some</em> <u>text</u> <strong>here</strong>
-                                </textarea>
-                            </div>
+                            <form action="<?= site_url('trx/trx-confirm/') ?>" method="post">
+                                <input type="hidden" name="id" value="<?= $pc['id'] ?>">
+                                <input type="hidden" name="trx_id" value="<?= $pc['trx_id'] ?>">
+                                <div class="col-12">Note</div>
+                                <div class="col-12">
+                                    <textarea id="summernote" name="note">
+                                        <?= $pc['note'] == "" ? "Masukkan Note nya" : $pc['note'] ?>
+                                    </textarea>
+                                </div>
                         </div>
                     </div>
                 <!-- /.card-body -->
                     <div class="card-footer">
-                        <a href="#" class="btn btn-sm btn-success">Approve</a>
-                        <a href="#" class="btn btn-sm btn-danger">Reject</a>
+                        <button type="submit" name="status" class="btn btn-sm btn-success" value="SUCCESS">Approve</button>
+                        <button type="submit" name="status" class="btn btn-sm btn-danger" value="REJECT">Reject</button>
                     </div>
+                                </form>
                 </div>
                 <!-- /.card -->
             </div>

@@ -48,7 +48,7 @@ class ControllerProduct extends BaseController
     {
         $data['title'] = "Edit Data Product";
         $this->crud->setParamDataPagination("tbl_product");
-        $product = $this->crud->read_all_data();
+        $product = $this->crud->select_1_cond("id", $id);
         $data['data']=$product[0];
         
         $this->crud->setParamDataPagination("tbl_product_category");
