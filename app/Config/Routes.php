@@ -20,6 +20,7 @@ $routes->group('product', ['filter' => 'auth'], function($routes) {
     $routes->get('data-product/add-product', 'ControllerProduct::add');
     $routes->post('data-product/add-product', 'ControllerProduct::save');
     $routes->get('data-product/edit-product/(:num)', 'ControllerProduct::edit/$1');
+    $routes->post('data-product/edit-product', 'ControllerProduct::update');
     $routes->get('data-product/(:num)', 'ControllerProduct::delete/$1');
 
     $routes->get('category-product', 'ControllerProductCategory::index');

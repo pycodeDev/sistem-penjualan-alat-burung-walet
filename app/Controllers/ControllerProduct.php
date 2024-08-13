@@ -76,6 +76,25 @@ class ControllerProduct extends BaseController
         return redirect()->to("/product/data-product");
     }
 
+    public function update()
+    {
+        $data = $this->request->getPost();
+        $waktuSekarang = Time::now();
+
+        $product['category_id'] = $data['category_id'];
+        $product['name'] = $data['name'];
+        $product['price'] = $data['price'];
+        $product['stok'] = $data['stok'];
+        $product['image'] = $data['image'];
+        $product['updated_at'] = $waktuSekarang;
+
+        $this->crud->setParamDataPagination("tbl_product");
+        $this->crud->update_data($product, "id", $data['id']);
+        $this->session->setFlashdata('success', 'Product Data Sucess Update');
+
+        return redirect()->to("/product/data-product");
+    }
+
     public function delete($id)
     {
         if ($id == 0) {

@@ -21,16 +21,17 @@
                         <h3 class="card-title">Edit Data Product</h3>
                     </div>
                 <!-- /.card-header -->
+                <form action="<?= site_url('product/data-product/edit-product') ?>" method="post">
                     <div class="card-body p-2">
                     <?= csrf_field() ?>
                         <div class="form-group">
                             <label for="exampleInputName">Product Name</label>
-                            <input type="text" class="form-control" id="exampleInputName" value="<?= $data['name']; ?>" placeholder="Enter Product Name">
-                            <input type="hidden" class="form-control" id="exampleInputName" value="<?= $data['id']; ?>">
+                            <input type="text" class="form-control" name="name" value="<?= $data['name']; ?>" placeholder="Enter Product Name">
+                            <input type="hidden" class="form-control" name="id" value="<?= $data['id']; ?>">
                         </div>
                         <div class="form-group">
                             <label>Category Product</label>
-                            <select class="form-control select2bs4" style="width: 100%;">
+                            <select class="form-control select2bs4" name="category_id" style="width: 100%;">
                                 <option selected="selected">Silahkan Pilih Category Produk</option>
                                 <?php
                                     foreach ($cat_product as $cp) {?>
@@ -42,18 +43,23 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPrice">Price</label>
-                            <input type="text" class="form-control" id="exampleInputPrice" value="<?= $data['price']; ?>" placeholder="Enter Price">
+                            <input type="text" class="form-control" name="price" value="<?= $data['price']; ?>" placeholder="Enter Price">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputStock">Stock</label>
-                            <input type="text" class="form-control" id="exampleInputStock" value="<?= $data['stok']; ?>" placeholder="Enter Stock">
+                            <input type="text" class="form-control" name="stok" value="<?= $data['stok']; ?>" placeholder="Enter Stock">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputStock">Image</label>
+                            <input type="text" class="form-control" name="image" value="<?= $data['image']; ?>" placeholder="Enter Stock">
                         </div>
                     <!-- /.card-body -->
                     </div>
                     <div class="card-footer">
-                        <button type="button" class="btn btn-primary" >Update</button>
-                        <button type="button" class="btn btn-secondary" >Back</button>
+                        <button type="submit" class="btn btn-primary" >Update</button>
+                        <a href="<?= base_url(); ?>product/data-product" class="btn btn-secondary">Back</a>
                     </div>
+                </form>
                 <!-- /.card -->
                 </div>
             </div>
