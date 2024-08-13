@@ -35,19 +35,19 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Category Name</th>
-                                <th>Name Product</th>
-                                <th>Price</th>
-                                <th>Stok</th>
-                                <th>Action</th>
+                                <th style="text-align: center; vertical-align: middle;">No</th>
+                                <th style="text-align: center; vertical-align: middle;">Category Name</th>
+                                <th style="text-align: center; vertical-align: middle;">Name Product</th>
+                                <th style="text-align: center; vertical-align: middle;">Price</th>
+                                <th style="text-align: center; vertical-align: middle;">Stok</th>
+                                <th style="text-align: center; vertical-align: middle;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 if (count($data) == 0) {?>
                                     <tr>
-                                        <td colspan="6">Tidak Ada Data !!</td>
+                                        <td colspan="6" style="text-align: center; vertical-align: middle;">Tidak Ada Data !!</td>
                                     </tr>
                                 <?php } else {
                                     $no = 1;
@@ -55,12 +55,12 @@
                                         $rupiah = "Rp " . number_format($product['price'], 0, ',', '.');
                                     ?>
                                     <tr>
-                                        <td><?= $no; ?></td>
-                                        <td><?= $product["category_name"]?></td>
-                                        <td><?= $product["name"]?></td>
-                                        <td><?= $rupiah ?></td>
-                                        <td><?= $product["stok"] ?></td>
-                                        <td><a href="<?= base_url(); ?>product/data-product/edit-product/<?= $product['id'] ?>" class="btn btn-sm btn-warning"><div class="fa fa-pencil-alt text-white"></div></a><a href="<?= base_url(); ?>product/data-product/<?= $product['id'] ?>" class="btn btn-sm btn-danger ml-2"><div class="fa fa-trash-alt"></div></a></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $no; ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $product["category_name"]?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $product["name"]?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $rupiah ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $product["stok"] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><a href="<?= base_url(); ?>product/data-product/edit-product/<?= $product['id'] ?>" class="btn btn-sm btn-warning"><div class="fa fa-pencil-alt text-white"></div></a><a href="<?= base_url(); ?>product/data-product/<?= $product['id'] ?>" class="btn btn-sm btn-danger ml-2"><div class="fa fa-trash-alt"></div></a></td>
                                         </td>
                                     </tr>
                                 <?php

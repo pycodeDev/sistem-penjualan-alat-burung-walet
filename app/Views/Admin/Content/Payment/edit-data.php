@@ -21,37 +21,40 @@
                         <h3 class="card-title">Edit Data Payment Method</h3>
                     </div>
                 <!-- /.card-header -->
-                    <div class="card-body p-2">
-                    <?= csrf_field() ?>
-                        <div class="form-group">
-                            <label for="exampleInputName">Payment Method Name</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter Product Name"  value="<?= $data['name']; ?>">
+                    <form action="<?= site_url('payment/data-payment/edit-payment') ?>" method="post">
+                        <div class="card-body p-2">
+                        <?= csrf_field() ?>
+                            <div class="form-group">
+                                <label for="exampleInputName">Payment Method Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter Product Name"  value="<?= $data['name']; ?>">
+                                <input type="hidden" class="form-control" name="id" value="<?= $data['id']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Rekening Number</label>
+                                <input type="text" class="form-control" name="rek_num" placeholder="Enter Product Name"  value="<?= $data['rekening']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Rekening Name</label>
+                                <input type="text" class="form-control" name="rek_name" placeholder="Enter Product Name"  value="<?= $data['rekening_name']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputStock">Image</label>
+                                <input type="text" class="form-control" name="image" placeholder="Enter Url Image"  value="<?= $data['image']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputStock">Status</label>
+                                <select class="form-control select2bs4" name="status" style="width: 100%;">
+                                    <option value="1" <?= $data['status'] == 1 ? 'selected': "" ?>>Aktif</option>
+                                    <option value="0" <?= $data['status'] == 0 ? 'selected': "" ?>>Tidak Aktif</option>
+                                </select>
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                        <div class="form-group">
-                            <label>Rekening Number</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter Product Name"  value="<?= $data['rekening']; ?>">
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" >Update</button>
+                            <a href="<?= base_url(); ?>payment/data-payment" class="btn btn-secondary">Back</a>
                         </div>
-                        <div class="form-group">
-                            <label>Rekening Name</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter Product Name"  value="<?= $data['rekening_name']; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputStock">Image</label>
-                            <input type="text" class="form-control" id="exampleInputStock" placeholder="Enter Stock"  value="<?= $data['image']; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputStock">Status</label>
-                            <select name="status" id="">
-                                <option value="1" <?= $data['status'] == 1 ? 'selected': "" ?>>Aktif</option>
-                                <option value="0" <?= $data['status'] == 0 ? 'selected': "" ?>>Tidak Aktif</option>
-                            </select>
-                        </div>
-                    <!-- /.card-body -->
-                    </div>
-                    <div class="card-footer">
-                        <button type="button" class="btn btn-primary" onclick="saveData()">Update</button>
-                        <button type="button" class="btn btn-secondary" onclick="goBack()">Back</button>
-                    </div>
+                    </form>
                 <!-- /.card -->
                 </div>
             </div>

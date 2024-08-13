@@ -35,16 +35,16 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Action</th>
+                                <th style="text-align: center; vertical-align: middle;">No</th>
+                                <th style="text-align: center; vertical-align: middle;">Name</th>
+                                <th style="text-align: center; vertical-align: middle;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 if (count($data) == 0) {?>
                                     <tr>
-                                        <td colspan="3">Tidak Ada Data !!</td>
+                                        <td colspan="3" style="text-align: center; vertical-align: middle;">Tidak Ada Data !!</td>
                                     </tr>
                                 <?php } else {
                                     $no = 1;
@@ -52,9 +52,9 @@
                                     ?>
 
                                     <tr>
-                                        <td><?= $no;?></td>
-                                        <td><?= $cp['name'] ?></td>
-                                        <td><a href="<?= base_url(); ?>product/category-product/edit-category-product/<?= $cp['id'] ?>" class="btn btn-sm btn-warning"><div class="fa fa-pencil-alt text-white"></div></a><a href="<?= base_url(); ?>product/category-product/delete-category-product/<?= $cp['id'] ?>" class="btn btn-sm btn-danger ml-2"><div class="fa fa-trash-alt"></div></a></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $no;?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $cp['name'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><a href="<?= base_url(); ?>product/category-product/edit-category-product/<?= $cp['id'] ?>" class="btn btn-sm btn-warning"><div class="fa fa-pencil-alt text-white"></div></a><a href="<?= base_url(); ?>product/category-product/<?= $cp['id'] ?>" class="btn btn-sm btn-danger ml-2"><div class="fa fa-trash-alt"></div></a></td>
                                     </tr>
                                 <?php
                                 $no++;

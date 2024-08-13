@@ -47,7 +47,7 @@ class ControllerAdmin extends BaseController
                     'logged_in' => TRUE
                 ]);
                 $this->session->setFlashdata('success_login', 'Anda Berhasil Login, Selamat Datang '. $user['name']);
-                return redirect()->to('/');
+                return redirect()->to('/dashboard');
             } else {
                 $this->session->setFlashdata('error_login', 'Password salah');
                 return redirect()->back();
@@ -61,6 +61,6 @@ class ControllerAdmin extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/');
+        return redirect()->to('/auth/index');
     }
 }

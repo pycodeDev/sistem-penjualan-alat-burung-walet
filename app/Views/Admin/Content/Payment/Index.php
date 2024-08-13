@@ -29,31 +29,44 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
+                <a class="btn btn-sm btn-success float-left m-2" href="<?= base_url(); ?>payment/data-payment/add-payment">
+                        Tambah Data
+                    </a>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Image</th>
-                                <th>Rekening</th>
-                                <th>Rekening Name</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th style="text-align: center; vertical-align: middle;">No</th>
+                                <th style="text-align: center; vertical-align: middle;">Name</th>
+                                <th style="text-align: center; vertical-align: middle;">Image</th>
+                                <th style="text-align: center; vertical-align: middle;">Rekening</th>
+                                <th style="text-align: center; vertical-align: middle;">Rekening Name</th>
+                                <th style="text-align: center; vertical-align: middle;">Status</th>
+                                <th style="text-align: center; vertical-align: middle;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 if (count($data) == 0) {?>
                                     <tr>
-                                        <td colspan="7">Tidak Ada Data !!</td>
+                                        <td colspan="7" style="text-align: center; vertical-align: middle;">Tidak Ada Data !!</td>
                                     </tr>
-                                <?php } else {?>
+                                <?php } else {
+                                    $no=1;
+                                    foreach ($data as $pm) {
+                                    ?>
                                     <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td><span class="badge bg-danger">55%</span></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $no ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $pm['name'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><img src="<?= $pm['image'] ?>" alt="logo payment method" style="width: 100%; max-width: 200px; height: auto;"></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $pm['rekening'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $pm['rekening_name'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $pm['status'] == 1 ? '<span class="right badge badge-success">Aktif</span>' : '<span class="right badge badge-danger">Tidak Aktif</span>' ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><a href="<?= base_url(); ?>payment/data-payment/edit-payment/<?= $pm['id'] ?>" class="btn btn-sm btn-warning"><div class="fa fa-pencil-alt text-white"></div></a><a href="<?= base_url(); ?>payment/data-payment/<?= $pm['id'] ?>" class="btn btn-sm btn-danger ml-2"><div class="fa fa-trash-alt"></div></a></td>
+                                        </td>
                                     </tr>
                                 <?php
+                                $no++;
+                                    }
                                 }
                             ?>
                         </tbody>

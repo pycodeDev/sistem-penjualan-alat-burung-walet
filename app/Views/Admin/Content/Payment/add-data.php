@@ -21,27 +21,28 @@
                         <h3 class="card-title">Add Data Payment Method</h3>
                     </div>
                 <!-- /.card-header -->
+                <form action="<?= site_url('payment/data-payment/add-payment') ?>" method="post">
                     <div class="card-body p-2">
                     <?= csrf_field() ?>
                         <div class="form-group">
                             <label for="exampleInputName">Payment Method Name</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter Product Name">
+                            <input type="text" class="form-control" name="name" placeholder="Enter Product Name">
                         </div>
                         <div class="form-group">
                             <label>Rekening Number</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter Product Name">
+                            <input type="text" class="form-control" name="rek_num" placeholder="Enter Product Name">
                         </div>
                         <div class="form-group">
                             <label>Rekening Name</label>
-                            <input type="text" class="form-control" id="exampleInputName" placeholder="Enter Product Name">
+                            <input type="text" class="form-control" name="rek_name" placeholder="Enter Product Name">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputStock">Image</label>
-                            <input type="text" class="form-control" id="exampleInputStock" placeholder="Enter Stock">
+                            <input type="text" class="form-control" name="image" placeholder="Enter Url Image">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputStock">Status</label>
-                            <select name="status" id="">
+                            <select class="form-control select2bs4" name="status" style="width: 100%;">
                                 <option value="1">Aktif</option>
                                 <option value="0">Tidak Aktif</option>
                             </select>
@@ -49,9 +50,10 @@
                     <!-- /.card-body -->
                     </div>
                     <div class="card-footer">
-                        <button type="button" class="btn btn-primary" onclick="saveData()">Save</button>
-                        <button type="button" class="btn btn-secondary" onclick="goBack()">Back</button>
+                        <button type="submit" class="btn btn-primary" >Save</button>
+                        <a href="<?= base_url(); ?>payment/data-payment" class="btn btn-secondary">Back</a>
                     </div>
+                </form>
                 <!-- /.card -->
                 </div>
             </div>

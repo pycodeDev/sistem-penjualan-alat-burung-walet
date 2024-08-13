@@ -77,7 +77,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url(); ?>payment" class="nav-link" data-subsection="data-payment">
+            <a href="<?= base_url(); ?>payment/data-payment" class="nav-link" data-subsection="payment">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Payment
