@@ -34,6 +34,28 @@ class ControllerProduct extends BaseController
         return view('admin/content/product/index', $data);
     }
     
+    public function detail($id_product, $id = null, $metode = null)
+    {
+        if ($id == null) {
+            $id = 0;
+            $metode = "";
+        }
+        $data['title'] = "Detail Product";
+        $this->crud->setParamDataPagination("tbl_comment tm",$id,$metode,"tbl_user tu", "tm.user_id=tu.id", "tm.id, tm.user_id, tm.product_id, tm.comment, tm.created_at, tu.name as name_user", "product_id", $id_product);
+
+        $data_comment = $this->crud->data_pagination();
+
+        $this->crud->setParamDataPagination("tbl_product tp",0,"","tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name, tp.deskripsi", "tp.id", $id_product);
+        $product = $this->crud->data_pagination();
+        
+        $data['prd']=$product['data'][0];
+        $data['data'] = $data_comment["data"];
+        $data['next'] = $data_comment["last_id"];
+        $data['back'] = $data_comment["first_id"];
+
+        return view('admin/content/product/detail-product', $data);
+    }
+    
     public function add()
     {
         $data['title'] = "Add Data Product";

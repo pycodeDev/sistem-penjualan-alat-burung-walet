@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Product</h1>
+                    <h1 class="m-0">Buyer</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -18,7 +18,7 @@
             <div class="col-md-12">
                 <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Product</h3>
+                    <h3 class="card-title">Data Buyer</h3>
 
                     <div class="card-tools">
                         <ul class="pagination pagination-sm float-right">
@@ -29,17 +29,18 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                    <a class="btn btn-sm btn-success float-left m-2" href="<?= base_url(); ?>product/data-product/add-product">
+                    <a class="btn btn-sm btn-success float-left m-2" href="<?= base_url(); ?>supplier/data-buyer/add-buyer">
                         Tambah Data
                     </a>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th style="text-align: center; vertical-align: middle;">No</th>
-                                <th style="text-align: center; vertical-align: middle;">Category Name</th>
-                                <th style="text-align: center; vertical-align: middle;">Name Product</th>
+                                <th style="text-align: center; vertical-align: middle;">Buyer Id</th>
+                                <th style="text-align: center; vertical-align: middle;">Supplier</th>
+                                <th style="text-align: center; vertical-align: middle;">Name</th>
+                                <th style="text-align: center; vertical-align: middle;">Qty</th>
                                 <th style="text-align: center; vertical-align: middle;">Price</th>
-                                <th style="text-align: center; vertical-align: middle;">Stok</th>
                                 <th style="text-align: center; vertical-align: middle;">Action</th>
                             </tr>
                         </thead>
@@ -47,25 +48,26 @@
                             <?php
                                 if (count($data) == 0) {?>
                                     <tr>
-                                        <td colspan="6" style="text-align: center; vertical-align: middle;">Tidak Ada Data !!</td>
+                                        <td colspan="7" style="text-align: center; vertical-align: middle;">Tidak Ada Data !!</td>
                                     </tr>
                                 <?php } else {
                                     $no = 1;
-                                    foreach ($data as $product) {
-                                        $rupiah = "Rp " . number_format($product['price'], 0, ',', '.');
+                                    foreach ($data as $buy) {
+                                        $rupiah = "Rp " . number_format($buy['price'], 0, ',', '.');
                                     ?>
+
                                     <tr>
-                                        <td style="text-align: center; vertical-align: middle;"><?= $no; ?></td>
-                                        <td style="text-align: center; vertical-align: middle;"><?= $product["category_name"]?></td>
-                                        <td style="text-align: center; vertical-align: middle;"><?= $product["name"]?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $no;?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $buy['buyer_id'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $buy['supplier_name'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $buy['name'] ?></td>
+                                        <td style="text-align: center; vertical-align: middle;"><?= $buy['qty'] ?></td>
                                         <td style="text-align: center; vertical-align: middle;"><?= $rupiah ?></td>
-                                        <td style="text-align: center; vertical-align: middle;"><?= $product["stok"] ?></td>
-                                        <td style="text-align: center; vertical-align: middle;"><a href="<?= base_url(); ?>product/data-product/edit-product/<?= $product['id'] ?>" class="btn btn-sm btn-warning"><div class="fa fa-pencil-alt text-white"></div></a><a href="<?= base_url(); ?>product/data-product/<?= $product['id'] ?>" class="btn btn-sm btn-danger ml-2"><div class="fa fa-trash-alt"></div></a><a href="<?= base_url(); ?>product/data-product/detail-product/<?= $product['id'] ?>" class="btn btn-sm btn-info ml-2"><div class="fa fa-eye text-white"></div></a></td>
-                                        </td>
+                                        <td style="text-align: center; vertical-align: middle;"><a href="<?= base_url(); ?>supplier/data-buyer/edit-buyer/<?= $buy['id'] ?>" class="btn btn-sm btn-warning"><div class="fa fa-pencil-alt text-white"></div></a><a href="<?= base_url(); ?>supplier/data-buyer/<?= $buy['id'] ?>" class="btn btn-sm btn-danger ml-2"><div class="fa fa-trash-alt"></div></a></td>
                                     </tr>
                                 <?php
                                 $no++;
-                                }
+                                    }
                                 }
                             ?>
                         </tbody>

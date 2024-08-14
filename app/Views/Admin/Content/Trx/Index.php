@@ -78,7 +78,7 @@
                                             ?>
                                         </td>
                                         <td style="text-align: center; vertical-align: middle;"><?= $formattedDate ?></td>
-                                        <td style="text-align: center; vertical-align: middle;"><a href="<?= base_url(); ?>trx/data-trx/<?= $trx['trx_id'] ?>" class="btn btn-sm btn-info"><div class="fa fa-eye text-white"></div></a>
+                                        <td style="text-align: center; vertical-align: middle;"><a href="<?= base_url(); ?>trx/data-trx/<?= $trx['trx_id'] ?>" class="btn btn-sm btn-info"><div class="fa fa-eye text-white"></div></a></td>
                                     </tr>
                                 <?php
                                 $no++;

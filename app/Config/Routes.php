@@ -18,6 +18,8 @@ $routes->group('auth', function($routes) {
 $routes->group('product', ['filter' => 'auth'], function($routes) {
     $routes->get('data-product', 'ControllerProduct::index');
     $routes->get('data-product/(:num)?/(:any)?', 'ControllerProduct::index');
+    $routes->get('data-product/detail-product/(:num)', 'ControllerProduct::detail/$1');
+    $routes->get('data-product/detail-product/(:num)/(:num)?/(:any)?', 'ControllerProduct::detail/$1');
     $routes->get('data-product/add-product', 'ControllerProduct::add');
     $routes->post('data-product/add-product', 'ControllerProduct::save');
     $routes->get('data-product/edit-product/(:num)', 'ControllerProduct::edit/$1');
@@ -66,4 +68,12 @@ $routes->group('supplier', ['filter' => 'auth'], function($routes) {
     $routes->get('data-supplier/edit-supplier/(:num)', 'ControllerSupplier::edit/$1');
     $routes->put('data-supplier', 'ControllerSupplier::update');
     $routes->get('data-supplier/(:num)', 'ControllerSupplier::delete/$1');
+    
+    $routes->get('data-buyer', 'ControllerBuyer::index');
+    $routes->get('data-buyer/(:num)?/(:any)?', 'ControllerBuyer::index');
+    $routes->get('data-buyer/add-buyer', 'ControllerBuyer::add');
+    $routes->post('data-buyer', 'ControllerBuyer::save');
+    $routes->get('data-buyer/edit-buyer/(:num)', 'ControllerBuyer::edit/$1');
+    $routes->put('data-buyer', 'ControllerBuyer::update');
+    $routes->get('data-buyer/(:num)', 'ControllerBuyer::delete/$1');
 });

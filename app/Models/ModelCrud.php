@@ -12,10 +12,12 @@ class ModelCrud extends Model
         "table"=>"", 
         "join"=>"", 
         "on"=>"",
-        "select"=>""
+        "select"=>"",
+        "where"=>"",
+        "value"=>""
     );
 
-    public function setParamDataPagination($table, $last_id=0, $metode="", $join="", $on="", $select="")
+    public function setParamDataPagination($table, $last_id=0, $metode="", $join="", $on="", $select="", $where="", $value="")
     {
         $this->param['last_id'] = $last_id;
         $this->param['metode'] = $metode;
@@ -23,6 +25,8 @@ class ModelCrud extends Model
         $this->param['join'] = $join;
         $this->param['on'] = $on;
         $this->param['select'] = $select;
+        $this->param['where'] = $where;
+        $this->param['value'] = $value;
     }
 
     public function save_data($table, $data)
@@ -82,6 +86,11 @@ class ModelCrud extends Model
             $builder->orderBy('id', 'DESC');
         }
 
+        if ($this->param['value'] != "") {
+            $where = $this->param['where'];
+            $builder->orWhere("$where =", $this->param['value']);
+        }
+
         $builder->limit(10);
 
         // dd($builder->getCompiledSelect());
@@ -102,4 +111,30 @@ class ModelCrud extends Model
             'last_id' => $last_id
         ];
     }
+
+    public function generateString($tipe) {
+        // Mendapatkan tanggal dalam format YYmmdd
+        $date = date('ymd');
+    
+        // Menghasilkan 3 digit angka random
+        $randomNumber = str_pad(rand(0, 999), 3, '0', STR_PAD_LEFT);
+    
+        // Menghasilkan 3 huruf random
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomLetters = '';
+        for ($i = 0; $i < 3; $i++) {
+            $randomLetters .= $characters[rand(0, strlen($characters) - 1)];
+        }
+    
+        // Menggabungkan semua bagian
+        if ($tipe == "buyer") {
+            return "BY$date$randomNumber$randomLetters";
+        }else if ($tipe == "trx") {
+            return "SW$date$randomNumber$randomLetters";
+        }else{
+            return "SWI$date$randomNumber$randomLetters";
+        }
+    }
+    
+    
 }
