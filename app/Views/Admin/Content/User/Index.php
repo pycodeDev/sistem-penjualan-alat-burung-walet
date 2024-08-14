@@ -29,6 +29,9 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
+                <a class="btn btn-sm btn-success float-left m-2" href="<?= base_url(); ?>product/category-product/add-category-product">
+                        <i class="fas fa-print"></i> Cetak
+                    </a>
                     <table class="table">
                         <thead>
                             <tr>
