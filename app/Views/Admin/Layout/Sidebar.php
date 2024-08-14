@@ -92,6 +92,29 @@
               </p>
             </a>
           </li>
+          <li class="nav-item" data-section="supplier">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-boxes"></i>
+              <p>
+                Supplier
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url(); ?>supplier/data-buyer" class="nav-link" data-subsection="data-buyer">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Buyer Product</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url(); ?>supplier/data-supplier" class="nav-link" data-subsection="data-supplier">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Supplier</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item" style="position:fixed;bottom:0;">
             <a href="<?= base_url('auth/logout'); ?>" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>

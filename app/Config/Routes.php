@@ -57,3 +57,13 @@ $routes->group('user', ['filter' => 'auth'], function($routes) {
     $routes->get('data-user/(:num)?/(:any)?', 'ControllerUser::index');
     $routes->get('data-user/(:num)', 'ControllerUser::detail/$1');
 });
+
+$routes->group('supplier', ['filter' => 'auth'], function($routes) {
+    $routes->get('data-supplier', 'ControllerSupplier::index');
+    $routes->get('data-supplier/(:num)?/(:any)?', 'ControllerSupplier::index');
+    $routes->get('data-supplier/add-supplier', 'ControllerSupplier::add');
+    $routes->post('data-supplier', 'ControllerSupplier::save');
+    $routes->get('data-supplier/edit-supplier/(:num)', 'ControllerSupplier::edit/$1');
+    $routes->put('data-supplier', 'ControllerSupplier::update');
+    $routes->get('data-supplier/(:num)', 'ControllerSupplier::delete/$1');
+});
