@@ -30,6 +30,7 @@
 <!-- REQUIRED SCRIPTS -->
   <?php echo $this->include('Admin/Layout/Js'); ?>
   <?php echo $this->include('Admin/Layout/Toast'); ?>
+  <?php echo $this->include('Admin/Layout/Chart'); ?>
   <script>
     // Dapatkan URL saat ini
     const currentURL = window.location.pathname;

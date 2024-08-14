@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\ModelCrud;
 
 class Home extends BaseController
 {
+    protected $crud;
     protected $session;
-
 	public function __construct()
 	{
         $this->session = session();
+		$this->crud = new ModelCrud();
 	}
 
     public function index()
@@ -17,7 +19,21 @@ class Home extends BaseController
         if (!$this->session->get('logged_in')) {
             return redirect()->to('auth/index');
         }
-        return view('admin/content/dashboard');
+
+        $this->crud->setParamDataPagination("tbl_user");
+        $user = $this->crud->read_all_data();
+
+        $this->crud->setParamDataPagination("tbl_trx");
+        $trx = $this->crud->read_all_data();
+
+        $this->crud->setParamDataPagination("tbl_product");
+        $product = $this->crud->read_all_data();
+
+        $data['user'] = count($user);
+        $data['trx'] = count($trx);
+        $data['product'] = count($product);
+        
+        return view('admin/content/dashboard', $data);
     }
     
     public function tes(): string
