@@ -78,3 +78,11 @@ $routes->group('supplier', ['filter' => 'auth'], function($routes) {
     $routes->put('data-buyer', 'ControllerBuyer::update');
     $routes->get('data-buyer/(:num)', 'ControllerBuyer::delete/$1');
 });
+
+$routes->group('client', function($routes) {
+    $routes->get('login', 'Home::login');
+    $routes->post('login', 'Home::p_login');
+    $routes->get('register', 'Home::register');
+    $routes->post('register', 'Home::p_register');
+});
+

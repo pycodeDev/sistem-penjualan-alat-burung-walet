@@ -56,4 +56,11 @@ class ControllerUser extends BaseController
 
         return view('admin/content/user/detail-user', $data);
     }
+
+    public function dashboard_user()
+    {
+        $data['title'] = "Welcome To MarketPlace";
+
+        return view('users/content/home', $data);
+    }
 }

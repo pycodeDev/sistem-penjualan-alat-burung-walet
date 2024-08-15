@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title><?=$title?></title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
@@ -23,7 +23,7 @@
             </div>
             <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Login</button>
         </form>
-        <p class="mt-4 text-center text-gray-600">Don't have an account? <a href="/signup" class="text-blue-500 hover:underline">Sign up</a></p>
+        <p class="mt-4 text-center text-gray-600">Don't have an account? <a href="<?= base_url(); ?>client/register" class="text-blue-500 hover:underline">Sign up</a></p>
     </div>
 
 </body>

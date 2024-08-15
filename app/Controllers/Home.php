@@ -41,13 +41,33 @@ class Home extends BaseController
         return view('users/register');
     }
     
-    public function prd(): string
+    public function login()
     {
-        return view('admin/content/confirm-trx/confirm-detail-trx');
+        $data['title'] = "Login Marketplace";
+        
+        return view('users/login', $data);
+    }
+
+    public function register()
+    {
+        $data['title'] = "Register Marketplace";
+        
+        return view('users/register', $data);
     }
     
-    public function prdd(): string
+    public function p_register()
     {
-        return view('admin/content/dashboard');
+        $data = $this->request->getPost();
+        $waktuSekarang = Time::now();
+        
+        $user['name'] = $data['name'];
+        $user['email'] = $data['email'];
+        $user['hp'] = $data['hp'];
+        $user['pass'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        
+        $id = $this->crud->save_data_return('tbl_user', $product);
+        $this->session->setFlashdata('success', 'Success Register Account');
+
+        return redirect()->to("/product/data-product");
     }
 }

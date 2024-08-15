@@ -33,6 +33,13 @@ class ModelCrud extends Model
 	{
 		return $this->db->table($table)->insert($data);
 	}
+    
+    public function save_data_return($table, $data)
+	{
+		$this->db->table($table)->insert($data);
+
+        return $this->db->insertID();
+	}
 
     public function update_data($data, $param, $id)
 	{

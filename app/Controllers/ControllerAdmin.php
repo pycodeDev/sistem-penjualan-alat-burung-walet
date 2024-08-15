@@ -21,7 +21,7 @@ class ControllerAdmin extends BaseController
     {
         // Cek apakah pengguna sudah login
         if ($this->session->get('logged_in')) {
-            return redirect()->to('/');
+            return redirect()->to('/dashboard');
         }
         return view('admin/index');
     }
