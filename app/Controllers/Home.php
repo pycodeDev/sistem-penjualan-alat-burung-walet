@@ -38,7 +38,7 @@ class Home extends BaseController
     
     public function tes(): string
     {
-        return view('admin/content/dashboard');
+        return view('users/register');
     }
     
     public function prd(): string

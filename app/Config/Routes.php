@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/tes', 'Home::prd');
 $routes->get('/', 'ControllerAdmin::index');
+$routes->get('/user', 'Home::tes');
 
 $routes->get('/dashboard', 'Home::index', ['filter' => 'auth']);
 
