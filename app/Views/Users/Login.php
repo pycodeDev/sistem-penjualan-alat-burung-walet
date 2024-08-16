@@ -10,7 +10,7 @@
     <!-- Login Form -->
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
         <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Login</h2>
-        <form action="/login" method="POST">
+        <form action="<?= base_url(); ?>client/login" method="POST">
             <div class="mb-4">
                 <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
                 <input type="email" id="email" name="email" required

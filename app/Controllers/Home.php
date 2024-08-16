@@ -79,4 +79,36 @@ class Home extends BaseController
         $this->session->setFlashdata('success', 'Success Register Account');
         return redirect()->to('/client/home');
     }
+
+    public function p_login()
+    {
+        $email = $this->request->getVar('email');
+        $password = $this->request->getVar('password');
+
+        $this->crud->setParamDataPagination("tbl_user");
+
+        $data_user = $this->crud->select_1_cond("email", $email);
+
+        $user = $data_user[0];
+
+        if ($user) {
+            // Verifikasi password
+            if (password_verify($password, $user['pass'])) {
+                $this->session->set([
+                    'id' => $user['id'],
+                    'email' => $user['email'],
+                    'name' => $user['name'],
+                    'logged_in' => TRUE
+                ]);
+                $this->session->setFlashdata('success_login', 'Anda Berhasil Login, Selamat Datang '. $user['name']);
+                return redirect()->to('/client/home');
+            } else {
+                $this->session->setFlashdata('error_login', 'Password salah');
+                return redirect()->back();
+            }
+        } else {
+            $this->session->setFlashdata('error_login', 'Email tidak ditemukan');
+            return redirect()->back();
+        }
+    }
 }
