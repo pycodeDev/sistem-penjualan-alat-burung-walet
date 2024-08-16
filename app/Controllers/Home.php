@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\ModelCrud;
+use CodeIgniter\I18n\Time;
 
 class Home extends BaseController
 {
@@ -64,10 +65,18 @@ class Home extends BaseController
         $user['email'] = $data['email'];
         $user['hp'] = $data['hp'];
         $user['pass'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        $user['created_at'] = $waktuSekarang;
+        $user['updated_at'] = $waktuSekarang;
         
-        $id = $this->crud->save_data_return('tbl_user', $product);
-        $this->session->setFlashdata('success', 'Success Register Account');
+        $id = $this->crud->save_data_return('tbl_user', $user);
 
-        return redirect()->to("/product/data-product");
+        $this->session->set([
+            'id' => $id,
+            'email' => $user['email'],
+            'name' => $user['name'],
+            'logged_in' => TRUE
+        ]);
+        $this->session->setFlashdata('success', 'Success Register Account');
+        return redirect()->to('/client/home');
     }
 }

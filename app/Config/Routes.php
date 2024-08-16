@@ -84,5 +84,7 @@ $routes->group('client', function($routes) {
     $routes->post('login', 'Home::p_login');
     $routes->get('register', 'Home::register');
     $routes->post('register', 'Home::p_register');
+    
+    $routes->get('home', 'ControllerUser::dashboard_user');
 });
 
