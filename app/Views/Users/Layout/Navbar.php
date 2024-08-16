@@ -3,13 +3,15 @@
     <div class="container mx-auto px-6 py-3">
         <div class="flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-gray-800">Marketplace</a>
-            <div class="flex items-center">
-                <a href="#" class="text-gray-600 hover:text-gray-800 mx-4">Home</a>
-                <a href="#" class="text-gray-600 hover:text-gray-800 mx-4">Shop</a>
-                <a href="#" class="text-gray-600 hover:text-gray-800 mx-4">Contact</a>
-            </div>
             <?php
             if (session()->get('logged_in')) {?>
+
+            <div class="flex items-center">
+                <a href="<?= base_url() ?>client/home" class="text-gray-600 hover:text-gray-800 mx-4">Home</a>
+                <a href="<?= base_url() ?>client/product" class="text-gray-600 hover:text-gray-800 mx-4">Product</a>
+                <a href="<?= base_url() ?>client/trx" class="text-gray-600 hover:text-gray-800 mx-4">Trx</a>
+            </div>
+            
             <div class="flex items-center">
                 <!-- Cart Icon with Dropdown -->
                 <div class="relative">
@@ -42,6 +44,10 @@
             </div>
 
             <?php }else {?>
+            <div class="flex items-center">
+            <a href="<?= base_url() ?>client/home" class="text-gray-600 hover:text-gray-800 mx-4">Home</a>
+            <a href="<?= base_url() ?>client/product" class="text-gray-600 hover:text-gray-800 mx-4">Product</a>
+            </div>
             <div class="flex items-center">
                 <a href="<?= base_url(); ?>client/login" class="text-gray-600 hover:text-gray-800 mx-4">Login</a>
                 <a href="<?= base_url(); ?>client/register" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Sign Up</a>
