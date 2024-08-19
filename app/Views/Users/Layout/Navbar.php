@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-gray-800">Marketplace</a>
             <?php
-            if (session()->get('logged_in')) {?>
+            if (session()->get('logged_in_user')) {?>
 
             <div class="flex items-center">
                 <a href="<?= base_url() ?>client/home" class="text-gray-600 hover:text-gray-800 mx-4">Home</a>

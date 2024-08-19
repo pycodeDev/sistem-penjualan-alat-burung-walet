@@ -29,4 +29,43 @@
             }
         });
     });
+
+    function showToast(message, tipe) {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('msg');
+        toastMessage.textContent = message;  // Pesan ditempatkan di sini   
+        if (tipe == "toast") {
+            toast.classList.add('bg-green-200');
+            toast.classList.add('border-green-200');
+        }else{
+            toast.classList.add('bg-red-200');
+            toast.classList.add('border-red-200');
+        }
+        toast.classList.remove('hidden');
+        toast.classList.add('fade-in');
+
+        // Toast akan otomatis hilang setelah 3 detik
+        setTimeout(() => {
+            hideToast();
+        }, 3000); // 3000 ms = 3 detik
+    }
+
+    function hideToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.add('fade-out');
+        setTimeout(() => {
+            toast.classList.remove('fade-in', 'fade-out');
+            toast.classList.add('hidden');
+        }, 500); // Durasi animasi fade-out
+    }
+    <?php if(session()->getFlashdata('err_msg')): ?>
+        document.addEventListener('DOMContentLoaded', () => {
+            showToast("<?= session()->getFlashdata('err_msg') ?>", "toast-error");
+        });
+    <?php endif; ?>
+    <?php if(session()->getFlashdata('msg')): ?>
+        document.addEventListener('DOMContentLoaded', () => {
+            showToast("<?= session()->getFlashdata('msg') ?>", "toast");
+        });
+    <?php endif; ?>
 </script>

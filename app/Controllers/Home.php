@@ -74,7 +74,7 @@ class Home extends BaseController
             'id' => $id,
             'email' => $user['email'],
             'name' => $user['name'],
-            'logged_in' => TRUE
+            'logged_in_user' => TRUE
         ]);
         $this->session->setFlashdata('success', 'Success Register Account');
         return redirect()->to('/client/home');
@@ -98,7 +98,7 @@ class Home extends BaseController
                     'id' => $user['id'],
                     'email' => $user['email'],
                     'name' => $user['name'],
-                    'logged_in' => TRUE
+                    'logged_in_user' => TRUE
                 ]);
                 $this->session->setFlashdata('success_login', 'Anda Berhasil Login, Selamat Datang '. $user['name']);
                 return redirect()->to('/client/home');
