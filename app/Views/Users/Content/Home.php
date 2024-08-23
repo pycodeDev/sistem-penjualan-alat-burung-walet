@@ -47,16 +47,22 @@
 <!-- Product List with Pagination -->
 <div class="container mx-auto px-6 py-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Repeatable Product Card -->
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <img src="https://via.placeholder.com/400x300" alt="Product 4" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800">Product 4</h3>
-                <p class="text-gray-600 mt-2">$22.00</p>
-                <button class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600">Add to Cart</button>
+            <?php
+                foreach ($data as $value) { 
+                $rupiah = "Rp " . number_format($value['price'], 0, ',', '.');
+            ?>
+            <!-- Repeatable Product Card -->
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="<?= $value['image'] ?>" alt="Product 4" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-800"><?= $value['name'] ?></h3>
+                    <p class="text-gray-600 my-2"><?= $rupiah ?></p>
+                    <a href="<?= base_url() ?>client/product/<?= $value['id'] ?>" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600">Detail</a>
+                </div>
             </div>
-        </div>
-        <!-- Product Card 2, 3, 4, etc... -->
+            <?php
+                }
+            ?>
     </div>
     
     <!-- Pagination -->

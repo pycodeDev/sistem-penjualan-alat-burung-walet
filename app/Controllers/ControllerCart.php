@@ -45,12 +45,14 @@ class ControllerCart extends BaseController
         $cart['user_id'] = $this->session->get('id');
         $productId = $request->getJSON()->product_id;
         $quantity = $request->getJSON()->quantity;
+        $cart['product_id'] = $productId;
+        $cart['qty'] = $quantity;
         $cart['created_at'] = $waktuSekarang;
         $cart['updated_at'] = $waktuSekarang;
 
         $this->crud->setParamDataPagination("tbl_product");
-        $product = $this->crud->select_1_cond("id", $data['product_id']);
-        if ($product[0]['stok'] < $data['qty']) {
+        $product = $this->crud->select_1_cond("id", $productId);
+        if ($product[0]['stok'] < $quantity) {
             $this->session->setFlashdata('err_msg', 'Maaf Stok yang Tersisa hanya '. $product['stok']);
             return $this->response->setJSON(['success' => false]);
         }

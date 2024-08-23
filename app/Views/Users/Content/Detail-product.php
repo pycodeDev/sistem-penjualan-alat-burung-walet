@@ -92,8 +92,10 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                // alert('sukses')
                 location.reload();
             } else {
+                // alert('gagal')
                 location.reload(); // Tetap refresh jika gagal
             }
         })

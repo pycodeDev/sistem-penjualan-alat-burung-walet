@@ -86,6 +86,7 @@ $routes->group('client', function($routes) {
     $routes->post('register', 'Home::p_register');
     
     $routes->get('home', 'ControllerUser::dashboard_user');
+    $routes->get('home/(:num)/(:any)/(:any)', 'ControllerUser::dashboard_user');
 
     $routes->group('cart', function($routes) {
         $routes->get('/', 'ControllerCart::index');
@@ -96,6 +97,7 @@ $routes->group('client', function($routes) {
     
     $routes->group('product', function($routes) {
         $routes->get('/', 'ControllerProduct::client_index');
+        $routes->get('/(:num)/(:any)/(:any)', 'ControllerProduct::client_index');
         $routes->get('(:num)', 'ControllerProduct::client_detail/$1');
     });
 });

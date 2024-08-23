@@ -17,7 +17,7 @@
                 <div class="relative">
                     <a href="#" class="text-gray-600 hover:text-gray-800 mx-4" id="cartDropdownToggle">
                         <i class="fa fa-cart-plus"></i>
-                        <span class="ml-1">3</span> <!-- Display the number of items in the cart -->
+                        <span class="ml-1"><?= countDataCart() ?></span> <!-- Display the number of items in the cart -->
                     </a>
                     <!-- Dropdown Menu -->
                     <div id="cartDropdownMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 hidden">
