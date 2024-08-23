@@ -36,15 +36,15 @@ class ControllerCart extends BaseController
     {
         if (!$this->session->get('logged_in_user')) {
             $this->session->setFlashdata('err_msg', 'Silahkan Login Dahulu');
-            return redirect()->to('/client/home');
+            return $this->response->setJSON(['success' => false]);
         }
 
-        $data = $this->request->getPost();
+        $request = service('request');
         $waktuSekarang = Time::now();
 
         $cart['user_id'] = $this->session->get('id');
-        $cart['product_id'] = $data['product_id'];
-        $cart['qty'] = $data['qty'];
+        $productId = $request->getJSON()->product_id;
+        $quantity = $request->getJSON()->quantity;
         $cart['created_at'] = $waktuSekarang;
         $cart['updated_at'] = $waktuSekarang;
 
@@ -52,20 +52,19 @@ class ControllerCart extends BaseController
         $product = $this->crud->select_1_cond("id", $data['product_id']);
         if ($product[0]['stok'] < $data['qty']) {
             $this->session->setFlashdata('err_msg', 'Maaf Stok yang Tersisa hanya '. $product['stok']);
-            return redirect()->back();
+            return $this->response->setJSON(['success' => false]);
         }
 
         $this->crud->setParamDataPagination("tbl_product_category");
         $cart_user = $this->crud->read_all_data();
         if (count($cart_user) > 5) {
             $this->session->setFlashdata('err_msg', 'Maaf Jumlah Product Yang Ada di Keranjang tidak boleh lebih dari 5');
-            return redirect()->back();
+            return $this->response->setJSON(['success' => false]);
         }
 
         $this->crud->save_data('tbl_cart', $cart);
         $this->session->setFlashdata('msg', 'Success Add Cart');
-
-        return redirect()->back();
+        return $this->response->setJSON(['success' => true]);
     }
     
     public function edit($id)

@@ -90,8 +90,13 @@ $routes->group('client', function($routes) {
     $routes->group('cart', function($routes) {
         $routes->get('/', 'ControllerCart::index');
         $routes->post('/', 'ControllerCart::add');
-        $routes->put('/(:num)', 'ControllerCart::edit/$1');
-        $routes->get('/(:num)', 'ControllerCart::delete/$1');
+        $routes->put('(:num)', 'ControllerCart::edit/$1');
+        $routes->get('(:num)', 'ControllerCart::delete/$1');
+    });
+    
+    $routes->group('product', function($routes) {
+        $routes->get('/', 'ControllerProduct::client_index');
+        $routes->get('(:num)', 'ControllerProduct::client_detail/$1');
     });
 });
 
