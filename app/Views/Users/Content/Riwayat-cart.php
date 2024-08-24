@@ -19,30 +19,31 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 <!-- Example Cart Item Row -->
-                 <?php
-                 if (count($data) == 0) {
-                    # code...
-                 }else{
+                <?php
+                if (count($data) == 0) {
+                    // Kode untuk ketika data kosong
+                } else {
                     foreach ($data as $cart) {
                         $price = "Rp " . number_format($cart['price'], 0, ',', '.');
                         $total = "Rp " . number_format($cart['price'] * $cart['qty'], 0, ',', '.');
-                 ?>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= $cart['name'] ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $price ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <input type="number" value="<?= $cart['qty'] ?>" min="1" class="w-16 px-2 py-1 border rounded-md">
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $total ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="#" class="text-red-600 hover:text-yellow-800">Update</a>
-                            <a href="#" class="text-red-600 hover:text-red-800">Remove</a>
-                        </td>
-                    </tr>
-                <?php
+                        ?>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= $cart['name'] ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $price ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <input type="number" value="<?= $cart['qty'] ?>" min="1" class="w-16 px-2 py-1 border rounded-md quantity" data-product-id="<?= $cart['id'] ?>">
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $total ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-yellow-300 hover:text-yellow-500 update-cart-btn" data-product-id="<?= $cart['id'] ?>">Update</button>
+                                <a href="<?= base_url() ?>client/cart/<?= $cart['id'] ?>" class="text-red-600 hover:text-red-800">Remove</a>
+                            </td>
+                        </tr>
+                        <?php
                     }
-                 }
+                }
                 ?>
+
                 <!-- Add more rows as needed -->
             </tbody>
         </table>
@@ -69,4 +70,48 @@
         </div>
     </div>
 </div>
+<?= $this->endSection() ?>
+<?= $this->section('js') ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tangkap semua tombol update
+        const updateButtons = document.querySelectorAll('.update-cart-btn');
+
+        updateButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                const quantityInput = document.querySelector(`.quantity[data-product-id='${productId}']`);
+                const quantity = quantityInput.value;
+
+                // Mengirim data ke server menggunakan fetch
+                const url = "<?= base_url('client/cart/') ?>"
+                fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: JSON.stringify({
+                        id_cart: productId,
+                        qty: quantity
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Berhasil, lakukan refresh halaman
+                        location.reload();
+                    } else {
+                        // Tampilkan error jika ada
+                        location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat mengupdate cart.');
+                });
+            });
+        });
+    });
+</script>
 <?= $this->endSection() ?>

@@ -75,24 +75,26 @@ class ControllerCart extends BaseController
         return $this->response->setJSON(['success' => true]);
     }
     
-    public function edit($id)
+    public function edit()
     {
         if (!$this->session->get('logged_in_user')) {
             $this->session->setFlashdata('err_msg', 'Silahkan Login Dahulu');
-            return redirect()->to('/client/home');
+            return $this->response->setJSON(['success' => false]);
         }
 
-        $data = $this->request->getPost();
+        $request = service('request');
+        $id_cart = $request->getJSON()->id_cart;
+        $quantity = $request->getJSON()->qty;
         $waktuSekarang = Time::now();
 
-        $cart['qty'] = $data['qty'];
-        $cart['updated_at'] = $waktuSekarang;
+        $cart['qty'] = (int)$quantity;
+        $cart['updated_at'] =$waktuSekarang;
 
         $this->crud->setParamDataPagination("tbl_cart");
-        $this->crud->update_data($cart, "id", $id);
+        $this->crud->update_data($cart, "id", $id_cart);
         $this->session->setFlashdata('msg', 'Success Edit Cart');
 
-        return redirect()->to("/client/cart");
+        return $this->response->setJSON(['success' => true]);
     }
     
     public function delete($id)
