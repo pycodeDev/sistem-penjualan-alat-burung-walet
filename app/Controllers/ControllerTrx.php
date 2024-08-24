@@ -165,4 +165,20 @@ class ControllerTrx extends BaseController
 
         return view('users/content/riwayat-trx', $data);
     }
+    
+    public function client_detail($trx_id){
+        if (!$this->session->get('logged_in_user')) {
+            $this->session->setFlashdata('err_msg', 'Silahkan Login Dahulu');
+            return redirect()->to('/client/home');
+        }
+
+        $data['title']="Detail Transaction #$trx_id";
+
+        $this->crud->setParamDataPagination("tbl_trx");
+        $data_trx = $this->crud->select_1_cond("trx_id", $trx_id);
+
+        $data['data'] = $data_trx;
+
+        return view('users/content/detail-order', $data);
+    }
 }

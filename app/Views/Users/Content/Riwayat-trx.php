@@ -69,7 +69,7 @@
                         ?>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="#" class="text-blue-600 hover:text-blue-800">View Details</a>
+                        <a href="<?= base_url() ?>client/trx/<?= $trx['trx_id'] ?>" class="text-blue-600 hover:text-blue-800">View Details</a>
                     </td>
                 </tr>
                 <?php

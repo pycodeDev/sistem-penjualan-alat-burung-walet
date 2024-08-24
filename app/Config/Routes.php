@@ -103,6 +103,7 @@ $routes->group('client', function($routes) {
     
     $routes->group('trx', function($routes) {
         $routes->get('/', 'ControllerTrx::client_index');
+        $routes->get('(:any)', 'ControllerTrx::client_detail/$1');
     });
 });
 
