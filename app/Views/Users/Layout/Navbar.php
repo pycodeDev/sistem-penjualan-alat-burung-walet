@@ -22,7 +22,7 @@
                     <!-- Dropdown Menu -->
                     <div id="cartDropdownMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 hidden">
                         <div class="py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">View Cart</a>
+                            <a href="<?= base_url() ?>client/cart/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">View Cart</a>
                         </div>
                     </div>
                 </div>

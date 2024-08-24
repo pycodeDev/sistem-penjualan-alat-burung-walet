@@ -19,17 +19,30 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 <!-- Example Cart Item Row -->
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Product 1</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$25.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <input type="number" value="1" min="1" class="w-16 px-2 py-1 border rounded-md">
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$25.00</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="#" class="text-red-600 hover:text-red-800">Remove</a>
-                    </td>
-                </tr>
+                 <?php
+                 if (count($data) == 0) {
+                    # code...
+                 }else{
+                    foreach ($data as $cart) {
+                        $price = "Rp " . number_format($cart['price'], 0, ',', '.');
+                        $total = "Rp " . number_format($cart['price'] * $cart['qty'], 0, ',', '.');
+                 ?>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= $cart['name'] ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $price ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <input type="number" value="<?= $cart['qty'] ?>" min="1" class="w-16 px-2 py-1 border rounded-md">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $total ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <a href="#" class="text-red-600 hover:text-yellow-800">Update</a>
+                            <a href="#" class="text-red-600 hover:text-red-800">Remove</a>
+                        </td>
+                    </tr>
+                <?php
+                    }
+                 }
+                ?>
                 <!-- Add more rows as needed -->
             </tbody>
         </table>
@@ -40,9 +53,15 @@
         <h3 class="text-2xl font-semibold text-gray-800 mb-4">Cart Summary</h3>
         <div class="flex flex-col md:flex-row md:justify-between mb-4">
             <div class="w-full md:w-2/3">
-                <p class="text-gray-600 mb-2">Subtotal: <span id="cart-subtotal">$25.00</span></p>
-                <p class="text-gray-600 mb-2">Shipping: <span id="cart-shipping">$5.00</span></p>
-                <p class="text-gray-800 font-bold text-lg">Total: <span id="cart-total">$30.00</span></p>
+                <p class="text-gray-600 mb-2">Subtotal: <span id="cart-subtotal"><?php 
+                $price = "Rp " . number_format($total_cart, 0, ',', '.');
+                echo $price;
+                ?></span></p>
+                <p class="text-gray-600 mb-2">Admin: <span id="cart-shipping">Rp 0</span></p>
+                <p class="text-gray-800 font-bold text-lg">Total: <span id="cart-total"><?php 
+                $price = "Rp " . number_format($total_cart, 0, ',', '.');
+                echo $price;
+                ?></span></p>
             </div>
             <div class="w-full md:w-1/3 mt-6 md:mt-0">
                 <a href="checkout.html" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Proceed to Checkout</a>
