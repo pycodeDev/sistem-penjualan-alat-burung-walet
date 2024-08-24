@@ -128,4 +128,41 @@ class ControllerTrx extends BaseController
 
         return redirect()->to("/trx/trx-confirm/$trx_id");
     }
+
+    public function client_index($search = "", $id = 0, $metode = ""){
+        if (!$this->session->get('logged_in_user')) {
+            $this->session->setFlashdata('err_msg', 'Silahkan Login Dahulu');
+            return redirect()->to('/client/home');
+        }
+
+        $data['title']="Riwayat Transaction";
+
+        $id =$this->session->get('id');
+
+        $query = "select * from tbl_trx where user_id = '$id' ";
+        if ($metode == "next") {
+            $query .= " or id < $id ";
+        }else if ($metode == "back") {
+            $query .= " or id < $id ";
+        }
+
+        if ($search != "") {
+            $query .= " or trx_id = '$search' ";
+        }
+
+        $query .= " order by id DESC LIMIT 10";
+
+        $data_trx = $this->crud->solo_query($query);
+
+        $ids = array_column($data_trx, 'id');
+        
+        $first_id = !empty($ids) ? reset($ids) : null; // Ambil ID pertama
+        $last_id = !empty($ids) ? end($ids) : null; // Ambil ID terakhir
+
+        $data['data'] = $data_trx;
+        $data['next'] = $last_id;
+        $data['back'] = $first_id;
+
+        return view('users/content/riwayat-trx', $data);
+    }
 }
