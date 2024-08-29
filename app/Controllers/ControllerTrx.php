@@ -177,8 +177,12 @@ class ControllerTrx extends BaseController
         $this->crud->setParamDataPagination("tbl_trx");
         $data_trx = $this->crud->select_1_cond("trx_id", $trx_id);
 
-        $data['data'] = $data_trx;
+        $this->crud->setParamDataPagination("tbl_trx_item");
+        $data_trx_item = $this->crud->select_1_cond("trx_id", $trx_id);
 
-        return view('users/content/detail-order', $data);
+        $data['trx'] = $data_trx[0];
+        $data['trx_item'] = $data_trx_item;
+
+        return view('users/content/detail-trx', $data);
     }
 }
