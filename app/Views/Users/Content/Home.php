@@ -2,32 +2,21 @@
 <?= $this->section('content') ?>
 <!-- Product Grid -->
 <div class="container mx-auto px-6 py-8 flex-grow">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Best Products</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">New Products</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <?php
+        foreach ($new_product as $prd):
+            $rupiah = "Rp " . number_format($prd['price'], 0, ',', '.');
+        ?>
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <img src="https://via.placeholder.com/400x300" alt="Product 1" class="w-full h-48 object-cover">
+            <img src="<?= $prd['image'] ?>" alt="Product 1" class="w-full h-48 object-cover">
             <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800">Product 1</h3>
-                <p class="text-gray-600 mt-2">$25.00</p>
-                <button class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600">Add to Cart</button>
+                <h3 class="text-lg font-semibold text-gray-800"><?= $prd['name']; ?></h3>
+                <p class="text-gray-600 my-2"><?= $rupiah; ?></p>
+                <a href="<?= base_url() ?>client/product/<?= $prd['id'] ?>" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600">Detail</a>
             </div>
         </div>
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <img src="https://via.placeholder.com/400x300" alt="Product 2" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800">Product 2</h3>
-                <p class="text-gray-600 mt-2">$30.00</p>
-                <button class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600">Add to Cart</button>
-            </div>
-        </div>
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <img src="https://via.placeholder.com/400x300" alt="Product 3" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800">Product 3</h3>
-                <p class="text-gray-600 mt-2">$20.00</p>
-                <button class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600">Add to Cart</button>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 </div>
 
