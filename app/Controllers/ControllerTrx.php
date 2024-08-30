@@ -131,7 +131,7 @@ class ControllerTrx extends BaseController
         return redirect()->to("/trx/trx-confirm/$trx_id");
     }
 
-    public function client_index($search = "", $id = 0, $metode = ""){
+    public function client_index($id = 0,$metode=""){
         if (!$this->session->get('logged_in_user')) {
             $this->session->setFlashdata('err_msg', 'Silahkan Login Dahulu');
             return redirect()->to('/client/home');
@@ -148,8 +148,9 @@ class ControllerTrx extends BaseController
             $query .= " or id < $id ";
         }
 
-        if ($search != "") {
-            $query .= " or trx_id = '$search' ";
+        if (!empty($this->request->getPost('trx_id'))) {
+            $search = $this->request->getPost('trx_id');
+            $query .= " and trx_id = '$search' ";
         }
 
         $query .= " order by id DESC LIMIT 10";

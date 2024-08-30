@@ -7,9 +7,9 @@
     <!-- Search Form -->
     <div class="bg-white shadow-md rounded-lg p-6 mb-8">
         <h3 class="text-2xl font-semibold text-gray-800 mb-4">Search Transactions</h3>
-        <form action="#" method="GET">
+        <form action="<?= base_url() ?>client/trx/" method="POST">
             <div class="flex items-center">
-                <input type="text" name="search" placeholder="Search by transaction ID" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
+                <input type="text" name="trx_id" placeholder="Search by transaction ID" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
                 <button type="submit" class="ml-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Search</button>
             </div>
         </form>
