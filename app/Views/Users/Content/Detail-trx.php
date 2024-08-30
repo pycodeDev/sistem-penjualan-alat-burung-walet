@@ -85,10 +85,11 @@
         <h3 class="text-2xl font-semibold text-gray-800 mb-4">Status Transaction</h3>
         <?php
         if ($trx['status'] == 'PENDING'):?>
-            <form action="#" method="POST" enctype="multipart/form-data">
+            <form action="<?= base_url() ?>client/trx/upload" method="POST" enctype="multipart/form-data">
                 <div class="mb-4">
                     <label for="payment-proof" class="block text-gray-700 font-bold mb-2">Upload Payment Proof:</label>
-                    <input type="file" id="payment-proof" name="payment-proof" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
+                    <input type="file" id="payment-proof" name="image" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
+                    <input type="hidden" name="trx_id" value="<?= $trx['trx_id'] ?>">
                 </div>
                 <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Submit</button>
             </form>

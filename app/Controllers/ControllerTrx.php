@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\ModelCrud;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Files\File;
+
 
 class ControllerTrx extends BaseController
 {
@@ -184,5 +186,67 @@ class ControllerTrx extends BaseController
         $data['trx_item'] = $data_trx_item;
 
         return view('users/content/detail-trx', $data);
+    }
+
+    public function upload()
+    {
+        // Ambil file yang diupload
+        $image = $this->request->getFile('image');
+
+        // Pastikan file ada
+        if ($image && $image->isValid() && !$image->hasMoved()) {
+            // Generate nama file yang unik
+            $newName = $image->getRandomName();
+
+            // Pindahkan file ke direktori tujuan
+            $image->move(WRITEPATH . 'uploads', $newName);
+
+            // $image->move(ROOTPATH . 'upload', $newName); //jika ingin diluar folder writable
+
+            // Kompresi gambar
+            $this->compressImage(WRITEPATH . 'uploads/' . $newName);
+            $fileURL = base_url('upload/' . $newName);
+
+            $data = $this->request->getPost();
+            $payment_confirm['trx_id'] = $data['trx_id'];
+            $payment_confirm['image'] = $fileURL;
+            $payment_confirm['status'] = 'PENDING';
+
+            $this->crud->save_data('tbl_payment_confirm', $payment_confirm);
+            $waktuSekarang = Time::now();
+
+            $trx['status'] = "CONFIRM";
+            $trx['updated_at'] = $waktuSekarang;
+            $this->crud->setParamDataPagination("tbl_trx");
+            $this->crud->update_data($trx, "trx_id", $data['trx_id']);
+
+            return redirect()->back()->with('msg', 'Berhasil Upload Bukti Pembayaran');
+        }
+
+        return redirect()->back()->with('err_msg', 'Gagal Upload Bukti Pembayaran!');
+    }
+
+    private function compressImage($filePath)
+    {
+        // Load layanan Image Manipulation
+        $image = \Config\Services::image()
+            ->withFile($filePath)
+            ->resize(800, 800, true, 'auto') // Ubah ukuran gambar (lebar x tinggi)
+            ->save($filePath, 75); // Simpan gambar dengan kualitas 75%
+    }
+
+    public function show($filename)
+    {
+        $filePath = WRITEPATH . 'uploads/' . $filename;
+
+        if (file_exists($filePath)) {
+            // Menentukan tipe konten berdasarkan ekstensi file
+            $mimeType = mime_content_type($filePath);
+            return $this->response
+                ->setHeader('Content-Type', $mimeType)
+                ->setBody(file_get_contents($filePath));
+        } else {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($filename);
+        }
     }
 }
