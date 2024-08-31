@@ -250,4 +250,64 @@ class ControllerTrx extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException($filename);
         }
     }
+
+    public function order()
+    {
+        if (!$this->session->get('logged_in_user')) {
+            $this->session->setFlashdata('err_msg', 'Silahkan Login Dahulu');
+            return redirect()->to('/client/home');
+        }
+        $data = $this->request->getPost();
+
+        $produk_id = $data['product_id'];
+        $tipe = $data['is_cart'];
+        $qty = $data['qty'];
+        $uid =$this->session->get('id');
+        $waktuSekarang = Time::now();
+        $created = explode(" ", $waktuSekarang);
+
+        //user
+        $this->crud->setParamDataPagination("tbl_user");
+        $user = $this->crud->select_1_cond("id", $uid);
+
+        $trx_id = $this->crud->generateString("trx");
+        if ($tipe == 0) {
+            $trx_id_item = $this->crud->generateString("trx_item");
+            //product
+            $this->crud->setParamDataPagination("tbl_product");
+            $produk = $this->crud->select_1_cond("id", $produk_id);
+
+            $price = $qty * $produk[0]['price'];
+            if ($produk[0]['stok'] < $qty) {
+                $this->session->setFlashdata('err_msg', 'Maaf, Stok Tidak Mencukupi !');
+                return redirect()->to('/client/product/'.$produk_id);
+            }
+            
+            $trx_item['trx_id'] = $trx_id;
+            $trx_item['item_id'] = $trx_id_item;
+            $trx_item['barang_id'] = $produk_id;
+            $trx_item['nama_brang'] = $produk[0]['name'];
+            $trx_item['qty'] = $qty;
+            $trx_item['price'] = $qty;
+            $trx_item['created']=$created[0];
+            $trx_item['created_at']= $waktuSekarang;
+            $trx_item['updated_at']= $waktuSekarang;
+        }
+
+        $this->crud->save_data('tbl_trx_item', $trx_item);
+
+        $trx['trx_id'] = $trx_id;
+        $trx['user_id'] = $uid;
+        $trx['nama_user'] = $user['name'];
+        $trx['total'] = $qty;
+        $trx['price'] = $price;
+        $trx['status'] = "PENDING";
+        $trx['created']=$created[0];
+        $trx['created_at']= $waktuSekarang;
+        $trx['updated_at']= $waktuSekarang;
+        $this->crud->save_data('tbl_trx', $trx);
+        $this->session->setFlashdata('msg', 'Silahkan Pilih Metode Pembayaran');
+        return redirect()->to('/client/detail-order/'.$trx_id);
+
+    }
 }
