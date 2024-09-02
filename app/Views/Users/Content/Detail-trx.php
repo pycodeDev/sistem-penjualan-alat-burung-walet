@@ -5,63 +5,63 @@
     <h2 class="text-3xl font-bold text-gray-800 mb-6">Transaction Detail</h2>
 
     <!-- Product Details -->
-<div class="bg-white shadow-md rounded-lg p-6 mb-8">
-    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Product Details</h3>
-    
-    <!-- Container for product details and price summary -->
-    <div class="flex flex-col md:flex-row">
-        <!-- Product details (stacked vertically) -->
-        <div class="w-full md:w-2/3 flex flex-col space-y-4">
-            <?php
-            $subtotal = 0;
-            foreach ($trx_item as $trx_i) {
-                $subtotal = $subtotal + $trx_i['price'];
-            ?>
-            <div>
-                <h4 class="text-xl font-bold text-gray-800 mb-2"><?= $trx_i['nama_barang'] ?></h4>
-                <p class="text-gray-600 mb-2">Quantity: <span id="product-quantity"><?= $trx_i['qty'] ?></span></p>
-                <p class="text-gray-600 mb-2">Price: <span id="product-price">
-                    <?php
-                    $price = "Rp " . number_format($trx_i['price'], 0, ',', '.');
-                    echo $price;
-                    ?>
-                </span></p>
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Product Details</h3>
+        
+        <!-- Container for product details and price summary -->
+        <div class="flex flex-col md:flex-row">
+            <!-- Product details (stacked vertically) -->
+            <div class="w-full md:w-2/3 flex flex-col space-y-4">
+                <?php
+                $subtotal = 0;
+                foreach ($trx_item as $trx_i) {
+                    $subtotal = $subtotal + $trx_i['price'];
+                ?>
+                <div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2"><?= $trx_i['nama_barang'] ?></h4>
+                    <p class="text-gray-600 mb-2">Quantity: <span id="product-quantity"><?= $trx_i['qty'] ?></span></p>
+                    <p class="text-gray-600 mb-2">Price: <span id="product-price">
+                        <?php
+                        $price = "Rp " . number_format($trx_i['price'], 0, ',', '.');
+                        echo $price;
+                        ?>
+                    </span></p>
+                </div>
+                <?php
+                }
+                ?>
             </div>
-            <?php
-            }
-            ?>
-        </div>
 
-        <!-- Price Summary -->
-        <div class="w-full md:w-1/3 mt-6 md:mt-0 flex justify-end">
-            <div class="bg-gray-100 p-4 rounded-lg shadow-md self-end">
-                <h4 class="text-lg font-semibold text-gray-800 mb-2">Price Summary</h4>
-                <p class="flex justify-between text-gray-600 mb-2">
-                    <span>Subtotal:</span>
-                    <span id="subtotal">
-                    <?php
-                    $price = "Rp " . number_format($subtotal, 0, ',', '.');
-                    echo $price;
-                    ?>
-                    </span>
-                </p>
-                <p class="flex justify-between text-gray-600 mb-2">
-                    <span>Admin:</span>
-                    <span id="shipping">Rp 0</span>
-                </p>
-                <p class="flex justify-between text-gray-800 font-bold text-lg">
-                    <span>Total:</span>
-                    <span id="total">
-                    <?php
-                    $price = "Rp " . number_format($subtotal, 0, ',', '.');
-                    echo $price;
-                    ?>
-                    </span>
-                </p>
+            <!-- Price Summary -->
+            <div class="w-full md:w-1/3 mt-6 md:mt-0 flex justify-end">
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md self-end">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-2">Price Summary</h4>
+                    <p class="flex justify-between text-gray-600 mb-2">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">
+                        <?php
+                        $price = "Rp " . number_format($subtotal, 0, ',', '.');
+                        echo $price;
+                        ?>
+                        </span>
+                    </p>
+                    <p class="flex justify-between text-gray-600 mb-2">
+                        <span>Admin:</span>
+                        <span id="shipping">Rp 0</span>
+                    </p>
+                    <p class="flex justify-between text-gray-800 font-bold text-lg">
+                        <span>Total:</span>
+                        <span id="total">
+                        <?php
+                        $price = "Rp " . number_format($subtotal, 0, ',', '.');
+                        echo $price;
+                        ?>
+                        </span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <!-- Payment Information -->
@@ -111,6 +111,33 @@
             <div class="badge bg-green-500 text-white px-4 py-2 rounded-lg">
                 Sukses
             </div>
+
+            <!-- Form input komentar -->
+            <?php if (count($trx_item) == 1): ?>
+                <form action="/submit-comment" method="POST" class="mb-4">
+                    <label for="comment" class="block text-sm font-medium text-gray-700">Tulis Komentar</label>
+                    <textarea id="comment" name="comment" rows="3" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+                    <button type="submit" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                        Kirim Komentar
+                    </button>
+                </form>
+
+                <!-- List komentar -->
+                <div class="space-y-4">
+                    <?php if (count($comments) > 0): ?>
+                        <?php foreach ($comments as $comment): ?>
+                            <div class="p-4 bg-gray-100 rounded-lg shadow">
+                                <p class="text-gray-800"><?= htmlspecialchars($comment['comment']) ?></p>
+                                <span class="text-xs text-gray-500">Dikirim oleh <?= htmlspecialchars($comment['name']) ?> pada <?= htmlspecialchars($comment['created_at']) ?></span>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else:  ?>
+                        <div class="p-4 bg-gray-100 rounded-lg shadow">
+                            <span class="text-xs text-gray-500">Belum Ada Comment Pada Produk Ini !</span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 </div>

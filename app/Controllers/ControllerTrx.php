@@ -183,6 +183,14 @@ class ControllerTrx extends BaseController
         $this->crud->setParamDataPagination("tbl_trx_item");
         $data_trx_item = $this->crud->select_1_cond("trx_id", $trx_id);
 
+        if (count($data_trx_item) == 1) {
+            $this->crud->setParamDataPagination("tbl_comment tc",0,"","tbl_user tu", "tc.user_id=tu.id", "tc.id, tc.user_id, tc.product_id, tc.comment, tc.created_at, tu.name", "tc.product_id", $id);
+            $komen = $this->crud->data_pagination();    
+
+            $data['comments'] = $komen;
+        }
+        
+
         $data['trx'] = $data_trx[0];
         $data['trx_item'] = $data_trx_item;
 
@@ -342,7 +350,7 @@ class ControllerTrx extends BaseController
         $trx['updated_at']= $waktuSekarang;
         $this->crud->save_data('tbl_trx', $trx);
         $this->session->setFlashdata('msg', 'Silahkan Pilih Metode Pembayaran');
-        return redirect()->to('/client/detail-order/'.$trx_id);
 
+        return redirect()->to('/client/detail-order/'.$trx_id);
     }
 }
