@@ -65,8 +65,8 @@ class ControllerCart extends BaseController
 
         $this->crud->setParamDataPagination("tbl_product_category");
         $cart_user = $this->crud->read_all_data();
-        if (count($cart_user) > 5) {
-            $this->session->setFlashdata('err_msg', 'Maaf Jumlah Product Yang Ada di Keranjang tidak boleh lebih dari 5');
+        if (count($cart_user) > 3) {
+            $this->session->setFlashdata('err_msg', 'Maaf Jumlah Product Yang Ada di Keranjang tidak boleh lebih dari 3');
             return $this->response->setJSON(['success' => false]);
         }
 

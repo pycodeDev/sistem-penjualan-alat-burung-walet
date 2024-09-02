@@ -259,9 +259,8 @@ class ControllerTrx extends BaseController
         }
         $data = $this->request->getPost();
 
-        $produk_id = $data['product_id'];
         $tipe = $data['is_cart'];
-        $qty = $data['qty'];
+        
         $uid =$this->session->get('id');
         $waktuSekarang = Time::now();
         $created = explode(" ", $waktuSekarang);
@@ -272,6 +271,9 @@ class ControllerTrx extends BaseController
 
         $trx_id = $this->crud->generateString("trx");
         if ($tipe == 0) {
+            $produk_id = $data['product_id'];
+            $qty = $data['qty'];
+
             $trx_id_item = $this->crud->generateString("trx_item");
             //product
             $this->crud->setParamDataPagination("tbl_product");
@@ -288,13 +290,46 @@ class ControllerTrx extends BaseController
             $trx_item['barang_id'] = $produk_id;
             $trx_item['nama_brang'] = $produk[0]['name'];
             $trx_item['qty'] = $qty;
-            $trx_item['price'] = $qty;
+            $trx_item['price'] = $price;
             $trx_item['created']=$created[0];
             $trx_item['created_at']= $waktuSekarang;
             $trx_item['updated_at']= $waktuSekarang;
-        }
 
-        $this->crud->save_data('tbl_trx_item', $trx_item);
+            $this->crud->save_data('tbl_trx_item', $trx_item);
+        }else{ 
+            $qty = 0;
+            $cart = false;
+            $this->crud->setParamDataPagination("tbl_cart");
+            $cart = $this->crud->select_1_cond("user_id", $uid);
+            if (count($cart[0]) == 0) {
+                $this->session->setFlashdata('err_msg', 'Maaf, Cart Anda Kosong !');
+                return redirect()->to('/client/cart');
+            }
+            foreach ($cart[0] as $cart_item) {
+                $trx_id_item = $this->crud->generateString("trx_item");  
+
+                $this->crud->setParamDataPagination("tbl_product");
+                $produk = $this->crud->select_1_cond("id", $cart_item['product_id']);
+
+                $price = $cart_item['qty'] * $produk[0]['price'];
+                if ($produk[0]['stok'] > $qty) {
+                    $trx_item['trx_id'] = $trx_id;
+                    $trx_item['item_id'] = $trx_id_item;
+                    $trx_item['barang_id'] = $cart_item['product_id'];
+                    $trx_item['nama_brang'] = $produk[0]['name'];
+                    $trx_item['qty'] = $cart_item['qty'];
+                    $trx_item['price'] = $price;
+                    $trx_item['created']=$created[0];
+                    $trx_item['created_at']= $waktuSekarang;
+                    $trx_item['updated_at']= $waktuSekarang;
+                    $qty = $cart_item['qty'];
+
+                    $this->crud->save_data('tbl_trx_item', $trx_item);
+                }else {
+                    $cart = true;
+                }
+            }
+        }
 
         $trx['trx_id'] = $trx_id;
         $trx['user_id'] = $uid;

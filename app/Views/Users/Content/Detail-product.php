@@ -29,7 +29,7 @@
             <!-- Action Buttons -->
             <div class="flex gap-4">
                 <button id="add-to-cart-btn" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Add to Cart</button>
-                <button class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600">Buy Now</button>
+                <button id="add-order-btn" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600">Buy Now</button>
             </div>
         </div>
     </div>
@@ -87,6 +87,41 @@
             body: JSON.stringify({
                 product_id: productId,
                 quantity: quantity
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // alert('sukses')
+                location.reload();
+            } else {
+                // alert('gagal')
+                location.reload(); // Tetap refresh jika gagal
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+    
+    document.getElementById('add-order-btn').addEventListener('click', function() {
+        // Data yang akan dikirim
+        const productId = <?= json_encode($data['id']) ?>;
+        const quantity = document.getElementById('quantity-input').value;
+
+        // Melakukan POST request menggunakan fetch API
+        fetch('<?= base_url('client/order/') ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': '<?= csrf_hash() ?>' // Untuk keamanan CSRF
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: quantity,
+                is_cart: 0
             })
         })
         .then(response => response.json())
