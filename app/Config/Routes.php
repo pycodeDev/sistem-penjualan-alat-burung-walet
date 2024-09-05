@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/tes', 'Home::prd');
+$routes->get('/tes', 'Home::tes');
 $routes->get('/', 'ControllerAdmin::index');
 $routes->get('/user', 'Home::tes');
 $routes->get('upload/(:any)', 'ControllerTrx::show/$1');

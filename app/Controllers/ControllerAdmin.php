@@ -34,7 +34,10 @@ class ControllerAdmin extends BaseController
         $this->crud->setParamDataPagination("tbl_admin");
 
         $data_user = $this->crud->select_1_cond("email", $email);
-
+        if (count($data_user) == 0) {
+            $this->session->setFlashdata('error_login', 'Email Atau Password Salah !!');
+                return redirect()->back();
+        }
         $user = $data_user[0];
 
         if ($user) {
@@ -49,11 +52,11 @@ class ControllerAdmin extends BaseController
                 $this->session->setFlashdata('success_login', 'Anda Berhasil Login, Selamat Datang '. $user['name']);
                 return redirect()->to('/dashboard');
             } else {
-                $this->session->setFlashdata('error_login', 'Password salah');
+                $this->session->setFlashdata('error_login', 'Email Atau Password Salah !!');
                 return redirect()->back();
             }
         } else {
-            $this->session->setFlashdata('error_login', 'Email tidak ditemukan');
+            $this->session->setFlashdata('error_login', 'Email Atau Password Salah !!');
             return redirect()->back();
         }
     }

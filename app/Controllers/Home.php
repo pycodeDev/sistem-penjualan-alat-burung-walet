@@ -39,7 +39,7 @@ class Home extends BaseController
     
     public function tes(): string
     {
-        return view('users/register');
+        return view('users/content/detail-order');
     }
     
     public function login()
