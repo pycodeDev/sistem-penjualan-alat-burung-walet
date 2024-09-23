@@ -63,6 +63,9 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body p-0">
+                        <?php
+                        if (count($rek) != 0) {
+                        ?>
                         <div class="row m-1">
                             <div class="col-4">
                                 <h5>Nama Rekening</h5>
@@ -109,6 +112,41 @@
                                 </h5>
                             </div>
                         </div>
+                                    <?php
+                                }else {
+                                    ?>
+                                    <div class="row m-1">
+                            <div class="col-4">
+                                <h5>Nama Rekening</h5>
+                            </div>
+                            <div class="col-1">
+                                <h5>:</h5>
+                            </div>
+                            <div class="col-7">
+                                <h5>-</h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>Nomor Rekening</h5>
+                            </div>
+                            <div class="col-1">
+                                <h5>:</h5>
+                            </div>
+                            <div class="col-7">
+                                <h5>-</h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>Payment Method</h5>
+                            </div>
+                            <div class="col-1">
+                                <h5>:</h5>
+                            </div>
+                            <div class="col-7">
+                                <h5>-</h5>
+                            </div>
+                        </div>
+                                    <?php
+                                }
+                                    ?>
                     </div>
                 <!-- /.card-body -->
                 </div>

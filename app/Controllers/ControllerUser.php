@@ -52,7 +52,11 @@ class ControllerUser extends BaseController
         $this->crud->setParamDataPagination("tbl_trx");
         $data['trx'] = $this->crud->select_1_cond("user_id", $user_id);
         $data['user'] = $user[0];
-        $data['rek'] = $rekening[0];
+        if (isset($rekening[0])) {
+            $data['rek'] = $rekening[0];
+        }else{
+            $data['rek'] = [];
+        }
 
         return view('admin/content/user/detail-user', $data);
     }
