@@ -86,4 +86,30 @@ class ControllerUser extends BaseController
 
         return view('users/content/home', $data);
     }
+
+    public function add_rekening()
+    {
+        if (!$this->session->get('logged_in_user')) {
+            $this->session->setFlashdata('err_msg', 'Silahkan Login Dahulu');
+            return $this->response->setJSON(['success' => false]);
+        }
+
+        $paymentMethodName = $this->request->getGet('payment_method_name');
+        $uid =$this->session->get('id');
+
+        $data_rekening = $this->crud->solo_query("select * from tbl_rekening where name = '$paymentMethodName' and user_id = $uid");
+
+        $this->crud->setParamDataPagination("tbl_payment_method");
+        $pm = $this->crud->select_1_cond("name", $paymentMethodName);
+
+        if (isset($data_rekening[0]['id'])) {
+            return $this->response->setJSON([
+                'account_number' => $data_rekening[0]['rekening'],
+                'account_name'   => $data_rekening[0]['rekening_name'],
+                'payment_method_number' => $pm[0]['rekening']
+            ]);
+        }else {
+            return $this->response->setJSON(['payment_method_number' => $pm[0]['rekening']]);
+        }
+    }
 }

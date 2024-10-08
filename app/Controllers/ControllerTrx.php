@@ -183,8 +183,11 @@ class ControllerTrx extends BaseController
         $this->crud->setParamDataPagination("tbl_trx_item");
         $data_trx_item = $this->crud->select_1_cond("trx_id", $trx_id);
 
+        $this->crud->setParamDataPagination("tbl_payment_method");
+        $data_payment = $this->crud->read_all_data();
+
         if (count($data_trx_item) == 1) {
-            $this->crud->setParamDataPagination("tbl_comment tc",0,"","tbl_user tu", "tc.user_id=tu.id", "tc.id, tc.user_id, tc.product_id, tc.comment, tc.created_at, tu.name", "tc.product_id", $id);
+            $this->crud->setParamDataPagination("tbl_comment tc",0,"","tbl_user tu", "tc.user_id=tu.id", "tc.id, tc.user_id, tc.product_id, tc.comment, tc.created_at, tu.name", "tc.product_id", $data_trx_item[0]['barang_id']);
             $komen = $this->crud->data_pagination();    
 
             $data['comments'] = $komen;
@@ -193,6 +196,7 @@ class ControllerTrx extends BaseController
 
         $data['trx'] = $data_trx[0];
         $data['trx_item'] = $data_trx_item;
+        $data['payment_data'] = $data_payment;
 
         return view('users/content/detail-trx', $data);
     }
@@ -224,8 +228,23 @@ class ControllerTrx extends BaseController
             $this->crud->save_data('tbl_payment_confirm', $payment_confirm);
             $waktuSekarang = Time::now();
 
+            $rekening['name']= $data['payment_method_name'];
+            $rekening['user_id']= $this->session->get('id');
+            $rekening['rekening']= $data['rekening'];
+            $rekening['rekening_name']= $data['rekening_name'];
+            $rekening['status']= 1;
+            $rekening['created_at']= $waktuSekarang;
+            $trx['updated_at'] = $waktuSekarang;
+            $id_rek = $this->crud->save_data_return('tbl_rekening', $rekening);
+
             $trx['status'] = "CONFIRM";
             $trx['updated_at'] = $waktuSekarang;
+            $trx['rek_name'] = $data['rekening_name'];
+            $trx['rek_id'] = $id_rek;
+            $trx['rek_number'] = $data['rekening'];
+            $trx['payment_method_id'] = $data['payment_method_id'];
+            $trx['payment_method_name'] = $data['payment_method_name'];
+            $trx['payment_method_number'] = $data['payment_method_number'];
             $this->crud->setParamDataPagination("tbl_trx");
             $this->crud->update_data($trx, "trx_id", $data['trx_id']);
 
@@ -263,11 +282,11 @@ class ControllerTrx extends BaseController
     {
         if (!$this->session->get('logged_in_user')) {
             $this->session->setFlashdata('err_msg', 'Silahkan Login Dahulu');
-            return redirect()->to('/client/home');
+            return $this->response->setJSON(['success' => false]);
         }
-        $data = $this->request->getPost();
+        $request = service('request');
 
-        $tipe = $data['is_cart'];
+        $tipe = $request->getJSON()->is_cart;
         
         $uid =$this->session->get('id');
         $waktuSekarang = Time::now();
@@ -279,8 +298,8 @@ class ControllerTrx extends BaseController
 
         $trx_id = $this->crud->generateString("trx");
         if ($tipe == 0) {
-            $produk_id = $data['product_id'];
-            $qty = $data['qty'];
+            $produk_id = $request->getJSON()->product_id;
+            $qty = $request->getJSON()->quantity;
 
             $trx_id_item = $this->crud->generateString("trx_item");
             //product
@@ -290,13 +309,13 @@ class ControllerTrx extends BaseController
             $price = $qty * $produk[0]['price'];
             if ($produk[0]['stok'] < $qty) {
                 $this->session->setFlashdata('err_msg', 'Maaf, Stok Tidak Mencukupi !');
-                return redirect()->to('/client/product/'.$produk_id);
+                return $this->response->setJSON(['success' => false]);
             }
             
             $trx_item['trx_id'] = $trx_id;
             $trx_item['item_id'] = $trx_id_item;
             $trx_item['barang_id'] = $produk_id;
-            $trx_item['nama_brang'] = $produk[0]['name'];
+            $trx_item['nama_barang'] = $produk[0]['name'];
             $trx_item['qty'] = $qty;
             $trx_item['price'] = $price;
             $trx_item['created']=$created[0];
@@ -311,7 +330,7 @@ class ControllerTrx extends BaseController
             $cart = $this->crud->select_1_cond("user_id", $uid);
             if (count($cart[0]) == 0) {
                 $this->session->setFlashdata('err_msg', 'Maaf, Cart Anda Kosong !');
-                return redirect()->to('/client/cart');
+                return $this->response->setJSON(['success' => false]);
             }
             foreach ($cart[0] as $cart_item) {
                 $trx_id_item = $this->crud->generateString("trx_item");  
@@ -324,7 +343,7 @@ class ControllerTrx extends BaseController
                     $trx_item['trx_id'] = $trx_id;
                     $trx_item['item_id'] = $trx_id_item;
                     $trx_item['barang_id'] = $cart_item['product_id'];
-                    $trx_item['nama_brang'] = $produk[0]['name'];
+                    $trx_item['nama_barang'] = $produk[0]['name'];
                     $trx_item['qty'] = $cart_item['qty'];
                     $trx_item['price'] = $price;
                     $trx_item['created']=$created[0];
@@ -341,7 +360,7 @@ class ControllerTrx extends BaseController
 
         $trx['trx_id'] = $trx_id;
         $trx['user_id'] = $uid;
-        $trx['nama_user'] = $user['name'];
+        $trx['nama_user'] = $user[0]['name'];
         $trx['total'] = $qty;
         $trx['price'] = $price;
         $trx['status'] = "PENDING";
@@ -351,6 +370,6 @@ class ControllerTrx extends BaseController
         $this->crud->save_data('tbl_trx', $trx);
         $this->session->setFlashdata('msg', 'Silahkan Pilih Metode Pembayaran');
 
-        return redirect()->to('/client/detail-order/'.$trx_id);
+        return $this->response->setJSON(['success' => true, 'trx_id' => $trx_id]);
     }
 }

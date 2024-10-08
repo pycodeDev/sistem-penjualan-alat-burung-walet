@@ -111,7 +111,7 @@
         const quantity = document.getElementById('quantity-input').value;
 
         // Melakukan POST request menggunakan fetch API
-        fetch('<?= base_url('client/order/') ?>', {
+        fetch('<?= base_url('client/trx/order/') ?>', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -128,9 +128,10 @@
         .then(data => {
             if (data.success) {
                 // alert('sukses')
-                location.reload();
+                window.location.href = '<?= base_url() ?>client/trx/'+data.trx_id;
             } else {
                 // alert('gagal')
+                // console.log(data)
                 location.reload(); // Tetap refresh jika gagal
             }
         })

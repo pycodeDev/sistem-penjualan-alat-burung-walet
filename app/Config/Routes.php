@@ -85,6 +85,7 @@ $routes->group('client', function($routes) {
     $routes->post('login', 'Home::p_login');
     $routes->get('register', 'Home::register');
     $routes->post('register', 'Home::p_register');
+    $routes->get('rekening', 'ControllerUser::add_rekening');
     
     $routes->get('home', 'ControllerUser::dashboard_user');
     $routes->get('home/(:num)/(:any)/(:any)', 'ControllerUser::dashboard_user');
@@ -105,7 +106,7 @@ $routes->group('client', function($routes) {
     $routes->group('trx', function($routes) {
         $routes->get('/', 'ControllerTrx::client_index');
         $routes->post('/', 'ControllerTrx::client_index');
-        $routes->post('/order', 'ControllerTrx::order');
+        $routes->post('order', 'ControllerTrx::order');
         $routes->get('(:any)', 'ControllerTrx::client_detail/$1');
         $routes->post('upload', 'ControllerTrx::upload');
     });
