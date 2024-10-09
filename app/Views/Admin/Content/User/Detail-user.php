@@ -63,9 +63,15 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body p-0">
-                        <?php
-                        if (count($rek) != 0) {
-                        ?>
+                        <div class="row m-1">
+                            <input type="hidden" id="user_id" value="<?= $user['id'] ?>">
+                            <select class="form-control select2bs4" id="paymentMethod" onchange="fetchPaymentData()" style="width: 100%;">
+                                <option value="">Pilih Metode Pembayaran</option>
+                                <?php foreach ($payment as $pm) { ?>
+                                    <option value="<?= $pm['name'] ?>"><?= $pm['name'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>    
                         <div class="row m-1">
                             <div class="col-4">
                                 <h5>Nama Rekening</h5>
@@ -74,7 +80,7 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5><?= $rek['rekening_name'] ?></h5>
+                                <h5 id="rekening_name">-</h5>
                             </div>
                             <div class="col-4">
                                 <h5>Nomor Rekening</h5>
@@ -83,7 +89,7 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5><?= $rek['rekening'] ?></h5>
+                                <h5 id="rekening_number">-</h5>
                             </div>
                             <div class="col-4">
                                 <h5>Payment Method</h5>
@@ -92,7 +98,7 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5><?= $rek['name'] ?></h5>
+                                <h5 id="payment_method_name">-</h5>
                             </div>
                             <div class="col-4">
                                 <h5>Status</h5>
@@ -101,52 +107,10 @@
                                 <h5>:</h5>
                             </div>
                             <div class="col-7">
-                                <h5>
-                                <?php
-                                    if ($rek['status'] == 1) {
-                                        echo '<span class="right badge badge-success text-white">Aktif</span>';
-                                    }else{
-                                        echo '<span class="right badge badge-danger text-white">Tidak Aktif</span>';
-                                    }
-                                ?>
-                                </h5>
+                                <h5 id="status">-</h5>
                             </div>
                         </div>
-                                    <?php
-                                }else {
-                                    ?>
-                                    <div class="row m-1">
-                            <div class="col-4">
-                                <h5>Nama Rekening</h5>
-                            </div>
-                            <div class="col-1">
-                                <h5>:</h5>
-                            </div>
-                            <div class="col-7">
-                                <h5>-</h5>
-                            </div>
-                            <div class="col-4">
-                                <h5>Nomor Rekening</h5>
-                            </div>
-                            <div class="col-1">
-                                <h5>:</h5>
-                            </div>
-                            <div class="col-7">
-                                <h5>-</h5>
-                            </div>
-                            <div class="col-4">
-                                <h5>Payment Method</h5>
-                            </div>
-                            <div class="col-1">
-                                <h5>:</h5>
-                            </div>
-                            <div class="col-7">
-                                <h5>-</h5>
-                            </div>
-                        </div>
-                                    <?php
-                                }
-                                    ?>
+
                     </div>
                 <!-- /.card-body -->
                 </div>
@@ -202,4 +166,54 @@
             </div>
         </div>
     </section>
+<?= $this->endSection() ?>
+<?= $this->section('js') ?>
+<script>
+function fetchPaymentData() {
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    const hiddenId = document.getElementById('user_id').value;
+
+    if (paymentMethod) {
+        // Lakukan POST ke API dengan paymentMethod dan hiddenId
+        fetch('<?= base_url() ?>/user/get-rek', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': '<?= csrf_hash() ?>' // Untuk keamanan CSRF
+            },
+            body: JSON.stringify({
+                payment_method_name: paymentMethod,
+                user_id: hiddenId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Cek apakah data rekening valid
+            if (data.account_id !== "-") {
+                // Tampilkan data rekening di HTML
+                document.getElementById('rekening_name').innerText = data.account_name;
+                document.getElementById('rekening_number').innerText = data.account_number;
+                document.getElementById('payment_method_name').innerText = data.payment_method_name;
+
+                const statusElement = document.getElementById('status');
+                if (data.status == 1) {
+                    statusElement.innerHTML = '<span class="right badge badge-success text-white">Aktif</span>';
+                } else {
+                    statusElement.innerHTML = '<span class="right badge badge-danger text-white">Tidak Aktif</span>';
+                }
+            } else {
+                // Tampilkan pesan jika tidak ada rekening
+                document.getElementById('rekening_name').innerText = '-';
+                document.getElementById('rekening_number').innerText = '-';
+                document.getElementById('payment_method_name').innerText = '-';
+                document.getElementById('status').innerHTML = '-';
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+}
+</script>
 <?= $this->endSection() ?>

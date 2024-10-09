@@ -52,6 +52,10 @@ class ControllerUser extends BaseController
         $this->crud->setParamDataPagination("tbl_trx");
         $data['trx'] = $this->crud->select_1_cond("user_id", $user_id);
         $data['user'] = $user[0];
+
+        $this->crud->setParamDataPagination("tbl_payment_method");
+        $data['payment'] = $this->crud->read_all_data();
+    
         if (isset($rekening[0])) {
             $data['rek'] = $rekening[0];
         }else{
@@ -111,6 +115,33 @@ class ControllerUser extends BaseController
             ]);
         }else {
             return $this->response->setJSON(['payment_method_number' => $pm[0]['rekening']]);
+        }
+    }
+
+    public function get_rek()
+    {
+        $request = service('request');
+        $payment_method = $request->getJSON()->payment_method_name;
+        $uid = $request->getJSON()->user_id;
+
+        $data_rekening = $this->crud->solo_query("select * from tbl_rekening where name = '$payment_method' and user_id = $uid");
+
+        if (isset($data_rekening[0]['id'])) {
+            return $this->response->setJSON([
+                'account_id' => $data_rekening[0]['id'],
+                'account_number' => $data_rekening[0]['rekening'],
+                'account_name'   => $data_rekening[0]['rekening_name'],
+                'payment_method_name' => $data_rekening[0]['name'],
+                'status' => $data_rekening[0]['status']
+            ]);
+        }else {
+            return $this->response->setJSON([
+                'account_id' => "-",
+                'account_number' => "-",
+                'account_name'   => "-",
+                'payment_method_name' => "-",
+                'status' => "-"
+            ]);
         }
     }
 }
