@@ -89,6 +89,7 @@ class ControllerProduct extends BaseController
         $product['price'] = $data['price'];
         $product['stok'] = $data['stok'];
         $product['image'] = $data['image'];
+        $product['deskripsi'] = $data['deskripsi'];
         $product['created_at'] = $waktuSekarang;
         $product['updated_at'] = $waktuSekarang;
 
@@ -108,6 +109,7 @@ class ControllerProduct extends BaseController
         $product['price'] = $data['price'];
         $product['stok'] = $data['stok'];
         $product['image'] = $data['image'];
+        $product['deskripsi'] = $data['deskripsi'];
         $product['updated_at'] = $waktuSekarang;
 
         $this->crud->setParamDataPagination("tbl_product");

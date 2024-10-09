@@ -1,4 +1,7 @@
 <?= $this->extend('admin/Main') ?>
+<?= $this->section('css') ?>
+<link rel="stylesheet" href="<?php echo base_url('assets/admin/plugins/summernote/summernote-bs4.min.css')?>">
+<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -52,7 +55,12 @@
                                 <label for="exampleInputImage">Image</label>
                                 <input type="text" class="form-control" name="image" placeholder="Enter Image Url">
                             </div>
-                        <!-- /.card-body -->
+                            <div class="form-group">
+                                <label for="exampleInputImage">Note</label>
+                                <textarea id="summernote" name="deskripsi">
+                                        Masukkan deskripsi nya
+                                    </textarea>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary" >Save</button>
@@ -64,6 +72,15 @@
             </div>
         </div>
     </section>
+<?= $this->endSection() ?>
+<?= $this->section('js') ?>
+<script src="<?php echo base_url('assets/admin/plugins/summernote/summernote-bs4.min.js')?>"></script>
+    <script>
+  $(function () {
+    // Summernote
+    $('#summernote').summernote()
+  })
+</script>
 <?= $this->endSection() ?>
 
 <!-- <script>

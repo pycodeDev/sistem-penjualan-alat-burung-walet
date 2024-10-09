@@ -84,15 +84,11 @@
             <div id="payment-info" class="mt-4"></div>
         <?php else: ?>
             <p class="text-gray-600 mb-2">Payment Method: <span id="payment-method"><?= $trx['payment_method_name']; ?></span></p>
-                <div id="payment-info" class="mb-4">
-                    <h4 class="text-lg font-semibold text-gray-800 mb-2">Account Payment Information</h4>
-                    <?php
-                    if ($trx['payment_method_id'] == 1) {?>
-                        <p class="text-gray-600 mb-2">Account Number: <span id="account-number"><?=$trx['rek_number']?></span></p>
-                        <p class="text-gray-600 mb-2">Account Name: <span id="account-name"><?=$trx['rek_name']?></span></p>
-                    <?php
-                    }
-                    ?>
+            <p class="text-gray-600 mb-2">Payment Method Number: <span id="payment-method"><?= $trx['payment_method_number']; ?></span></p>
+            <div id="payment-info" class="mb-4">
+                <h4 class="text-lg font-semibold text-gray-800 mb-2">Account Payment Information</h4>
+                <p class="text-gray-600 mb-2">Account Number: <span id="account-number"><?=$trx['rek_number']?></span></p>
+                <p class="text-gray-600 mb-2">Account Name: <span id="account-name"><?=$trx['rek_name']?></span></p>
             </div>
         <?php endif; ?>
     </div>
@@ -112,6 +108,7 @@
                     <input type="hidden" id="payment_method_name" name="payment_method_name">
                     <input type="hidden" id="account_number" name="rekening">
                     <input type="hidden" id="account_name" name="rekening_name">
+                    <input type="hidden" id="is_rekening" name="is_rekening">
                     <input type="hidden" name="trx_id" value="<?= $trx['trx_id'] ?>">
                 </div>
                 <button type="submit" id="submit_button" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Submit</button>
@@ -204,6 +201,7 @@ document.getElementById('payment_method').addEventListener('change', function() 
                 document.getElementById('payment_method_number').value = data.payment_method_number;
                 document.getElementById('account_number').value = data.account_number;
                 document.getElementById('account_name').value = data.account_name;
+                document.getElementById('is_rekening').value = data.account_id;
             } else {
                 // Jika tidak ada data, tampilkan form input untuk memasukkan informasi rekening
                 paymentInfoDiv.innerHTML = `
@@ -221,6 +219,7 @@ document.getElementById('payment_method').addEventListener('change', function() 
                 document.getElementById('payment_method_id').value = paymentMethodId;
                 document.getElementById('payment_method_name').value = paymentMethodName;
                 document.getElementById('payment_method_number').value = data.payment_method_number;
+                document.getElementById('is_rekening').value = 0;
             }
         })
         .catch(error => {
