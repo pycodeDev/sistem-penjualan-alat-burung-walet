@@ -34,7 +34,7 @@ class ControllerUser extends BaseController
         return view('admin/content/user/index', $data);
     }
     
-    public function detail($user_id)
+    public function detail($user_id,$id = null,$metode=null)
     {
         if ($user_id == null || $user_id == "") {
             $this->session->setFlashdata('error', 'User Not Found');
@@ -48,9 +48,20 @@ class ControllerUser extends BaseController
         $uid = $user[0]['id'];
         $this->crud->setParamDataPagination("tbl_rekening");
         $rekening = $this->crud->select_1_cond("user_id", $user_id);
+
+        if ($id == null) {
+            $id = 0;
+            $metode = "";
+        }
         
-        $this->crud->setParamDataPagination("tbl_trx");
-        $data['trx'] = $this->crud->select_1_cond("user_id", $user_id);
+        // $this->crud->setParamDataPagination("tbl_trx");
+        // $data['trx'] = $this->crud->select_1_cond("user_id", $user_id);
+        $this->crud->setParamDataPagination("tbl_trx",$id,$metode,"","","","user_id",$user_id,"id");
+
+        $data_product = $this->crud->data_pagination();
+        $data['trx'] = $data_product["data"];
+        $data['next'] = $data_product["last_id"];
+        $data['back'] = $data_product["first_id"];
         $data['user'] = $user[0];
 
         $this->crud->setParamDataPagination("tbl_payment_method");

@@ -60,6 +60,7 @@ $routes->group('user', ['filter' => 'auth'], function($routes) {
     $routes->get('data-user', 'ControllerUser::index');
     $routes->get('data-user/(:num)?/(:any)?', 'ControllerUser::index/$1/$2');
     $routes->get('data-user/(:num)', 'ControllerUser::detail/$1');
+    $routes->get('data-user/(:num)/(:num)?/(:any)?', 'ControllerUser::detail/$1/$2/$3');
     $routes->post('get-rek', 'ControllerUser::get_rek');
 });
 
