@@ -24,7 +24,7 @@ class ControllerUser extends BaseController
             $metode = "";
         }
         $data['title'] = "Data User";
-        $this->crud->setParamDataPagination("tbl_user");
+        $this->crud->setParamDataPagination("tbl_user",$id,$metode,"","","","","","id");
 
         $data_product = $this->crud->data_pagination();
         $data['data'] = $data_product["data"];

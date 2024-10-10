@@ -26,7 +26,7 @@ class ControllerTrx extends BaseController
             $metode = "";
         }
         $data['title'] = "Data Trx";
-        $this->crud->setParamDataPagination("tbl_trx");
+        $this->crud->setParamDataPagination("tbl_trx",$id,$metode,"","","","","","id");
 
         $data_product = $this->crud->data_pagination();
         $data['data'] = $data_product["data"];

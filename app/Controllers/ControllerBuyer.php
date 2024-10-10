@@ -24,7 +24,7 @@ class ControllerBuyer extends BaseController
             $metode = "";
         }
         $data['title'] = "Data Buyer";
-        $this->crud->setParamDataPagination("tbl_buyer tby", $id, $metode, "tbl_supplier ts", "tby.supplier_id=ts.id", "tby.id, tby.buyer_id, tby.name, tby.qty, tby.price, ts.name as supplier_name");
+        $this->crud->setParamDataPagination("tbl_buyer tby", $id, $metode, "tbl_supplier ts", "tby.supplier_id=ts.id", "tby.id, tby.buyer_id, tby.name, tby.qty, tby.price, ts.name as supplier_name","","","tby.id");
 
         $data_product = $this->crud->data_pagination();
         $data['data'] = $data_product["data"];

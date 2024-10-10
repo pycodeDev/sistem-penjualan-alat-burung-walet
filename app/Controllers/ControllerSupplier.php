@@ -24,7 +24,7 @@ class ControllerSupplier extends BaseController
             $metode = "";
         }
         $data['title'] = "Data Supplier";
-        $this->crud->setParamDataPagination("tbl_supplier");
+        $this->crud->setParamDataPagination("tbl_supplier",$id,$metode,"","","","","","id");
 
         $data_product = $this->crud->data_pagination();
         $data['data'] = $data_product["data"];

@@ -24,7 +24,7 @@ class ControllerPaymentMethod extends BaseController
             $metode = "";
         }
         $data['title'] = "Data Payment Method";
-        $this->crud->setParamDataPagination("tbl_payment_method");
+        $this->crud->setParamDataPagination("tbl_payment_method",$id,$metode,"","","","","","id");
 
         $data_product = $this->crud->data_pagination();
         $data['data'] = $data_product["data"];

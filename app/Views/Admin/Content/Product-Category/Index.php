@@ -22,8 +22,8 @@
 
                     <div class="card-tools">
                         <ul class="pagination pagination-sm float-right">
-                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="<?= base_url() ?>product/category-product/<?=$back?>/back">&laquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="<?= base_url() ?>product/category-product/<?=$next?>/next">&raquo;</a></li>
                         </ul>
                     </div>
                 </div>

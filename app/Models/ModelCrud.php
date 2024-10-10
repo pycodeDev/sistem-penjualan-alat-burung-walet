@@ -14,10 +14,11 @@ class ModelCrud extends Model
         "on"=>"",
         "select"=>"",
         "where"=>"",
-        "value"=>""
+        "value"=>"",
+        "where_id_page"=>""
     );
 
-    public function setParamDataPagination($table, $last_id=0, $metode="", $join="", $on="", $select="", $where="", $value="")
+    public function setParamDataPagination($table, $last_id=0, $metode="", $join="", $on="", $select="", $where="", $value="", $where_id_page="")
     {
         $this->param['last_id'] = $last_id;
         $this->param['metode'] = $metode;
@@ -27,6 +28,7 @@ class ModelCrud extends Model
         $this->param['select'] = $select;
         $this->param['where'] = $where;
         $this->param['value'] = $value;
+        $this->param['where_id_page'] = $where_id_page;
     }
 
     public function save_data($table, $data)
@@ -84,10 +86,11 @@ class ModelCrud extends Model
         }
 
         if ($this->param['metode'] != "") {
+            $where_id_page = $this->param['where_id_page'];
             if ($this->param['metode'] == "next") {
-                $builder->orWhere('id <', $this->param['last_id'])->orderBy('id', 'DESC');
+                $builder->orWhere("$where_id_page < ", $this->param['last_id'])->orderBy($this->param['where_id_page'], 'DESC');
             }else{
-                $builder->orWhere('id >', $this->param['last_id'])->orderBy('id', 'ASC');
+                $builder->orWhere("$where_id_page > ", $this->param['last_id'])->orderBy($this->param['where_id_page'], 'ASC');
             }
         }else{
             $builder->orderBy('id', 'DESC');
