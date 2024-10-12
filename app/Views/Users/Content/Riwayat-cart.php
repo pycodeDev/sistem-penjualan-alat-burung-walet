@@ -65,7 +65,7 @@
                 ?></span></p>
             </div>
             <div class="w-full md:w-1/3 mt-6 md:mt-0">
-                <a href="checkout.html" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Proceed to Checkout</a>
+                <button id="cekout" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Proceed to Checkout</button>
             </div>
         </div>
     </div>
@@ -111,6 +111,39 @@
                     alert('Terjadi kesalahan saat mengupdate cart.');
                 });
             });
+        });
+    });
+
+    document.getElementById('cekout').addEventListener('click', function() {
+        // Data yang akan dikirim
+
+        // Melakukan POST request menggunakan fetch API
+        fetch('<?= base_url('client/trx/order/') ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': '<?= csrf_hash() ?>' // Untuk keamanan CSRF
+            },
+            body: JSON.stringify({
+                is_cart: 1
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // alert('sukses')
+                // console.log(data)
+                window.location.href = '<?= base_url() ?>client/trx/'+data.trx_id;
+            } else {
+                // alert('gagal')
+                // console.log(data)
+                location.reload(); // Tetap refresh jika gagal
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
         });
     });
 </script>

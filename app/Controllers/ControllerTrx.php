@@ -329,14 +329,15 @@ class ControllerTrx extends BaseController
             $this->crud->save_data('tbl_trx_item', $trx_item);
         }else{ 
             $qty = 0;
-            $cart = false;
+            $success = 0;
+            $fail = 0;
             $this->crud->setParamDataPagination("tbl_cart");
             $cart = $this->crud->select_1_cond("user_id", $uid);
-            if (count($cart[0]) == 0) {
+            if (count($cart) == 0) {
                 $this->session->setFlashdata('err_msg', 'Maaf, Cart Anda Kosong !');
                 return $this->response->setJSON(['success' => false]);
             }
-            foreach ($cart[0] as $cart_item) {
+            foreach ($cart as $cart_item) {
                 $trx_id_item = $this->crud->generateString("trx_item");  
 
                 $this->crud->setParamDataPagination("tbl_product");
@@ -353,27 +354,53 @@ class ControllerTrx extends BaseController
                     $trx_item['created']=$created[0];
                     $trx_item['created_at']= $waktuSekarang;
                     $trx_item['updated_at']= $waktuSekarang;
-                    $qty = $cart_item['qty'];
+                    $qty = $cart_item['qty'] + $qty;
 
                     $this->crud->save_data('tbl_trx_item', $trx_item);
+
+                    $this->crud->setParamDataPagination("tbl_cart");
+                    $this->crud->delete_data($cart_item['id']);
+                    $success = $success + 1;
                 }else {
-                    $cart = true;
+                    $fail = $fail + 1;
                 }
             }
         }
 
-        $trx['trx_id'] = $trx_id;
-        $trx['user_id'] = $uid;
-        $trx['nama_user'] = $user[0]['name'];
-        $trx['total'] = $qty;
-        $trx['price'] = $price;
-        $trx['status'] = "PENDING";
-        $trx['created']=$created[0];
-        $trx['created_at']= $waktuSekarang;
-        $trx['updated_at']= $waktuSekarang;
-        $this->crud->save_data('tbl_trx', $trx);
-        $this->session->setFlashdata('msg', 'Silahkan Pilih Metode Pembayaran');
-
-        return $this->response->setJSON(['success' => true, 'trx_id' => $trx_id]);
+        if ($tipe == 1) {
+            if ($success != 0) {
+                $trx['trx_id'] = $trx_id;
+                $trx['user_id'] = $uid;
+                $trx['nama_user'] = $user[0]['name'];
+                $trx['total'] = $qty;
+                $trx['price'] = $price;
+                $trx['status'] = "PENDING";
+                $trx['created']=$created[0];
+                $trx['created_at']= $waktuSekarang;
+                $trx['updated_at']= $waktuSekarang;
+                $this->crud->save_data('tbl_trx', $trx);
+                $this->session->setFlashdata('msg', 'Silahkan Pilih Metode Pembayaran');
+        
+                return $this->response->setJSON(['success' => true, 'trx_id' => $trx_id]);
+            }else {
+                $this->session->setFlashdata('msg', 'Maaf Transaksi Tidak di proses !!');
+        
+                return $this->response->setJSON(['success' => false]);
+            }
+        }else{
+            $trx['trx_id'] = $trx_id;
+            $trx['user_id'] = $uid;
+            $trx['nama_user'] = $user[0]['name'];
+            $trx['total'] = $qty;
+            $trx['price'] = $price;
+            $trx['status'] = "PENDING";
+            $trx['created']=$created[0];
+            $trx['created_at']= $waktuSekarang;
+            $trx['updated_at']= $waktuSekarang;
+            $this->crud->save_data('tbl_trx', $trx);
+            $this->session->setFlashdata('msg', 'Silahkan Pilih Metode Pembayaran');
+    
+            return $this->response->setJSON(['success' => true, 'trx_id' => $trx_id]);
+        }
     }
 }
