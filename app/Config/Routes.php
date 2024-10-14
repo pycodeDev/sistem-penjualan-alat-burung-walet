@@ -90,7 +90,7 @@ $routes->group('client', function($routes) {
     $routes->get('rekening', 'ControllerUser::add_rekening');
     
     $routes->get('home', 'ControllerUser::dashboard_user');
-    $routes->get('home/(:num)/(:any)/(:any)', 'ControllerUser::dashboard_user');
+    $routes->get('home/(:num)/(:any)', 'ControllerUser::dashboard_user/$1/$2');
 
     $routes->group('cart', function($routes) {
         $routes->get('/', 'ControllerCart::index');
@@ -101,7 +101,7 @@ $routes->group('client', function($routes) {
     
     $routes->group('product', function($routes) {
         $routes->get('/', 'ControllerProduct::client_index');
-        $routes->get('/(:num)/(:any)/(:any)', 'ControllerProduct::client_index/$1/$2/$3');
+        $routes->get('/(:num)/(:any)', 'ControllerProduct::client_index/$1/$2');
         $routes->get('(:num)', 'ControllerProduct::client_detail/$1');
     });
     

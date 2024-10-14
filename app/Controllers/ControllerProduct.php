@@ -133,20 +133,15 @@ class ControllerProduct extends BaseController
         return redirect()->to("/product/data-product");
     }
 
-    public function client_index($id = null, $metode = null, $search="")
+    public function client_index($id = null, $metode = null)
     {
         if ($id == null) {
             $id = 0;
             $metode = "";
         }
-        if ($search != "") {
-            $where = "name";
-        }else{
-            $where="";
-        }
 
         $data['title'] = "Data Product";
-        $this->crud->setParamDataPagination("tbl_product tp",$id,$metode,"tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name", $where, $search);
+        $this->crud->setParamDataPagination("tbl_product tp",$id,$metode,"tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name");
 
         $data_product = $this->crud->data_pagination();
         $data['data'] = $data_product["data"];
