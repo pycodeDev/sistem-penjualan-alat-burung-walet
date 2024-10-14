@@ -56,7 +56,7 @@ class ControllerUser extends BaseController
         
         // $this->crud->setParamDataPagination("tbl_trx");
         // $data['trx'] = $this->crud->select_1_cond("user_id", $user_id);
-        $this->crud->setParamDataPagination("tbl_trx",$id,$metode,"","","","user_id",$user_id,"id");
+        $this->crud->setParamDataPagination("tbl_trx",$id,$metode,"","","","user_id =",$user_id,"id");
 
         $data_product = $this->crud->data_pagination();
         $data['trx'] = $data_product["data"];

@@ -25,7 +25,7 @@
 
 <!-- Search Form -->
 <div class="container mx-auto px-6 py-4">
-    <form action="#" method="GET">
+    <form action="<?=base_url()?>client/search/product" method="GET">
         <div class="flex justify-center">
             <input type="text" name="search" placeholder="Search products..." class="w-full md:w-1/2 px-4 py-2 border rounded-l-lg focus:outline-none">
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">Search</button>

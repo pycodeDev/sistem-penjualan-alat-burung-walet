@@ -98,7 +98,7 @@ class ModelCrud extends Model
 
         if ($this->param['value'] != "") {
             $where = $this->param['where'];
-            $builder->orWhere("$where =", $this->param['value']);
+            $builder->orWhere("$where", $this->param['value']);
         }
 
         $builder->limit(10);

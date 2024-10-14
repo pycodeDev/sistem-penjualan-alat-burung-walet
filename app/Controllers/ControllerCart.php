@@ -26,7 +26,7 @@ class ControllerCart extends BaseController
 
         $id =$this->session->get('id');
 
-        $this->crud->setParamDataPagination("tbl_cart tc",0,"","tbl_product tp", "tc.product_id=tp.id", "tc.id, tc.user_id, tc.product_id, tc.qty, tc.created_at, tc.updated_at, tp.name, tp.price, (tp.price * tc.qty) as harga", "tc.user_id", $id);
+        $this->crud->setParamDataPagination("tbl_cart tc",0,"","tbl_product tp", "tc.product_id=tp.id", "tc.id, tc.user_id, tc.product_id, tc.qty, tc.created_at, tc.updated_at, tp.name, tp.price, (tp.price * tc.qty) as harga", "tc.user_id =", $id);
 
         $buyer = $this->crud->data_pagination();
         $totalSum = array_sum(array_column($buyer['data'], 'harga'));

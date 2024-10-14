@@ -41,11 +41,11 @@ class ControllerProduct extends BaseController
             $metode = "";
         }
         $data['title'] = "Detail Product";
-        $this->crud->setParamDataPagination("tbl_comment tm",$id,$metode,"tbl_user tu", "tm.user_id=tu.id", "tm.id, tm.user_id, tm.product_id, tm.comment, tm.created_at, tu.name as name_user", "product_id", $id_product);
+        $this->crud->setParamDataPagination("tbl_comment tm",$id,$metode,"tbl_user tu", "tm.user_id=tu.id", "tm.id, tm.user_id, tm.product_id, tm.comment, tm.created_at, tu.name as name_user", "product_id =", $id_product);
 
         $data_comment = $this->crud->data_pagination();
 
-        $this->crud->setParamDataPagination("tbl_product tp",0,"","tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name, tp.deskripsi", "tp.id", $id_product);
+        $this->crud->setParamDataPagination("tbl_product tp",0,"","tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name, tp.deskripsi", "tp.id =", $id_product);
         $product = $this->crud->data_pagination();
         
         $data['prd']=$product['data'][0];
@@ -151,14 +151,29 @@ class ControllerProduct extends BaseController
         return view('users/content/product', $data);
     }
     
+    public function client_index_search()
+    {
+        $searchTerm = $this->request->getGet('search');
+
+        $data['title'] = "Data Product";
+        $this->crud->setParamDataPagination("tbl_product tp",0,"","tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name","tp.name like","%$searchTerm%");
+
+        $data_product = $this->crud->data_pagination();
+        $data['data'] = $data_product["data"];
+        $data['next'] = $data_product["last_id"];
+        $data['back'] = $data_product["first_id"];
+        
+        return view('users/content/product', $data);
+    }
+    
     public function client_detail($id = null, $last_id=0,$metode="")
     {
         $data['title'] = "Data Product";
-        $this->crud->setParamDataPagination("tbl_product tp",0,"","tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name,tp.deskripsi", "tp.id", $id);
+        $this->crud->setParamDataPagination("tbl_product tp",0,"","tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name,tp.deskripsi", "tp.id =", $id);
 
         $data_product = $this->crud->data_pagination();
         
-        $this->crud->setParamDataPagination("tbl_comment tc",$last_id,$metode,"tbl_user tu", "tc.user_id=tu.id", "tc.id, tc.user_id, tc.product_id, tc.comment, tc.created_at, tu.name", "tc.product_id", $id);
+        $this->crud->setParamDataPagination("tbl_comment tc",$last_id,$metode,"tbl_user tu", "tc.user_id=tu.id", "tc.id, tc.user_id, tc.product_id, tc.comment, tc.created_at, tu.name", "tc.product_id =", $id);
         $komen = $this->crud->data_pagination();
 
         $data['data'] = $data_product["data"][0];

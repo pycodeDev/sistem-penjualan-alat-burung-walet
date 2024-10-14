@@ -105,6 +105,8 @@ $routes->group('client', function($routes) {
         $routes->get('(:num)', 'ControllerProduct::client_detail/$1');
     });
     
+    $routes->get('search/product', 'ControllerProduct::client_index_search');
+    
     $routes->group('trx', function($routes) {
         $routes->get('/', 'ControllerTrx::client_index');
         $routes->post('/', 'ControllerTrx::client_index');

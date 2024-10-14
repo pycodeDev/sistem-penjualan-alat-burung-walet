@@ -187,7 +187,7 @@ class ControllerTrx extends BaseController
         $data_payment = $this->crud->read_all_data();
 
         if (count($data_trx_item) == 1) {
-            $this->crud->setParamDataPagination("tbl_comment tc",0,"","tbl_user tu", "tc.user_id=tu.id", "tc.id, tc.user_id, tc.product_id, tc.comment, tc.created_at, tu.name", "tc.product_id", $data_trx_item[0]['barang_id']);
+            $this->crud->setParamDataPagination("tbl_comment tc",0,"","tbl_user tu", "tc.user_id=tu.id", "tc.id, tc.user_id, tc.product_id, tc.comment, tc.created_at, tu.name", "tc.product_id =", $data_trx_item[0]['barang_id']);
             $komen = $this->crud->data_pagination();    
 
             $data['comments'] = $komen;
