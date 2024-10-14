@@ -416,4 +416,25 @@ class ControllerTrx extends BaseController
         $this->session->setFlashdata('msg', 'Berhasil Menyelesaikan Transaksi !!');
         return redirect()->to("/client/trx/$trx_id");
     }
+
+    public function review()
+    {
+        if (!$this->session->get('logged_in_user')) {
+            $this->session->setFlashdata('err_msg', 'Silahkan Login Dahulu');
+            return redirect()->to('/client/home');
+        }
+
+        $data = $this->request->getPost();
+        $waktuSekarang = Time::now();
+        $uid =$this->session->get('id');
+        $rvw['user_id'] = $uid;
+        $rvw['product_id'] = $data['product_id'];
+        $rvw['comment'] = $data['comment'];
+        $rvw['created_at']= $waktuSekarang;
+        $rvw['updated_at']= $waktuSekarang;
+        $trx_id = $data['trx_id'];
+        $this->crud->save_data('tbl_comment', $rvw);
+        $this->session->setFlashdata('msg', 'Berhasil Menambahkan Review !');
+        return redirect()->to("/client/trx/$trx_id");
+    }
 }

@@ -113,5 +113,7 @@ $routes->group('client', function($routes) {
         $routes->post('upload', 'ControllerTrx::upload');
     });
     $routes->get('complete/trx/(:any)', 'ControllerTrx::complete_trx/$1');
+
+    $routes->post('review/submit-comment', 'ControllerTrx::review');
 });
 

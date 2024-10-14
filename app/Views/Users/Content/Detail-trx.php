@@ -14,8 +14,10 @@
             <div class="w-full md:w-2/3 flex flex-col space-y-4">
                 <?php
                 $subtotal = 0;
+                $product_id = 0;
                 foreach ($trx_item as $trx_i) {
                     $subtotal = $subtotal + $trx_i['price'];
+                    $product_id = $trx_i['barang_id']
                 ?>
                 <div>
                     <h4 class="text-xl font-bold text-gray-800 mb-2"><?= $trx_i['nama_barang'] ?></h4>
@@ -134,9 +136,11 @@
 
             <!-- Form input komentar -->
             <?php if (count($trx_item) == 1): ?>
-                <form action="/submit-comment" method="POST" class="mb-4">
+                <form action="<?= base_url() ?>/client/review/submit-comment" method="POST" class="mb-4">
                     <label for="comment" class="block text-sm font-medium text-gray-700">Tulis Komentar</label>
                     <textarea id="comment" name="comment" rows="3" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+                    <input type="hidden" name="product_id" value="<?= $product_id ?>">
+                    <input type="hidden" name="trx_id" value="<?= $trx['trx_id'] ?>">
                     <button type="submit" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
                         Kirim Komentar
                     </button>
