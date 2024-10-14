@@ -101,7 +101,7 @@ $routes->group('client', function($routes) {
     
     $routes->group('product', function($routes) {
         $routes->get('/', 'ControllerProduct::client_index');
-        $routes->get('/(:num)/(:any)/(:any)', 'ControllerProduct::client_index');
+        $routes->get('/(:num)/(:any)/(:any)', 'ControllerProduct::client_index/$1/$2/$3');
         $routes->get('(:num)', 'ControllerProduct::client_detail/$1');
     });
     
@@ -112,5 +112,6 @@ $routes->group('client', function($routes) {
         $routes->get('(:any)', 'ControllerTrx::client_detail/$1');
         $routes->post('upload', 'ControllerTrx::upload');
     });
+    $routes->get('complete/trx/(:any)', 'ControllerTrx::complete_trx/$1');
 });
 

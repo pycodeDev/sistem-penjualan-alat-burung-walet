@@ -403,4 +403,17 @@ class ControllerTrx extends BaseController
             return $this->response->setJSON(['success' => true, 'trx_id' => $trx_id]);
         }
     }
+
+    public function complete_trx($trx_id)
+    {
+        $waktuSekarang = Time::now();
+
+        $trx['status'] = "SUCCESS";
+        $trx['updated_at'] = $waktuSekarang;
+        $this->crud->setParamDataPagination("tbl_trx");
+        $this->crud->update_data($trx, "trx_id", $trx_id);
+
+        $this->session->setFlashdata('msg', 'Berhasil Menyelesaikan Transaksi !!');
+        return redirect()->to("/client/trx/$trx_id");
+    }
 }

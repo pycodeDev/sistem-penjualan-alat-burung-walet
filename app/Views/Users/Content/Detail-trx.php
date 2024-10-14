@@ -124,7 +124,7 @@
             </div>
             <?php elseif ($trx['status'] == 'SHIPPING'): ?>
                 <span>Ayo Selesaikan Transaksi Anda. </span>
-            <a href="url-to-complete-transaction" class="badge bg-yellow-500 text-white px-4 py-2 rounded-lg">
+            <a href="<?= base_url() ?>client/complete/trx/<?= $trx['trx_id'] ?>" class="badge bg-yellow-500 text-white px-4 py-2 rounded-lg">
                 Selesaikan Transaksi
             </a>
         <?php elseif ($trx['status'] == 'SUCCESS'): ?>
@@ -145,7 +145,7 @@
                 <!-- List komentar -->
                 <div class="space-y-4">
                     <?php if (count($comments) > 0): ?>
-                        <?php foreach ($comments as $comment): ?>
+                        <?php foreach ($comments['data'] as $comment): ?>
                             <div class="p-4 bg-gray-100 rounded-lg shadow">
                                 <p class="text-gray-800"><?= htmlspecialchars($comment['comment']) ?></p>
                                 <span class="text-xs text-gray-500">Dikirim oleh <?= htmlspecialchars($comment['name']) ?> pada <?= htmlspecialchars($comment['created_at']) ?></span>
