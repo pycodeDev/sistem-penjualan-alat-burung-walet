@@ -35,9 +35,8 @@
                     <!-- Dropdown Menu -->
                     <div id="userDropdownMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 hidden">
                         <div class="py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+                            <a href="<?= base_url() ?>client/setting" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</a>
+                            <a href="<?= base_url() ?>client/logout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
                         </div>
                     </div>
                 </div>

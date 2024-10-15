@@ -39,7 +39,10 @@ class Home extends BaseController
     
     public function tes(): string
     {
-        return view('users/content/detail-order');
+        $this->crud->setParamDataPagination("tbl_payment_method");
+        $data_payment = $this->crud->read_all_data();
+        $data['payment_data'] = $data_payment;
+        return view('users/content/settings',$data);
     }
     
     public function login()

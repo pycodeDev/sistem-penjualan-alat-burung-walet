@@ -150,4 +150,56 @@ class ControllerUser extends BaseController
             ]);
         }
     }
+
+    public function settings_profile()
+    {
+        $uid =$this->session->get('id');
+        $data['title'] = "Profile User";
+        $this->crud->setParamDataPagination("tbl_user");
+        $user = $this->crud->select_1_cond("id", $uid);
+
+        $this->crud->setParamDataPagination("tbl_payment_method");
+        $data_payment = $this->crud->read_all_data();
+        $data['payment_data'] = $data_payment;
+
+        return view('users/content/settings',$data);
+    }
+
+    public function save_rekening()
+    {
+        $request = service('request');
+        $rek = $request->getJSON()->account_number;
+        $rek_name = $request->getJSON()->account_name;
+        $rek_id = $request->getJSON()->account_id;
+        $payment_method = $request->getJSON()->payment_method;
+        $waktuSekarang = Time::now();
+
+        if ($rek_id == 0) {
+            $rekening['name']= $payment_method;
+            $rekening['user_id']= $this->session->get('id');
+            $rekening['rekening']= $rek;
+            $rekening['rekening_name']= $rek_name;
+            $rekening['status']= 1;
+            $rekening['created_at']= $waktuSekarang;
+            $rekening['updated_at'] = $waktuSekarang;
+
+            $this->crud->save_data('tbl_rekening', $product);
+        }else{
+            $rekening['rekening']= $rek;
+            $rekening['rekening_name']= $rek_name;
+            $rekening['updated_at'] = $waktuSekarang;
+            $this->crud->setParamDataPagination("tbl_rekening");
+            $this->crud->update_data($rekening, "id", $rek_id);
+        }
+
+        $this->session->setFlashdata('msg', 'Berhasil Melakukan Action Rekening !');
+
+        return $this->response->setJSON(['success' => true]);
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to('/client/home');
+    }
 }

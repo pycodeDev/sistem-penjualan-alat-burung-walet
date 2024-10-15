@@ -235,7 +235,7 @@ class ControllerTrx extends BaseController
                 $rekening['rekening_name']= $data['rekening_name'];
                 $rekening['status']= 1;
                 $rekening['created_at']= $waktuSekarang;
-                $trx['updated_at'] = $waktuSekarang;
+                $rekening['updated_at'] = $waktuSekarang;
                 $id_rek = $this->crud->save_data_return('tbl_rekening', $rekening);
             }else{
                 $id_rek = $data['is_rekening'];

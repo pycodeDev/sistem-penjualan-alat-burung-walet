@@ -88,6 +88,7 @@ $routes->group('client', function($routes) {
     $routes->get('register', 'Home::register');
     $routes->post('register', 'Home::p_register');
     $routes->get('rekening', 'ControllerUser::add_rekening');
+    $routes->get('setting', 'ControllerUser::settings_profile');
     
     $routes->get('home', 'ControllerUser::dashboard_user');
     $routes->get('home/(:num)/(:any)', 'ControllerUser::dashboard_user/$1/$2');
@@ -117,5 +118,9 @@ $routes->group('client', function($routes) {
     $routes->get('complete/trx/(:any)', 'ControllerTrx::complete_trx/$1');
 
     $routes->post('review/submit-comment', 'ControllerTrx::review');
+
+    $routes->post('payment-submit', 'ControllerUser::save_rekening');
+
+    $routes->get('logout', 'ControllerUser::logout');
 });
 
