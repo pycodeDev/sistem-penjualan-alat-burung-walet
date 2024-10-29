@@ -84,7 +84,7 @@
                                 <?php
                                     if ($trx['status'] == "PENDING") {
                                         echo '<span class="right badge badge-warning text-white">PENDING</span>';
-                                    }elseif ($trx['status'] == 'KONFIRM') {
+                                    }elseif ($trx['status'] == 'CONFIRM') {
                                         echo '<span class="right badge badge-info text-white">KONFIRM</span>';
                                     }elseif ($trx['status'] == 'SHIPPING') {
                                         echo '<span class="right badge badge-danger text-white">SHIPPING</span>';
