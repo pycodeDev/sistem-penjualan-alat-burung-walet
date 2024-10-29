@@ -6,6 +6,9 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/tes', 'Home::tes');
+$routes->get('client', function() {
+    return redirect()->to('/client/home');
+});
 $routes->get('/', 'ControllerAdmin::index');
 // $routes->get('/user', 'Home::tes');
 $routes->get('upload/(:any)', 'ControllerTrx::show/$1');
