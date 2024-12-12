@@ -91,7 +91,7 @@ class ControllerUser extends BaseController
         $data['back'] = $data_product["first_id"];
         $data['title'] = "Welcome To MarketPlace";
 
-        $data_product_new = $this->crud->solo_query("select * from tbl_product order by id DESC limit 3");
+        $data_product_new = $this->crud->solo_query("select * from tbl_product order by id DESC limit 6");
         $data['new_product']=$data_product_new;
 
         return view('users/content/home', $data);
