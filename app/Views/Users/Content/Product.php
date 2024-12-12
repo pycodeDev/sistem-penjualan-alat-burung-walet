@@ -34,8 +34,8 @@
     <!-- Pagination -->
     <div class="flex justify-center mt-6">
         <nav class="inline-flex">
-            <a href="<?=base_url()?>clientproduct/<?=$back?>/back" class="px-3 py-2 mx-1 bg-white border rounded-lg hover:bg-gray-200">Previous</a>
-            <a href="<?=base_url()?>clientproduct/<?=$next?>/next" class="px-3 py-2 mx-1 bg-white border rounded-lg hover:bg-gray-200">Next</a>
+            <a href="<?=base_url()?>client/product/<?=$back?>/back" class="px-3 py-2 mx-1 bg-white border rounded-lg hover:bg-gray-200">Previous</a>
+            <a href="<?=base_url()?>client/product/<?=$next?>/next" class="px-3 py-2 mx-1 bg-white border rounded-lg hover:bg-gray-200">Next</a>
         </nav>
     </div>
 </div>

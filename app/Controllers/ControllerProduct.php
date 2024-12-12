@@ -141,7 +141,7 @@ class ControllerProduct extends BaseController
         }
 
         $data['title'] = "Data Product";
-        $this->crud->setParamDataPagination("tbl_product tp",$id,$metode,"tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name");
+        $this->crud->setParamDataPagination("tbl_product tp",$id,$metode,"tbl_product_category tpc", "tp.category_id=tpc.id", "tp.id, tp.name, tp.price, tp.stok, tp.image, tp.created_at, tp.updated_at, tpc.name as category_name", "", "", "tp.id");
 
         $data_product = $this->crud->data_pagination();
         $data['data'] = $data_product["data"];

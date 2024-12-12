@@ -108,7 +108,7 @@ $routes->group('client', function($routes) {
     
     $routes->group('product', function($routes) {
         $routes->get('/', 'ControllerProduct::client_index');
-        $routes->get('/(:num)/(:any)', 'ControllerProduct::client_index/$1/$2');
+        $routes->get('(:num)/(:any)', 'ControllerProduct::client_index/$1/$2');
         $routes->get('(:num)', 'ControllerProduct::client_detail/$1');
     });
     
