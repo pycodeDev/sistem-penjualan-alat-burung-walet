@@ -331,6 +331,7 @@ class ControllerTrx extends BaseController
             $qty = 0;
             $success = 0;
             $fail = 0;
+            $price = 0;
             $this->crud->setParamDataPagination("tbl_cart");
             $cart = $this->crud->select_1_cond("user_id", $uid);
             if (count($cart) == 0) {
@@ -343,14 +344,14 @@ class ControllerTrx extends BaseController
                 $this->crud->setParamDataPagination("tbl_product");
                 $produk = $this->crud->select_1_cond("id", $cart_item['product_id']);
 
-                $price = $cart_item['qty'] * $produk[0]['price'];
+                $price_item = $cart_item['qty'] * $produk[0]['price'];
                 if ($produk[0]['stok'] > $qty) {
                     $trx_item['trx_id'] = $trx_id;
                     $trx_item['item_id'] = $trx_id_item;
                     $trx_item['barang_id'] = $cart_item['product_id'];
                     $trx_item['nama_barang'] = $produk[0]['name'];
                     $trx_item['qty'] = $cart_item['qty'];
-                    $trx_item['price'] = $price;
+                    $trx_item['price'] = $price_item;
                     $trx_item['created']=$created[0];
                     $trx_item['created_at']= $waktuSekarang;
                     $trx_item['updated_at']= $waktuSekarang;
@@ -364,6 +365,7 @@ class ControllerTrx extends BaseController
                 }else {
                     $fail = $fail + 1;
                 }
+                $price = $price + $price_item;
             }
         }
 

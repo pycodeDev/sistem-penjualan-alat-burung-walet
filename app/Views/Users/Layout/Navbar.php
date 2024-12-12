@@ -9,7 +9,7 @@
             <div class="flex items-center">
                 <a href="<?= base_url() ?>client/home" class="text-gray-600 hover:text-gray-800 mx-4">Home</a>
                 <a href="<?= base_url() ?>client/product" class="text-gray-600 hover:text-gray-800 mx-4">Product</a>
-                <a href="<?= base_url() ?>client/trx" class="text-gray-600 hover:text-gray-800 mx-4">Trx</a>
+                <a href="<?= base_url() ?>client/trx" class="text-gray-600 hover:text-gray-800 mx-4">Transaksi</a>
             </div>
             
             <div class="flex items-center">
