@@ -92,6 +92,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="<?= base_url(); ?>admin/data-admin" class="nav-link" data-subsection="admin">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Admin
+              </p>
+            </a>
+          </li>
           <li class="nav-item" data-section="supplier">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-boxes"></i>

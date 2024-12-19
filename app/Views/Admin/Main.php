@@ -57,6 +57,10 @@
       section = null 
       subsection = "user"
     }
+    if (section == "admin") {
+      section = null 
+      subsection = "admin"
+    }
     
     setActiveMenu(subsection, section);
 </script>

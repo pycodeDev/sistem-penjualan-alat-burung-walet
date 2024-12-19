@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\ModelCrud;
+use CodeIgniter\I18n\Time;
 
 class ControllerAdmin extends BaseController
 {
@@ -24,6 +25,49 @@ class ControllerAdmin extends BaseController
             return redirect()->to('/dashboard');
         }
         return view('admin/index');
+    }
+
+    public function index_admin($id = null, $metode = null)
+    {
+        if ($id == null) {
+            $id = 0;
+            $metode = "";
+        }
+        $data['title'] = "Data Admin";
+        $this->crud->setParamDataPagination("tbl_admin",$id,$metode,"","","","","","id");
+
+        $data_product = $this->crud->data_pagination();
+        $data['data'] = $data_product["data"];
+        $data['next'] = $data_product["last_id"];
+        $data['back'] = $data_product["first_id"];
+
+        return view('admin/content/admin/index', $data);
+    }
+
+    public function add_admin()
+    {
+        $data['title'] = "Add Data Admin";
+
+        return view('admin/content/admin/add-data', $data);
+    }
+
+    public function save_admin()
+    {
+        $data = $this->request->getPost();
+        $waktuSekarang = Time::now();
+
+        $product['name'] = $data['name'];
+        $product['email'] = $data['email'];
+        $product['hp'] = $data['hp'];
+        $product['level'] = $data['level'];
+        $product['password'] = password_hash($data['password'], PASSWORD_DEFAULT);;
+        $product['created_at'] = $waktuSekarang;
+        $product['updated_at'] = $waktuSekarang;
+
+        $this->crud->save_data('tbl_admin', $product);
+        $this->session->setFlashdata('success', 'Admin Data Sucess Save');
+
+        return redirect()->to("/admin/data-admin");
     }
 
     public function login()

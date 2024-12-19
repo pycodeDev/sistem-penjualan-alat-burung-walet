@@ -13,6 +13,10 @@ $routes->get('/', function() {
     return redirect()->to('/client/home');
 });
 $routes->get('/admin', 'ControllerAdmin::index');
+$routes->get('admin/data-admin', 'ControllerAdmin::index_admin');
+$routes->get('admin/data-admin/(:num)?/(:any)?', 'ControllerAdmin::index_admin/$1/$2');
+$routes->get('admin/data-admin/add-admin', 'ControllerAdmin::add_admin');
+$routes->post('admin/data-admin', 'ControllerAdmin::save_admin');
 // $routes->get('/user', 'Home::tes');
 $routes->get('upload/(:any)', 'ControllerTrx::show/$1');
 
