@@ -22,8 +22,8 @@
 
                     <div class="card-tools">
                         <ul class="pagination pagination-sm float-right">
-                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="<?= base_url() ?>trx/trx-confirm/<?=$back?>/back">&laquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="<?= base_url() ?>trx/trx-confirm/<?=$next?>/next">&raquo;</a></li>
                         </ul>
                     </div>
                 </div>
@@ -70,6 +70,7 @@
                                         <td ><a href="<?= base_url(); ?>trx/trx-confirm/<?= $ct['trx_id'] ?>" class="btn btn-sm btn-info"><div class="fa fa-eye text-white"></div></a>
                                             </tr>
                                 <?php
+                                $no++;
                                     }
                                 }
                             ?>

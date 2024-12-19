@@ -62,6 +62,7 @@ $routes->group('trx', ['filter' => 'auth'], function($routes) {
     $routes->get('data-trx/(:num)?/(:any)?', 'ControllerTrx::index/$1/$2');
     $routes->get('data-trx/(:any)', 'ControllerTrx::detail/$1');
     $routes->get('trx-confirm', 'ControllerTrx::confirm_trx');
+    $routes->get('trx-confirm/(:num)?/(:any)?', 'ControllerTrx::confirm_trx/$1/$2');
     $routes->get('trx-confirm/(:any)', 'ControllerTrx::detail_confirm_trx/$1');
     $routes->post('trx-confirm', 'ControllerTrx::action_confirm_trx');
 });

@@ -66,7 +66,7 @@ class ControllerTrx extends BaseController
             $metode = "";
         }
         $data['title'] = "Data Trx Confirm";
-        $this->crud->setParamDataPagination("tbl_payment_confirm");
+        $this->crud->setParamDataPagination("tbl_payment_confirm",$id,$metode,"","","","","","id");
 
         $data_product = $this->crud->data_pagination();
         $data['data'] = $data_product["data"];
@@ -220,10 +220,16 @@ class ControllerTrx extends BaseController
             $this->compressImage(WRITEPATH . 'uploads/' . $newName);
             $fileURL = base_url('upload/' . $newName);
 
+            $waktuSekarang = Time::now();
+            $created = explode(" ", $waktuSekarang);
+
             $data = $this->request->getPost();
             $payment_confirm['trx_id'] = $data['trx_id'];
             $payment_confirm['image'] = $fileURL;
             $payment_confirm['status'] = 'PENDING';
+            $payment_confirm['created'] = $created[0];
+            $payment_confirm['created_at'] = $waktuSekarang;
+            $payment_confirm['updated_at'] = $waktuSekarang;
 
             $this->crud->save_data('tbl_payment_confirm', $payment_confirm);
             $waktuSekarang = Time::now();
