@@ -125,7 +125,7 @@ $routes->group('client', function($routes) {
     $routes->group('cart', function($routes) {
         $routes->get('/', 'ControllerCart::index');
         $routes->post('/', 'ControllerCart::add');
-        $routes->put('/', 'ControllerCart::edit');
+        $routes->put('/', 'ControllerCart::updateCart');
         $routes->get('(:num)', 'ControllerCart::delete/$1');
     });
     

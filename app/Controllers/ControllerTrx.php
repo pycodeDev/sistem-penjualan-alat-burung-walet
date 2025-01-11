@@ -358,6 +358,7 @@ class ControllerTrx extends BaseController
             $trx_item['updated_at']= $waktuSekarang;
 
             $this->crud->save_data('tbl_trx_item', $trx_item);
+            $this->crud->solo_query("update tbl_product set stok = stok - $qty where id = $produk_id");
         }else{ 
             $qty = 0;
             $success = 0;
@@ -388,7 +389,11 @@ class ControllerTrx extends BaseController
                     $trx_item['updated_at']= $waktuSekarang;
                     $qty = $cart_item['qty'] + $qty;
 
+                    $stok = $cart_item['qty'];
+                    $id_p = $cart_item['product_id'];
+
                     $this->crud->save_data('tbl_trx_item', $trx_item);
+                    $this->crud->solo_query("update tbl_product set stok = stok - $stok where id = $id_p");
 
                     $this->crud->setParamDataPagination("tbl_cart");
                     $this->crud->delete_data($cart_item['id']);

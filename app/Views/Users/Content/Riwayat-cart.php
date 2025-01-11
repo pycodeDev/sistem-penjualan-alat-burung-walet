@@ -35,7 +35,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $total ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <button class="text-yellow-300 hover:text-yellow-500 update-cart-btn" data-product-id="<?= $cart['id'] ?>">Update</button>
+                                <!-- <button class="text-yellow-300 hover:text-yellow-500 update-cart-btn" data-product-id="<?= $cart['id'] ?>">Update</button> -->
                                 <a href="<?= base_url() ?>client/cart/<?= $cart['id'] ?>" class="text-red-600 hover:text-red-800">Remove</a>
                             </td>
                         </tr>
@@ -47,6 +47,13 @@
                 <!-- Add more rows as needed -->
             </tbody>
         </table>
+
+        <!-- Update All Button -->
+        <div class="text-right mt-4">
+            <button id="global-update-cart" class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600">
+                Update All
+            </button>
+        </div>
     </div>
 
     <!-- Cart Summary -->
@@ -73,18 +80,17 @@
 <?= $this->endSection() ?>
 <?= $this->section('js') ?>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Tangkap semua tombol update
+    document.addEventListener('DOMContentLoaded', function () {
+        // Tangkap tombol update per produk
         const updateButtons = document.querySelectorAll('.update-cart-btn');
 
         updateButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const productId = this.getAttribute('data-product-id');
                 const quantityInput = document.querySelector(`.quantity[data-product-id='${productId}']`);
                 const quantity = quantityInput.value;
 
-                // Mengirim data ke server menggunakan fetch
-                const url = "<?= base_url('client/cart/') ?>"
+                const url = "<?= base_url('client/cart/') ?>";
                 fetch(url, {
                     method: 'PUT',
                     headers: {
@@ -99,17 +105,53 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Berhasil, lakukan refresh halaman
                         location.reload();
                     } else {
-                        // Tampilkan error jika ada
-                        location.reload();
+                        alert('Failed to update cart item.');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Terjadi kesalahan saat mengupdate cart.');
+                    alert('An error occurred while updating the cart.');
                 });
+            });
+        });
+
+        // Tangkap tombol Update All
+        const globalUpdateButton = document.querySelector('#global-update-cart');
+        globalUpdateButton.addEventListener('click', function () {
+            const quantities = document.querySelectorAll('.quantity');
+            const cartData = [];
+
+            quantities.forEach(input => {
+                cartData.push({
+                    id_cart: input.getAttribute('data-product-id'),
+                    qty: input.value
+                });
+            });
+
+            const url = "<?= base_url('client/cart/') ?>";
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({
+                    cart_items: cartData
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Failed to update cart items.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the cart.');
             });
         });
     });

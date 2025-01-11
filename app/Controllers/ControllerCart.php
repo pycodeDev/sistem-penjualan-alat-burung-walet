@@ -96,6 +96,25 @@ class ControllerCart extends BaseController
 
         return $this->response->setJSON(['success' => true]);
     }
+
+    public function updateCart()
+    {
+        $request = $this->request->getJSON(true);
+
+        if (!isset($request['cart_items'])) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Data tidak valid']);
+        }
+
+        foreach ($request['cart_items'] as $item) {
+            $id_cart = $item['id_cart'];
+            $qty = $item['qty'];
+
+            $this->crud->solo_query("UPDATE tbl_cart SET qty = $qty WHERE id = $id_cart");
+        }
+
+        return $this->response->setJSON(['success' => true, 'message' => 'Keranjang berhasil diperbarui']);
+    }
+
     
     public function delete($id)
     {
