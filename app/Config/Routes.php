@@ -6,12 +6,30 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/tes', 'Home::tes');
+$routes->get('/graph', 'ControllerTrx::graph');
 $routes->get('client', function() {
     return redirect()->to('/client/home');
 });
 $routes->get('/', function() {
     return redirect()->to('/client/home');
 });
+
+$routes->group('report', function($routes) {
+    $routes->get('supplier/view', 'ControllerReport::index');
+    $routes->get('trx/view', 'ControllerReport::indexTrx');
+    $routes->get('product/view', 'ControllerReport::indexStock');
+    $routes->get('supplier', 'ControllerReport::exportPdf');
+    $routes->get('product', 'ControllerReport::exportPdfStok');
+    $routes->get('trx', 'ControllerReport::exportPdfTrx');
+});
+
+$routes->group('report-view', function($routes) {
+    $routes->get('supplier', 'ControllerReport::index_view_supplier');
+    $routes->get('trx', 'ControllerReport::index_view_trx');
+    $routes->get('stok', 'ControllerReport::index_view_product');
+});
+
+
 $routes->get('/admin', 'ControllerAdmin::index');
 $routes->get('admin/data-admin', 'ControllerAdmin::index_admin');
 $routes->get('admin/data-admin/(:num)?/(:any)?', 'ControllerAdmin::index_admin/$1/$2');

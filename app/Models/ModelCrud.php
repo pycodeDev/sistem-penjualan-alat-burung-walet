@@ -69,9 +69,16 @@ class ModelCrud extends Model
 	}
 
 	public function solo_query($query)
-	{
-		return $this->db->query($query)->getResultArray();
-	}
+    {
+        $result = $this->db->query($query);
+        // Jika query SELECT, kembalikan hasil sebagai array
+        if (stripos($query, 'SELECT') === 0) {
+            return $result->getResultArray();
+        }
+        // Untuk query non-SELECT (UPDATE, INSERT, DELETE), kembalikan status
+        return $result;
+    }
+
 
     public function data_pagination(){
         $builder = $this->db->table($this->param['table']);

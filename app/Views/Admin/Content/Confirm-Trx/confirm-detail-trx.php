@@ -139,6 +139,7 @@
                             </div>
                             <div class="col-7">
                                 <h5><img src="<?= $pc['image'] ?>" alt="bukti payment" style="width: 100%; max-width: 200px; height: auto;"></h5>
+                                <a class="btn btn-primary btn-small" href="<?= $pc['image'] ?>" download><i class="fa fa-download"></i></a>
                             </div>
                             <form action="<?= site_url('trx/trx-confirm/') ?>" method="post">
                                 <input type="hidden" name="id" value="<?= $pc['id'] ?>">

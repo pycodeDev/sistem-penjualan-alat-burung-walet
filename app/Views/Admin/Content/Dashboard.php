@@ -57,7 +57,7 @@
                         <div class="icon">
                             <i class="fas fa-boxes"></i>
                         </div>
-                        <a href="<?= base_url(); ?>product/category-product" class="small-box-footer text-white">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="<?= base_url(); ?>product/data-product" class="small-box-footer text-white">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             <!-- ./col -->
@@ -87,4 +87,62 @@
 <?= $this->section('js') ?>
 <!-- ChartJS -->
 <script src="<?php echo base_url('assets/admin/plugins/chart.js/Chart.min.js');?>"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // ID Canvas untuk Chart.js
+        const ctx = document.getElementById('areaChart').getContext('2d');
+
+        // Fungsi untuk Memuat Data dari API
+        async function fetchData() {
+            try {
+                const response = await fetch('http://localhost:8080/graph');
+                const json = await response.json();
+
+                // Ambil data bulan dan total dari response JSON
+                const labels = json.data.map(item => item.bulan);
+                const data = json.data.map(item => item.total);
+
+                // Inisialisasi Chart
+                new Chart(ctx, {
+                    type: 'line', // Jenis chart (line, bar, dll.)
+                    data: {
+                        labels: labels, // Bulan sebagai label
+                        datasets: [{
+                            label: 'Total Per Bulan',
+                            data: data, // Data total
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderWidth: 2,
+                            fill: true,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Bulan'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Total'
+                                },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Panggil fungsi fetchData untuk load data dan render chart
+        fetchData();
+    });
+</script>
 <?= $this->endSection() ?>

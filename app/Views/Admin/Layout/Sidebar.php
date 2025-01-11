@@ -123,6 +123,35 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item" data-section="report-view">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Laporan
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url(); ?>report-view/supplier" class="nav-link" data-subsection="supplier">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Report Supplier</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url(); ?>report-view/stok" class="nav-link" data-subsection="stok">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Report Stok</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url(); ?>report-view/trx" class="nav-link" data-subsection="trx">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Report Trx</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item" style="position:fixed;bottom:0;">
             <a href="<?= base_url('auth/logout'); ?>" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>

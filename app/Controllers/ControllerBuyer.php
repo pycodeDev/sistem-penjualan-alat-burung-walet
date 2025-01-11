@@ -42,6 +42,10 @@ class ControllerBuyer extends BaseController
 
         $data['data'] = $this->crud->read_all_data();
 
+        $this->crud->setParamDataPagination("tbl_product");
+
+        $data['data_product'] = $this->crud->read_all_data();
+
         return view('admin/content/buyer/add-data', $data);
     }
 
@@ -52,7 +56,12 @@ class ControllerBuyer extends BaseController
 
         $buyer['buyer_id'] = $this->crud->generateString('buyer');
         $buyer['supplier_id'] = $data['sup_id'];
-        $buyer['name'] = $data['name'];
+
+        $product = $data['product'];
+        $get_product = explode("|", $product);
+
+        $buyer['name'] = $get_product[1];
+        $buyer['product_id'] = $get_product[0];
         $buyer['qty'] = $data['qty'];
         $buyer['price'] = $data['price'];
         $buyer['created_at'] = $waktuSekarang;
@@ -60,6 +69,11 @@ class ControllerBuyer extends BaseController
 
         $this->crud->save_data('tbl_buyer', $buyer);
         $this->session->setFlashdata('success', 'Buyer Data Sucess Save');
+
+        $qty = $data['qty'];
+        $prd_id = $get_product[0];
+
+        $this->crud->solo_query("update tbl_product set stok = stok + $qty where id = $prd_id");
 
         return redirect()->to("/supplier/data-buyer");
     }

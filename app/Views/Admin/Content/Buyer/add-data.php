@@ -37,8 +37,16 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputStock">Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="Enter Name">
+                                <label>Supplier</label>
+                                <select class="form-control select2bs4" name="product" style="width: 100%;">
+                                    <option selected="selected">Silahkan Pilih Procuct</option>
+                                    <?php
+                                        foreach ($data_product as $prd) {?>
+                                        <option value="<?= $prd['id'] ?>|<?= $prd['name'] ?>"><?= $prd['name'] ?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPrice">Price</label>

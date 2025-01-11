@@ -19,6 +19,31 @@ class ControllerTrx extends BaseController
 		$this->crud = new ModelCrud();
 	}
 
+    public function graph()
+    {
+        $currentDate = new \DateTime();
+        $jumlah = [];
+
+        for ($i = 1; $i <= 12; $i++) { 
+            $bulan = $currentDate->format('F'); // Format bulan dan tahun
+            $search = $currentDate->format('Y-m'); // Format untuk pencarian di query
+            $currentDate->modify('-1 month'); // Mundur 1 bulan
+
+            // Query untuk mendapatkan total transaksi
+            $data_trx = $this->crud->solo_query("SELECT COUNT(id) as total FROM tbl_trx WHERE created LIKE '%$search%'");
+
+            // Menambahkan data ke array $jumlah
+            $jumlah[] = [
+                'bulan' => $bulan,
+                'total' => isset($data_trx[0]['total']) ? $data_trx[0]['total'] : 0, // Pastikan total ada
+            ];
+        }
+
+        // Mengembalikan data dalam format JSON
+        return $this->response->setJSON(['data' => $jumlah]);
+    }
+
+
     public function index($id = null, $metode = null)
     {
         if ($id == null) {
