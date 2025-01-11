@@ -78,7 +78,12 @@ class ControllerReport extends BaseController
 
     public function exportPdf()
     {
-        $data = $this->crud->solo_query("SELECT buy.buyer_id, sup.name, buy.name as product_name, buy.qty, buy.price, buy.created_at, buy.updated_at from tbl_buyer buy left join tbl_supplier sup on buy.supplier_id=sup.id order by buy.id desc");
+        $data_post = $this->request->getPost();
+
+        $start = $data_post['start_date']." "."00:00:00";
+        $end = $data_post['end_date']." "."23:59:59";
+
+        $data = $this->crud->solo_query("SELECT buy.buyer_id, sup.name, buy.name as product_name, buy.qty, buy.price, buy.created_at, buy.updated_at from tbl_buyer buy left join tbl_supplier sup on buy.supplier_id=sup.id where buy.created_at between '$start' and '$end'  order by buy.id desc");
 
         // Load view ke dalam HTML
         $html = view('report/ReportView', ['data' => $data]);
@@ -134,8 +139,12 @@ class ControllerReport extends BaseController
 
     public function exportPdfTrx()
     {
+        $data_post = $this->request->getPost();
+
+        $start = $data_post['start_date'];
+        $end = $data_post['end_date'];
         $data_trx = [];
-        $data = $this->crud->solo_query("SELECT trx_id, nama_user, created_at, updated_at from tbl_trx where status = 'SUCCESS' order by id desc");
+        $data = $this->crud->solo_query("SELECT trx_id, nama_user, created_at, updated_at from tbl_trx where status = 'SUCCESS' and created between '$start' and '$end' order by id desc");
 
         foreach ($data as $trx) {
             $trx_id = $trx['trx_id'];

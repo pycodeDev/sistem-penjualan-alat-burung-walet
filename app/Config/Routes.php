@@ -18,9 +18,9 @@ $routes->group('report', function($routes) {
     $routes->get('supplier/view', 'ControllerReport::index');
     $routes->get('trx/view', 'ControllerReport::indexTrx');
     $routes->get('product/view', 'ControllerReport::indexStock');
-    $routes->get('supplier', 'ControllerReport::exportPdf');
+    $routes->post('supplier', 'ControllerReport::exportPdf');
     $routes->get('product', 'ControllerReport::exportPdfStok');
-    $routes->get('trx', 'ControllerReport::exportPdfTrx');
+    $routes->post('trx', 'ControllerReport::exportPdfTrx');
 });
 
 $routes->group('report-view', function($routes) {

@@ -71,7 +71,7 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="4" style="text-align: center;">Tidak ada data tersedia</td>
+                    <td colspan="7" style="text-align: center;">Tidak ada data tersedia</td>
                 </tr>
             <?php endif; ?>
         </tbody>

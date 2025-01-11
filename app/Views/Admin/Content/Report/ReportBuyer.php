@@ -25,9 +25,12 @@
                     <a class="btn btn-sm btn-primary float-left m-2" target="_blank" href="<?= base_url(); ?>report/supplier/view">
                         View Data
                     </a>
-                    <a class="btn btn-sm btn-danger float-left m-2" target="_blank" href="<?= base_url(); ?>report/supplier">
+                    <!-- <a class="btn btn-sm btn-danger float-left m-2" target="_blank" href="<?= base_url(); ?>report/supplier">
                         Download Data
-                    </a>
+                    </a> -->
+                    <button type="button" class="btn btn-sm btn-danger float-left m-2" data-toggle="modal" data-target="#modal-default">
+                        Download Data
+                    </button>
                 </div>
                 <!-- /.card-body -->
                 </div>
@@ -35,4 +38,34 @@
             </div>
         </div>
     </section>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cetak Laporan</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?= base_url(); ?>report/supplier" method="post">
+                        <div class="form-group">
+                            <label>Tanggal Awal</label>
+                            <input type="date" class="form-control" name="start_date">
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Akhir</label>
+                            <input type="date" class="form-control" name="end_date">
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary float-right m-2" data-toggle="modal" data-target="#modal-default">
+                            Cetak
+                        </button>
+                    </form>
+                </div>
+            </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 <?= $this->endSection() ?>
