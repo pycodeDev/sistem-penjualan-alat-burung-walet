@@ -16,6 +16,63 @@ class ControllerReport extends BaseController
 		$this->crud = new ModelCrud();
 	}
 
+    public function nota_pembelian($trx_id)
+    {
+        $this->crud->setParamDataPagination("tbl_trx");
+        $data_trx = $this->crud->select_1_cond("trx_id", $trx_id);
+
+        $this->crud->setParamDataPagination("tbl_trx_item");
+        $data_trx_item = $this->crud->select_1_cond("trx_id", $trx_id);
+
+        $this->crud->setParamDataPagination("tbl_user");
+        $user = $this->crud->select_1_cond("id", $data_trx[0]['user_id']);
+
+        $data['trx'] = $data_trx[0];
+        $data['trx_item'] = $data_trx_item;
+        $data['user'] = $user[0];
+
+        return view('report/NotaPembelian', $data);
+    }
+    
+    public function exportPdfNota($trx_id)
+    {
+        $this->crud->setParamDataPagination("tbl_trx");
+        $data_trx = $this->crud->select_1_cond("trx_id", $trx_id);
+
+        $this->crud->setParamDataPagination("tbl_trx_item");
+        $data_trx_item = $this->crud->select_1_cond("trx_id", $trx_id);
+
+        $this->crud->setParamDataPagination("tbl_user");
+        $user = $this->crud->select_1_cond("id", $data_trx[0]['user_id']);
+
+        $data['trx'] = $data_trx[0];
+        $data['trx_item'] = $data_trx_item;
+        $data['user'] = $user[0];
+
+        // Load view ke dalam HTML
+        $html = view('report/NotaPembelian', $data);
+
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+
+        // Mengatur opsi Dompdf
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf->setOptions($options);
+
+        // Load HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set ukuran kertas dan orientasi
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render PDF
+        $dompdf->render();
+
+        // Kirim file PDF ke browser untuk diunduh
+        $dompdf->stream("nota_pembelian.pdf", ["Attachment" => true]);
+    }
+    
     public function index_view_supplier()
     {
         $data['title'] = "Data Buyer Supplier";

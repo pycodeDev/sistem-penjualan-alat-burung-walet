@@ -27,6 +27,7 @@ $routes->group('report-view', function($routes) {
     $routes->get('supplier', 'ControllerReport::index_view_supplier');
     $routes->get('trx', 'ControllerReport::index_view_trx');
     $routes->get('stok', 'ControllerReport::index_view_product');
+    $routes->get('nota/(:any)', 'ControllerReport::exportPdfNota/$1');
 });
 
 

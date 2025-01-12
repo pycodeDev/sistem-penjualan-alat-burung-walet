@@ -129,10 +129,20 @@
             <a href="<?= base_url() ?>client/complete/trx/<?= $trx['trx_id'] ?>" class="badge bg-yellow-500 text-white px-4 py-2 rounded-lg">
                 Selesaikan Transaksi
             </a>
+            <a target="_blank" href="<?= base_url() ?>report-view/nota/<?= $trx['trx_id'] ?>" class="badge bg-green-500 text-white px-4 py-2 rounded-lg">
+                Cetak Nota
+            </a>
         <?php elseif ($trx['status'] == 'SUCCESS'): ?>
             <div class="badge bg-green-500 text-white px-4 py-2 rounded-lg">
                 Sukses
             </div>
+            <div class="mt-4">
+                <a target="_blank" href="<?= base_url() ?>report-view/nota/<?= $trx['trx_id'] ?>" 
+                    class="badge bg-green-500 text-white px-4 py-2 rounded-lg">
+                    Cetak Nota
+                </a>
+            </div>
+
 
             <!-- Form input komentar -->
             <?php if (count($trx_item) == 1): ?>
