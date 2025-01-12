@@ -50,13 +50,20 @@
 
         <!-- Update All Button -->
         <div class="text-right mt-4">
+        <?php
+                if (count($data) > 0) {?>
             <button id="global-update-cart" class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600">
                 Update All
             </button>
+            <?php
+                }
+            ?>
         </div>
     </div>
 
     <!-- Cart Summary -->
+    <?php
+                if (count($data) > 0) {?>
     <div class="bg-white shadow-md rounded-lg p-6">
         <h3 class="text-2xl font-semibold text-gray-800 mb-4">Cart Summary</h3>
         <div class="flex flex-col md:flex-row md:justify-between mb-4">
@@ -76,6 +83,9 @@
             </div>
         </div>
     </div>
+    <?php
+                }
+            ?>
 </div>
 <?= $this->endSection() ?>
 <?= $this->section('js') ?>

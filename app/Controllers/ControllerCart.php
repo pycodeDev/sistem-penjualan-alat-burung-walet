@@ -69,10 +69,22 @@ class ControllerCart extends BaseController
             $this->session->setFlashdata('err_msg', 'Maaf Jumlah Product Yang Ada di Keranjang tidak boleh lebih dari 3');
             return $this->response->setJSON(['success' => false]);
         }
+        
+        $id_user=$this->session->get('id');
+        $data_cart=$this->crud->solo_query("select id from tbl_cart where product_id = $productId and user_id = $id_user");
+        if ($data_cart) {
+            // Data ditemukan
+            $id_cart = $data_cart[0]['id']; // Ambil nilai id
+            $this->crud->solo_query("update tbl_cart set qty=qty+$quantity, updated_at='$waktuSekarang' where id = $id_cart");
+            $this->session->setFlashdata('msg', 'Success Update Cart');
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            $this->crud->save_data('tbl_cart', $cart);
 
-        $this->crud->save_data('tbl_cart', $cart);
-        $this->session->setFlashdata('msg', 'Success Add Cart');
-        return $this->response->setJSON(['success' => true]);
+            $this->session->setFlashdata('msg', 'Success Add Cart');
+            return $this->response->setJSON(['success' => true]);
+        }
+        
     }
     
     public function edit()
