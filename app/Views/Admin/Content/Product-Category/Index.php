@@ -22,6 +22,14 @@
 
                     <div class="card-tools">
                         <ul class="pagination pagination-sm float-right">
+                        <?php
+                            if ($back == null) {
+                                $back = 0;
+                            }
+                            if ($next == null) {
+                                $next = 0;
+                            }
+                            ?>
                             <li class="page-item"><a class="page-link" href="<?= base_url() ?>product/category-product/<?=$back?>/back">&laquo;</a></li>
                             <li class="page-item"><a class="page-link" href="<?= base_url() ?>product/category-product/<?=$next?>/next">&raquo;</a></li>
                         </ul>
