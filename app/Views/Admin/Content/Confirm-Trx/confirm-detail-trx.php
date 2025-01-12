@@ -87,14 +87,14 @@
                                 <?php
                                     if ($trx['status'] == "PENDING") {
                                         echo '<span class="right badge badge-warning text-white">PENDING</span>';
-                                    }elseif ($trx['status'] == 'KONFIRM') {
+                                    }elseif ($trx['status'] == 'CONFIRM') {
                                         echo '<span class="right badge badge-info text-white">KONFIRM</span>';
                                     }elseif ($trx['status'] == 'SHIPPING') {
-                                        echo '<span class="right badge badge-danger text-white">SHIPPING</span>';
+                                        echo '<span class="right badge badge-primary text-white">SHIPPING</span>';
                                     }elseif ($trx['status'] == 'SUCCESS') {
-                                        echo '<span class="right badge badge-warning text-white">SUCCESS</span>';
+                                        echo '<span class="right badge badge-success text-white">SUCCESS</span>';
                                     }else{
-                                        echo '<span class="right badge badge-primary text-white">FAILED</span>';
+                                        echo '<span class="right badge badge-danger text-white">FAILED</span>';
                                     }
                                 ?>
                                 </h5>
@@ -154,8 +154,20 @@
                     </div>
                 <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" name="status" class="btn btn-sm btn-success" value="SUCCESS">Approve</button>
-                        <button type="submit" name="status" class="btn btn-sm btn-danger" value="REJECT">Reject</button>
+                        <?php
+                        if ($pc['status'] == "SUCCESS") {?>
+                            <p class="text-success">Transaksi ini Sudah Dikonfirmasi Benar oleh Admin.</p>
+                        <?php
+                        }else if ($pc['status'] == "REJECT") {?>
+                            <p class="text-danger">Transaksi ini Sudah Dikonfirmasi Salah oleh Admin.</p>
+                        <?php
+                        }else{
+                        ?>
+                            <button type="submit" name="status" class="btn btn-sm btn-success" value="SUCCESS">Approve</button>
+                            <button type="submit" name="status" class="btn btn-sm btn-danger" value="REJECT">Reject</button>
+                        <?php
+                        }
+                        ?>
                     </div>
                                 </form>
                 </div>

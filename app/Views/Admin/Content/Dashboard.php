@@ -27,7 +27,12 @@
                         <div class="icon">
                             <i class="fas fa-users"></i>
                         </div>
-                        <a href="<?= base_url(); ?>user/data-user" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <?php
+                        if (session()->get('level') == "admin") {?>
+                            <a href="<?= base_url(); ?>user/data-user" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -42,7 +47,12 @@
                         <div class="icon">
                             <i class="fas fa-shopping-bag"></i>
                         </div>
-                        <a href="<?= base_url(); ?>trx/data-trx" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <?php
+                        if (session()->get('level') == "admin") {?>
+                            <a href="<?= base_url(); ?>trx/data-trx" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -57,7 +67,11 @@
                         <div class="icon">
                             <i class="fas fa-boxes"></i>
                         </div>
-                        <a href="<?= base_url(); ?>product/data-product" class="small-box-footer text-white">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <?php if (session()->get('level') == "admin") {?>
+                            <a href="<?= base_url(); ?>product/data-product" class="small-box-footer text-white">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             <!-- ./col -->

@@ -69,11 +69,11 @@
                                                 }elseif ($trx['status'] == 'CONFIRM') {
                                                     echo '<span class="right badge badge-info text-white">KONFIRM</span>';
                                                 }elseif ($trx['status'] == 'SHIPPING') {
-                                                    echo '<span class="right badge badge-danger text-white">SHIPPING</span>';
+                                                    echo '<span class="right badge badge-primary text-white">SHIPPING</span>';
                                                 }elseif ($trx['status'] == 'SUCCESS') {
-                                                    echo '<span class="right badge badge-warning text-white">SUCCESS</span>';
+                                                    echo '<span class="right badge badge-success text-white">SUCCESS</span>';
                                                 }else{
-                                                    echo '<span class="right badge badge-primary text-white">FAILED</span>';
+                                                    echo '<span class="right badge badge-danger text-white">FAILED</span>';
                                                 }
                                             ?>
                                         </td>

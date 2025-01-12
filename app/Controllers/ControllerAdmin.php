@@ -91,6 +91,7 @@ class ControllerAdmin extends BaseController
                     'id' => $user['id'],
                     'email' => $user['email'],
                     'name' => $user['name'],
+                    'level' => $user['level'],
                     'logged_in' => TRUE
                 ]);
                 $this->session->setFlashdata('success_login', 'Anda Berhasil Login, Selamat Datang '. $user['name']);
