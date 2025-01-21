@@ -63,7 +63,6 @@
                         <td><?= htmlspecialchars($row['name']); ?></td>
                         <td><?= htmlspecialchars($row['price']); ?></td>
                         <td><?= htmlspecialchars($row['stok']); ?></td>
-                        <td><?= htmlspecialchars($row['qty']); ?></td>
                         <td><?= htmlspecialchars($row['created_at']); ?></td>
                         <td><?= htmlspecialchars($row['updated_at']); ?></td>
                     </tr>
