@@ -53,6 +53,19 @@ class ControllerAdmin extends BaseController
 
     public function save_admin()
     {
+        $validation = \Config\Services::validation();
+        
+        $validation->setRules([
+            'name' => 'required|alpha_space', // Hanya huruf dan spasi
+            'hp' => 'required|numeric', // Hanya huruf dan spasi
+            'email' => 'required|valid_email', // Hanya huruf dan spasi
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            // Jika validasi gagal, set Flashdata error
+            $this->session->setFlashdata('error_validation', $validation->getErrors());
+            return redirect()->back()->withInput();
+        }
         $data = $this->request->getPost();
         $waktuSekarang = Time::now();
 

@@ -51,6 +51,20 @@ class ControllerBuyer extends BaseController
 
     public function save()
     {
+        $validation = \Config\Services::validation();
+
+        $validation->setRules([
+            'name' => 'required|alpha_space', // Hanya huruf dan spasi
+            'qty' => 'required|numeric', // Hanya huruf dan spasi
+            'price' => 'required|alpha_space', // Hanya huruf dan spasi
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            // Jika validasi gagal, set Flashdata error
+            $this->session->setFlashdata('error_validation', $validation->getErrors());
+            return redirect()->back()->withInput();
+        }
+
         $data = $this->request->getPost();
         $waktuSekarang = Time::now();
 
@@ -93,6 +107,20 @@ class ControllerBuyer extends BaseController
 
     public function update()
     {
+        $validation = \Config\Services::validation();
+        
+        $validation->setRules([
+            'name' => 'required|alpha_space', // Hanya huruf dan spasi
+            'qty' => 'required|numeric', // Hanya huruf dan spasi
+            'price' => 'required|alpha_space', // Hanya huruf dan spasi
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            // Jika validasi gagal, set Flashdata error
+            $this->session->setFlashdata('error_validation', $validation->getErrors());
+            return redirect()->back()->withInput();
+        }
+
         $data = $this->request->getRawInput();
         $waktuSekarang = Time::now();
 

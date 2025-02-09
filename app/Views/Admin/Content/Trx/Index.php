@@ -37,10 +37,18 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                    <!-- <a class="btn btn-sm btn-success float-left m-2" href="<?= base_url(); ?>product/category-product/add-category-product">
-                        <i class="fas fa-print"></i> Cetak
-                    </a> -->
-                    <table class="table">
+                    <form action="javascript:void(0)" method="post" class="form-inline m-2" id="search-form">
+                        <?= csrf_field() ?>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="trx_id" id="trx_id" placeholder="Masukkan trx Id">
+                            <div class="input-group-append">
+                                <button type="button" id="search-form" class="btn btn-primary">Cari</button>
+                                <button type="button" id="reset-btn" class="btn btn-danger">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <table class="table" id="php-data">
                         <thead>
                             <tr>
                                 <th style="text-align: center; vertical-align: middle;">No</th>
@@ -94,6 +102,23 @@
                                 }
                             ?>
                         </tbody>
+                    </table>
+
+                    <!-- Tabel untuk AJAX (Akan Ditampilkan Setelah Pencarian) -->
+                    <table class="table" id="ajax-data" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Trx Id</th>
+                                <th>Nama User</th>
+                                <th>Total Product</th>
+                                <th>Total Harga</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->

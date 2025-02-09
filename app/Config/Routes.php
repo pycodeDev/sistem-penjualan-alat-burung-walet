@@ -75,10 +75,11 @@ $routes->group('payment', ['filter' => 'auth'], function($routes) {
     $routes->post('data-payment/edit-payment', 'ControllerPaymentMethod::update');
     $routes->get('data-payment/(:num)', 'ControllerPaymentMethod::delete/$1');
 });
-
+$routes->post('trx/search', 'ControllerTrx::search');
 $routes->group('trx', ['filter' => 'auth'], function($routes) {
     $routes->get('data-trx', 'ControllerTrx::index');
-    $routes->get('data-trx/(:num)?/(:any)?', 'ControllerTrx::index/$1/$2');
+    
+    $routes->get('data-trx/(:any)?/(:any)?', 'ControllerTrx::index/$1/$2');
     $routes->get('data-trx/(:any)', 'ControllerTrx::detail/$1');
     $routes->get('trx-confirm', 'ControllerTrx::confirm_trx');
     $routes->get('trx-confirm/(:num)?/(:any)?', 'ControllerTrx::confirm_trx/$1/$2');

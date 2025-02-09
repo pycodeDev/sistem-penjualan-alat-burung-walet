@@ -43,6 +43,19 @@ class ControllerPaymentMethod extends BaseController
 
     public function save()
     {
+        $validation = \Config\Services::validation();
+
+        $validation->setRules([
+            'name' => 'required|alpha_space', // Hanya huruf dan spasi
+            'rek' => 'required|numeric', // Hanya huruf dan spasi
+            'rek_name' => 'required|alpha_space', // Hanya huruf dan spasi
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            // Jika validasi gagal, set Flashdata error
+            $this->session->setFlashdata('error_validation', $validation->getErrors());
+            return redirect()->back()->withInput();
+        }
         $data = $this->request->getPost();
         $waktuSekarang = Time::now();
 
@@ -76,6 +89,19 @@ class ControllerPaymentMethod extends BaseController
 
     public function update()
     {
+        $validation = \Config\Services::validation();
+
+        $validation->setRules([
+            'name' => 'required|alpha_space', // Hanya huruf dan spasi
+            'rek' => 'required|numeric', // Hanya huruf dan spasi
+            'rek_name' => 'required|alpha_space', // Hanya huruf dan spasi
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            // Jika validasi gagal, set Flashdata error
+            $this->session->setFlashdata('error_validation', $validation->getErrors());
+            return redirect()->back()->withInput();
+        }
         $data = $this->request->getPost();
         $waktuSekarang = Time::now();
 

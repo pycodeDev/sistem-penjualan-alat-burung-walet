@@ -43,6 +43,20 @@ class ControllerTrx extends BaseController
         return $this->response->setJSON(['data' => $jumlah]);
     }
 
+    public function search()
+    {
+        $trx_id = $this->request->getPost('trx_id');
+
+        // Cari data berdasarkan trx_id
+        $this->crud->setParamDataPagination("tbl_trx", 0, "", "", "", "", "trx_id", $trx_id, "id");
+        $data_product = $this->crud->data_pagination();
+
+        // Kembalikan hasil dalam format JSON
+        return $this->response->setJSON([
+            'data' => $data_product["data"]
+        ]);
+    }
+
 
     public function index($id = null, $metode = null)
     {
@@ -50,9 +64,10 @@ class ControllerTrx extends BaseController
             $id = 0;
             $metode = "";
         }
+        
         $data['title'] = "Data Trx";
         $this->crud->setParamDataPagination("tbl_trx",$id,$metode,"","","","","","id");
-
+        
         $data_product = $this->crud->data_pagination();
         $data['data'] = $data_product["data"];
         $data['next'] = $data_product["last_id"];

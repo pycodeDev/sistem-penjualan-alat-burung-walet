@@ -13,3 +13,8 @@
       toastr.error("<?= session()->getFlashdata('error') ?>")
     </script>
 <?php endif; ?>
+<?php if(session()->getFlashdata('error_validation')): ?>
+    <script>
+      toastr.warning("<?= implode('<br>', session()->getFlashdata('error_validation')); ?>")
+    </script>
+<?php endif; ?>
