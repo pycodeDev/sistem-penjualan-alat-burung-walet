@@ -13,8 +13,10 @@ class ControllerTrx extends BaseController
 {
     protected $crud;
     protected $session;
+    protected $db;
 	public function __construct()
 	{
+        $this->db = \Config\Database::connect(); // Koneksi DB
         $this->session = session();
 		$this->crud = new ModelCrud();
 	}
@@ -46,16 +48,113 @@ class ControllerTrx extends BaseController
     public function search()
     {
         $trx_id = $this->request->getPost('trx_id');
+        $status = $this->request->getPost('status');
+        $trx_date = $this->request->getPost('trx_date');
 
-        // Cari data berdasarkan trx_id
-        $this->crud->setParamDataPagination("tbl_trx", 0, "", "", "", "", "trx_id", $trx_id, "id");
-        $data_product = $this->crud->data_pagination();
+        // Awal query dengan JOIN
+        $query = "SELECT tbl_trx.*, COUNT(tbl_trx_item.id) AS total_produk 
+                FROM tbl_trx 
+                LEFT JOIN tbl_trx_item ON tbl_trx.trx_id = tbl_trx_item.trx_id";
+        
+        $conditions = [];
+
+        // Tambahkan kondisi jika ada input
+        if (!empty($trx_id)) {
+            $conditions[] = "tbl_trx.trx_id = " . $this->db->escape($trx_id);
+        }
+        if (!empty($status)) {
+            $conditions[] = "tbl_trx.status = " . $this->db->escape($status);
+        }
+        if (!empty($trx_date)) {
+            $conditions[] = "tbl_trx.created LIKE '%" . $this->db->escapeLikeString($trx_date) . "%'";
+        }
+
+        // Gabungkan kondisi jika ada
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        // Grouping berdasarkan transaksi
+        $query .= " GROUP BY tbl_trx.id";
+        // Tambahkan ini sebelum eksekusi query
+        log_message('debug', 'Query Search: ' . $query);
+
+        // Jalankan query
+        $data_trx = $this->crud->solo_query($query);
 
         // Kembalikan hasil dalam format JSON
         return $this->response->setJSON([
-            'data' => $data_product["data"]
+            'data' => $data_trx
         ]);
     }
+
+    public function filter()
+    {
+        if ($this->request->isAJAX()) {
+            $trx_id = $this->request->getPost('trx_id');
+            $status = $this->request->getPost('status');
+            $trx_date = $this->request->getPost('trx_date');
+
+            $query = "SELECT status, COUNT(id) AS total_trx, SUM(total) AS total_produk 
+                    FROM tbl_trx WHERE 1=1";
+
+            if (!empty($trx_date)) {
+                $query .= " AND DATE(created) = '$trx_date'";
+            }
+
+            if (!empty($trx_id)) {
+                $query .= " AND trx_id = '$trx_id'";
+            }
+
+            if (!empty($status)) {
+                $query .= " AND status = '$status'";
+            }
+
+            $query .= " GROUP BY status";
+            log_message('debug', 'Query Search: ' . $query);
+            $data_trx = $this->crud->solo_query($query);
+
+            // Inisialisasi data default jika tidak ada hasil
+            $result = [
+                'total' => 0,
+                'pending' => 0,
+                'konfirm' => 0,
+                'shipping' => 0,
+                'success' => 0,
+                'failed' => 0
+            ];
+
+            // Mapping hasil query ke dalam result
+            if ($data_trx) {
+                foreach ($data_trx as $trx) {
+                    switch ($trx['status']) {
+                        case 'PENDING':
+                            $result['pending'] = $trx['total_trx'];
+                            break;
+                        case 'KONFIRM':
+                            $result['konfirm'] = $trx['total_trx'];
+                            break;
+                        case 'SHIPPING':
+                            $result['shipping'] = $trx['total_trx'];
+                            break;
+                        case 'SUCCESS':
+                            $result['success'] = $trx['total_trx'];
+                            break;
+                        case 'FAILED':
+                            $result['failed'] = $trx['total_trx'];
+                            break;
+                    }
+                    $result['total'] += $trx['total_trx'];
+                }
+            }
+
+            return $this->response->setJSON(['success' => true, 'data' => $result]);
+        }
+
+        return $this->response->setJSON(['success' => false]);
+    }
+
+
 
 
     public function index($id = null, $metode = null)
@@ -72,6 +171,46 @@ class ControllerTrx extends BaseController
         $data['data'] = $data_product["data"];
         $data['next'] = $data_product["last_id"];
         $data['back'] = $data_product["first_id"];
+        
+        $query = "SELECT status, COUNT(id) AS total_trx, SUM(total) AS total_produk 
+              FROM tbl_trx 
+              WHERE DATE(created) = CURDATE() 
+              AND status IN ('PENDING', 'KONFIRM', 'SHIPPING', 'SUCCESS', 'FAILED') 
+              GROUP BY status";
+
+        $data_trx = $this->crud->solo_query($query);
+
+        // Inisialisasi default jika tidak ada data
+        $data = [
+            'tgl'      => date('Y-m-d'), // Tanggal hari ini
+            'total'    => 0,
+            'pending'  => 0,
+            'konfirm'  => 0,
+            'shipping' => 0,
+            'success'  => 0,
+            'failed'   => 0,
+            'next' => $data_product["first_id"],
+            'back' => $data_product["last_id"],
+            'data' => $data_product["data"]
+        ];
+
+        // Loop hasil query dan simpan ke variabel sesuai statusnya
+        foreach ($data_trx as $row) {
+            if ($row['status'] == 'PENDING') {
+                $data['pending'] = $row['total_trx'];
+            } elseif ($row['status'] == 'KONFIRM') {
+                $data['konfirm'] = $row['total_trx'];
+            } elseif ($row['status'] == 'SHIPPING') {
+                $data['shipping'] = $row['total_trx'];
+            } elseif ($row['status'] == 'SUCCESS') {
+                $data['success'] = $row['total_trx'];
+            } elseif ($row['status'] == 'FAILED') {
+                $data['failed'] = $row['total_trx'];
+            }
+
+            // Hitung total dari semua transaksi
+            $data['total'] += $row['total_trx'];
+        }
 
         return view('admin/content/trx/index', $data);
     }

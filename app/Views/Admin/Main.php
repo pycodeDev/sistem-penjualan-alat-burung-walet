@@ -71,12 +71,14 @@ $(document).ready(function() {
         location.reload(); // Me-refresh halaman
     });
     
-    $("#search-form").click(function(e) {
+    $("#search-btn").click(function(e) {
         e.preventDefault(); // Mencegah reload
 
         let trx_id = $("#trx_id").val().trim();
+        let status = $("#status").val();
+        let trxDate = $("#trx_date").val();
         
-        if (trx_id === "") {
+        if (trx_id === "" && status === "" && trxDate === "") {
             // Jika input kosong, tampilkan kembali data PHP dan sembunyikan data AJAX
             $("#php-data").show();
             $("#ajax-data").hide();
@@ -86,10 +88,16 @@ $(document).ready(function() {
         $.ajax({
             url: "<?= base_url('trx/search') ?>",
             method: "POST",
-            data: { trx_id: trx_id },
+            data: {
+                trx_id: trx_id,
+                status: status,
+                trx_date: trxDate
+            },
             dataType: "json",
             success: function(response) {
                 if (response.data.length > 0) {
+                  console.log(response);
+                  
                     let tableBody = "";
                     response.data.forEach((trx, index) => {
                         let badgeClass = "";
@@ -119,6 +127,7 @@ $(document).ready(function() {
                     $("#php-data").hide();
                     $("#ajax-data").show();
                 } else {
+                  
                     alert("Data tidak ditemukan!");
                 }
             },
@@ -129,5 +138,61 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+$(document).ready(function () {
+    $('#search-btn').click(function () {
+        let trx_id = $('#trx_id').val();
+        let status = $('#status').val();
+        let trx_date = $('#trx_date').val(); // Bisa kosong jika tidak diisi
+
+        $.ajax({
+            url: "<?= base_url('trx/filter') ?>", // Endpoint untuk filter
+            type: "POST",
+            data: {
+                trx_id: trx_id,
+                status: status,
+                trx_date: trx_date,
+                csrf_token_name: "<?= csrf_hash() ?>" // Untuk keamanan
+            },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    let data = response.data;
+
+                    // Update tanggal transaksi
+                    if (trx_date) {
+                        $('#tgl').text(trx_date);
+                    } else {
+                        $('#tgl').text(''); // Kosongkan jika tidak ada filter tanggal
+                    }
+
+                    // Update data transaksi berdasarkan status
+                    $('#total').text(data.total || 0);
+                    $('#pending').text(data.pending || 0);
+                    $('#konfirm').text(data.konfirm || 0);
+                    $('#shipping').text(data.shipping || 0);
+                    $('#success').text(data.success || 0);
+                    $('#failed').text(data.failed || 0);
+                } else {
+                    alert("Data tidak ditemukan 1!");
+                }
+            },
+            error: function () {
+                alert("Terjadi kesalahan saat mengambil data 1.");
+            }
+        });
+    });
+
+    // Reset Button
+    $('#reset-btn').click(function () {
+        $('#trx_id').val('');
+        $('#status').val('');
+        $('#trx_date').val('');
+        $('#tgl').text('');
+        $('#total, #pending, #konfirm, #shipping, #success, #failed').text(0);
+    });
+});
+</script>
+
 </body>
 </html>

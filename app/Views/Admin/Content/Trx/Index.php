@@ -37,16 +37,61 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
-                    <form action="javascript:void(0)" method="post" class="form-inline m-2" id="search-form">
+                    <form action="javascript:void(0)" method="post" class="m-2" id="search-form">
                         <?= csrf_field() ?>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="trx_id" id="trx_id" placeholder="Masukkan trx Id">
-                            <div class="input-group-append">
-                                <button type="button" id="search-form" class="btn btn-primary">Cari</button>
+                        <div class="d-flex flex-wrap align-items-end gap-2">
+                            <!-- TRX ID -->
+                            <div class="form-group">
+                                <label for="trx_id">Trx ID</label>
+                                <input type="text" class="form-control" name="trx_id" id="trx_id" placeholder="Masukkan Trx ID">
+                            </div>
+
+                            <!-- STATUS (SELECT) -->
+                            <div class="form-group">
+                                <label for="category">Status</label>
+                                <select class="form-control" name="category" id="status">
+                                    <option value="">Pilih Status</option>
+                                    <option value="PENDING">Pending</option>
+                                    <option value="KONFIRM">Konfirm</option>
+                                    <option value="SHIPPING">Shipping</option>
+                                    <option value="SUCCESS">Success</option>
+                                    <option value="FAILED">Failed</option>
+                                </select>
+                            </div>
+
+                            <!-- TANGGAL TRANSAKSI -->
+                            <div class="form-group">
+                                <label for="trx_date">Tgl Trx</label>
+                                <input type="date" class="form-control" name="trx_date" id="trx_date">
+                            </div>
+
+                            <!-- BUTTONS -->
+                            <div class="form-group d-flex gap-2">
+                                <button type="button" id="search-btn" class="btn btn-primary">Cari</button>
                                 <button type="button" id="reset-btn" class="btn btn-danger">Reset</button>
                             </div>
                         </div>
                     </form>
+
+                    <table class="table">
+                        <tr>
+                            <th style="text-align: center; vertical-align: middle;">Transaksi Tgl <span id="tgl"><?=$tgl?></span></th>
+                            <th style="text-align: center; vertical-align: middle;">Pending</th>
+                            <th style="text-align: center; vertical-align: middle;">Konfirm</th>
+                            <th style="text-align: center; vertical-align: middle;">Shipping</th>
+                            <th style="text-align: center; vertical-align: middle;">Success</th>
+                            <th style="text-align: center; vertical-align: middle;">Failed</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle;" id="total"><?= $total ?></td>
+                            <td style="text-align: center; vertical-align: middle;" id="pending"><?= $pending ?></td>
+                            <td style="text-align: center; vertical-align: middle;" id="konfirm"><?= $konfirm ?></td>
+                            <td style="text-align: center; vertical-align: middle;" id="shipping"><?= $shipping ?></td>
+                            <td style="text-align: center; vertical-align: middle;" id="success"><?= $success ?></td>
+                            <td style="text-align: center; vertical-align: middle;" id="failed"><?= $failed ?></td>
+                        </tr>
+                    </table>
+
 
                     <table class="table" id="php-data">
                         <thead>

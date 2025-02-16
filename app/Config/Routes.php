@@ -76,6 +76,7 @@ $routes->group('payment', ['filter' => 'auth'], function($routes) {
     $routes->get('data-payment/(:num)', 'ControllerPaymentMethod::delete/$1');
 });
 $routes->post('trx/search', 'ControllerTrx::search');
+$routes->post('trx/filter', 'ControllerTrx::filter');
 $routes->group('trx', ['filter' => 'auth'], function($routes) {
     $routes->get('data-trx', 'ControllerTrx::index');
     
