@@ -302,6 +302,7 @@ class ControllerTrx extends BaseController
         $this->crud->update_data($payment_confirm, "id", $data['id']);
 
         $trx['status'] = $status_trx;
+        $trx['note'] = $data['note'];
         $trx['updated_at'] = $waktuSekarang;
 
         $this->crud->setParamDataPagination("tbl_trx");

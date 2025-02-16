@@ -96,6 +96,15 @@
                                 ?>
                                 </h5>
                             </div>
+                            <div class="col-4">
+                                <h5>Note</h5>
+                            </div>
+                            <div class="col-1">
+                                <h5>:</h5>
+                            </div>
+                            <div class="col-7">
+                                <h5><?= $trx['note'] ?></h5>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-body -->

@@ -118,7 +118,7 @@
         <?php
         elseif ($trx['status'] == 'FAILED'):?>
             <div class="badge bg-red-500 text-white px-4 py-2 rounded-lg flex items-center">
-                <span>Gagal Transaksi Silahkan Lakukan Transaksi Ulang.</span>
+                <span>Gagal Transaksi Silahkan Lakukan Transaksi Ulang. Dengan Alasan : <?= $trx['note'] ?></span>
             </div>
         <?php elseif ($trx['status'] == 'CONFIRM'): ?>
             <div class="badge bg-blue-500 text-white px-4 py-2 rounded-lg">

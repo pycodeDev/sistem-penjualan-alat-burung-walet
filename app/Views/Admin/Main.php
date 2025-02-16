@@ -117,6 +117,7 @@ $(document).ready(function() {
                                 <td>${trx.total}</td>
                                 <td>${trx.price}</td>
                                 <td><span class="badge ${badgeClass} text-white">${trx.status}</span></td>
+                                <td>${trx.note}</td>
                                 <td>${new Date(trx.created).toLocaleDateString()}</td>
                                 <td><a href="<?= base_url(); ?>trx/data-trx/${trx.trx_id}" class="btn btn-sm btn-info"><i class="fa fa-eye text-white"></i></a></td>
                             </tr>
